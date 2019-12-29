@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PhaseII | Kristian Brock</title>
+    <link>/tags/phaseii/</link>
+      <atom:link href="/tags/phaseii/index.xml" rel="self" type="application/rss+xml" />
+    <description>PhaseII</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>PhaseII</title>
+      <link>/tags/phaseii/</link>
+    </image>
+    
+    <item>
+      <title>PePS2</title>
+      <link>/project/peps2/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/project/peps2/</guid>
+      <description>&lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 non-small-cell lung cancer patients.
+It is run by the &lt;a href=&#34;https://www.birmingham.ac.uk/research/activity/mds/trials/crctu/&#34;&gt;Cancer Research UK Clinical Trials Unit&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Ibrutinib Plus Venetoclax in Relapsed/Refractory Chronic Lymphocytic Leukemia - The CLARITY Study</title>
+      <link>/publication/clarity-results/</link>
+      <pubDate>Thu, 11 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>/publication/clarity-results/</guid>
+      <description>&lt;p&gt;This publication is important to me because Clarity was my first successful grant application.
+It is a simple trial with modest sample size but the results are absolutely amazing, with an iwCLL response rate of 89% and minimum disease negative status achieved in the peripheral blood of 53% of patients.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

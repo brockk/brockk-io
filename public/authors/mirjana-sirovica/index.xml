@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mirjana Sirovica | Kristian Brock</title>
+    <link>/authors/mirjana-sirovica/</link>
+      <atom:link href="/authors/mirjana-sirovica/index.xml" rel="self" type="application/rss+xml" />
+    <description>Mirjana Sirovica</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 20 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Mirjana Sirovica</title>
+      <link>/authors/mirjana-sirovica/</link>
+    </image>
+    
+    <item>
+      <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
+      <link>/publication/matchpoint-design/</link>
+      <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>/publication/matchpoint-design/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts | Kristian Brock</title>
+    <link>/post/</link>
+      <atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <description>Posts</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Posts</title>
+      <link>/post/</link>
+    </image>
+    
+    <item>
+      <title>First post</title>
+      <link>/post/first-post/first-post/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/post/first-post/first-post/</guid>
+      <description>
+
+
+&lt;p&gt;I have started this site to record things I am working on in R during my duties as an academic clinical trial statistician.&lt;/p&gt;
+&lt;p&gt;Fingers crossed.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

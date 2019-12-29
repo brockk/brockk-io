@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects | Kristian Brock</title>
+    <link>/project/</link>
+      <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+    <description>Projects</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Projects</title>
+      <link>/project/</link>
+    </image>
+    
+    <item>
+      <title>PePS2</title>
+      <link>/project/peps2/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/project/peps2/</guid>
+      <description>&lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 non-small-cell lung cancer patients.
+It is run by the &lt;a href=&#34;https://www.birmingham.ac.uk/research/activity/mds/trials/crctu/&#34;&gt;Cancer Research UK Clinical Trials Unit&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>trialr</title>
+      <link>/project/trialr/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/project/trialr/</guid>
+      <description>&lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; is an R package that implements Bayesian clinical trial design in &lt;a href=&#34;https://mc-stan.org/&#34;&gt;Stan&lt;/a&gt;, a modern enviroment for probabilistic programming that implements Hamiltonian Monte Carlo Markov Chain sampling.
+Bayesian models are relatively abundant in early phase clinical trials where information is scarce and sensible inference is required practically from the moment the trial begins.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; implements:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the Contimual Reassessment Method (CMR) for toxicity-based dose-finding;&lt;/li&gt;
+&lt;li&gt;the time-to-event CRM for late-onset toxicity in dose-finding;&lt;/li&gt;
+&lt;li&gt;the EffTox for toxicity- and efficacy-based dose-finding;&lt;/li&gt;
+&lt;li&gt;Wason &amp;amp; Seaman&#39;s Augmented Binary method for fusing continuous and binary outcomes in phase II;&lt;/li&gt;
+&lt;li&gt;a hierarchical model of binary responses on related subgroups;&lt;/li&gt;
+&lt;li&gt;and more.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;trialr is available on CRAN and is listed on my GitHub page.
+There is a manuscript currently under peer-review (pre-print linked below) and it has been used to analyse outcomes in a forthcoming set of clinical trial results.&lt;/p&gt;
+&lt;p&gt;CRAN listing&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/web/packages/trialr/index.html&#34;&gt;https://cran.r-project.org/web/packages/trialr/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Source code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/brockk/trialr&#34;&gt;https://github.com/brockk/trialr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Documentation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://brockk.github.io/trialr/&#34;&gt;https://brockk.github.io/trialr/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

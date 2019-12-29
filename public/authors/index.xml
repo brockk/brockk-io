@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors | Kristian Brock</title>
+    <link>/authors/</link>
+      <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
+    <description>Authors</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>Authors</title>
+      <link>/authors/</link>
+    </image>
+    
+    <item>
+      <title></title>
+      <link>/authors/admin/</link>
+      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/admin/</guid>
+      <description>&lt;p&gt;I am a clinical trial statistician specialising in early phase trial methodology. 
+I have experience in cancer and non-cancer trials. I have authored several methodology papers. 
+I lead a MSc module on early phase trials and am currently supervising a PhD on trial methodology.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Christina Yap</title>
+      <link>/authors/christina-yap/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/christina-yap/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gary Middleton</title>
+      <link>/authors/gary-middleton/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/gary-middleton/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lucinda Billingham</title>
+      <link>/authors/lucinda-billingham/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/lucinda-billingham/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Adrian Mander</title>
+      <link>/authors/adrian-mander/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/adrian-mander/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Alun Bedding</title>
+      <link>/authors/alun-bedding/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/alun-bedding/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Andrew Grieve</title>
+      <link>/authors/andrew-grieve/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/andrew-grieve/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Christopher Weir</title>
+      <link>/authors/christopher-weir/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/christopher-weir/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Graham Wheeler</title>
+      <link>/authors/graham-wheeler/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/graham-wheeler/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Lang&#39;o Odondi</title>
+      <link>/authors/lango-odondi/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/lango-odondi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sharon Love</title>
+      <link>/authors/sharon-love/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/sharon-love/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Simon Bond</title>
+      <link>/authors/simon-bond/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/simon-bond/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Thomas Jaki</title>
+      <link>/authors/thomas-jaki/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/thomas-jaki/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Victoria Cornelius</title>
+      <link>/authors/victoria-cornelius/</link>
+      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/victoria-cornelius/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Andrea Hodgkinson</title>
+      <link>/authors/andrea-hodgkinson/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/andrea-hodgkinson/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Carmela De Santo</title>
+      <link>/authors/carmela-de-santo/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/carmela-de-santo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Charles Craddock</title>
+      <link>/authors/charles-craddock/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/charles-craddock/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Daniel Slade</title>
+      <link>/authors/daniel-slade/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/daniel-slade/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Francis Mussai</title>
+      <link>/authors/francis-mussai/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/francis-mussai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jamie Cavenagh</title>
+      <link>/authors/jamie-cavenagh/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/jamie-cavenagh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mike Dennis</title>
+      <link>/authors/mike-dennis/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/mike-dennis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Paul Ferguson</title>
+      <link>/authors/paul-ferguson/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/paul-ferguson/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rachel Wheat</title>
+      <link>/authors/rachel-wheat/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/rachel-wheat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ram Malladi</title>
+      <link>/authors/ram-malladi/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/ram-malladi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shamyla Siddique</title>
+      <link>/authors/shamyla-siddique/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/shamyla-siddique/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wendy Ingram</title>
+      <link>/authors/wendy-ingram/</link>
+      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>/authors/wendy-ingram/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mhairi Copland</title>
+      <link>/authors/mhairi-copland/</link>
+      <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>/authors/mhairi-copland/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mirjana Sirovica</title>
+      <link>/authors/mirjana-sirovica/</link>
+      <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>/authors/mirjana-sirovica/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
