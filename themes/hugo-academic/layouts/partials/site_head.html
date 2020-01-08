@@ -150,7 +150,9 @@
   {{ $featured_image := (.Resources.ByType "image").GetMatch "*featured*" }}
   {{ $og_image := "" }}
   {{ $twitter_card := "summary_large_image" }}
-  {{ if $featured_image }}
+  {{ if .Params.featured_image }}
+    {{ $og_image = .Params.featured_image }}
+  {{ else if $featured_image }}
     {{ $og_image = $featured_image.Permalink }}
   {{ else if .Params.header.image }}
     {{ $og_image = printf "img/%s" .Params.header.image | absURL }}
