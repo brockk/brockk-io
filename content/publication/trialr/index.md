@@ -35,3 +35,13 @@ url_slides: ""
 url_source: 'https://github.com/brockk/trialr-jss'
 url_video: 'https://www.youtube.com/watch?v=4SyxMMPYruI&t=56s'
 ---
+
+### About this publication
+I became aware of Stan whilst working on some Bayesian clinical trial designs.
+I recall using Monte Carlo integration to resolve six-dimensional integrals to estimate posterior means and thinking that there must be a better way.
+In fact, there were probably many better ways.
+However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
+This manuscript is my first sole-author attempt at research.
+It was particularly pleasing to implement James Wason and Shaun Seaman's augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables. 
+`trial` is on CRAN.
+

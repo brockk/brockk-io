@@ -27,7 +27,7 @@ tags:
 title: A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates
 url_code: ""
 url_dataset: ""
-url_pdf: https://link.springer.com/chapter/10.1007/978-3-030-30611-3_13
+url_pdf: "https://www.kristianbrock.com/publication/peps2-design/BrockP2TNE.pdf"
 url_poster: ""
 url_project: ""
 url_slides: ""
@@ -35,3 +35,10 @@ url_source: ""
 url_video: ""
 ---
 
+### About this publication
+Getting this paper published was a big deal for me because it was the first design idea I had had that was completely my own.
+Well, so I thought.
+An erudite peer-reviewer pointed out that the method (which I had named Bayesian Evaluation of Bivariate Outcomes and Predictive variables, or BEBOP) was actually a special case of a design by Thall, Nguyen & Estey.
+In response, I re-wrote the paper presenting the design as a novel refinement of their method suitable for phase II trials, called P2TNE for _Phase II Thall Nguyen & Estey_. 
+Anyway, after being rejected twice from big journals, it was a big relief to get the paper published in the BAYSM2018 conference proceedings.
+It was especially classy of Springer to give a complementary hard cover copy of the book to each contributing author. 

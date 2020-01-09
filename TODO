@@ -1,2 +1,0 @@
-Use {{ .Site.BaseURL }} in site_head.html
-Actually, looks liks {{ site.BaseURL }}

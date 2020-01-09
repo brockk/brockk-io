@@ -33,5 +33,6 @@ url_source: ""
 url_video: ""
 ---
 
+### About this publication
 This publication is important to me because Clarity was my first successful grant application.
 It is a simple trial with modest sample size but the results are absolutely amazing, with an iwCLL response rate of 89% and minimum disease negative status achieved in the peripheral blood of 53% of patients.

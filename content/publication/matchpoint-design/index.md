@@ -38,3 +38,10 @@ url_source: ""
 url_video: ""
 ---
 
+### About this publication
+This was my first first-author publication and a chapter in my PhD thesis.
+Working with EffTox was great, but challenging at times.
+The seamless phase I/II approach to dose-finding, where efficacy and toxicity outcomes guide dose selection, has never been more important in this era of targeted therapies in oncology.
+However, the EffTox design and the suite of phase I/II methods in general have been relatively underutilised.
+We hope this paper demonstrating our experiences with EffTox will inspire early phase trialists to look further than the 3+3.
+

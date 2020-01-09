@@ -20,7 +20,7 @@ interests:
 - Bayesian Statistics
 - R
 - Stan
-name: Dr Kristian Brock
+name: Kristian Brock
 organizations:
 - name: University of Birmingham
   url: ""

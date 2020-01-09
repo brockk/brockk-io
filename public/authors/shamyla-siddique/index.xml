@@ -17,7 +17,8 @@
       <link>https://www.kristianbrock.com/publication/viola-results/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/publication/viola-results/</guid>
-      <description>&lt;p&gt;This publication is important to me because Viola was the first dose-finding trial that I worked on.
+      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
+&lt;p&gt;This paper is important to me because Viola was the first dose-finding trial that I worked on.
 It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
 This was also one of my first published sets of trial results.&lt;/p&gt;
 </description>
@@ -28,7 +29,13 @@ This was also one of my first published sets of trial results.&lt;/p&gt;
       <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
       <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
-      <description></description>
+      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
+&lt;p&gt;This was my first first-author publication and a chapter in my PhD thesis.
+Working with EffTox was great, but challenging at times.
+The seamless phase I/II approach to dose-finding, where efficacy and toxicity outcomes guide dose selection, has never been more important in this era of targeted therapies in oncology.
+However, the EffTox design and the suite of phase I/II methods in general have been relatively underutilised.
+We hope this paper demonstrating our experiences with EffTox will inspire early phase trialists to look further than the 3+3.&lt;/p&gt;
+</description>
     </item>
     
   </channel>

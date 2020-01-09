@@ -44,6 +44,7 @@ url_source: ""
 url_video: ""
 ---
 
+### About this publication
 I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
 The topic of the day was the trials community's over-reliance on rule-based dose-finding methods like 3+3.
 This tutorial paper was produced by a group of attendees to promote model-based methods.

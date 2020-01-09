@@ -1,5 +1,4 @@
 ---
-featured_image: "https://www.kristianbrock.com/project/peps2/featured.jpg"
 date: "2019-12-27"
 external_link: ""
 image:

@@ -47,6 +47,7 @@ url_source: ""
 url_video: ""
 ---
 
-This publication is important to me because Viola was the first dose-finding trial that I worked on.
+### About this publication
+This paper is important to me because Viola was the first dose-finding trial that I worked on.
 It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
 This was also one of my first published sets of trial results.
