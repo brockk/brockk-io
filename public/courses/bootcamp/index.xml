@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>bootcamp | Kristian Brock</title>
-    <link>/courses/bootcamp/</link>
-      <atom:link href="/courses/bootcamp/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/courses/bootcamp/</link>
+      <atom:link href="https://www.kristianbrock.com/courses/bootcamp/index.xml" rel="self" type="application/rss+xml" />
     <description>bootcamp</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 28 Dec 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>bootcamp</title>
-      <link>/courses/bootcamp/</link>
+      <link>https://www.kristianbrock.com/courses/bootcamp/</link>
     </image>
     
   </channel>

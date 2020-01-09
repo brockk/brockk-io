@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projects | Kristian Brock</title>
-    <link>/project/</link>
-      <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/project/</link>
+      <atom:link href="https://www.kristianbrock.com/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Projects</title>
-      <link>/project/</link>
+      <link>https://www.kristianbrock.com/project/</link>
     </image>
     
     <item>
       <title>PePS2</title>
-      <link>/project/peps2/</link>
+      <link>https://www.kristianbrock.com/project/peps2/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/project/peps2/</guid>
+      <guid>https://www.kristianbrock.com/project/peps2/</guid>
       <description>&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 &lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 (PS2) non-small-cell lung cancer (NSCLC) patients.
 It is run by the &lt;a href=&#34;https://www.birmingham.ac.uk/research/activity/mds/trials/crctu/&#34;&gt;Cancer Research UK Clinical Trials Unit&lt;/a&gt;.&lt;/p&gt;
@@ -39,9 +39,9 @@ I worked up the design as part of my PhD, eventually published a design paper, a
     
     <item>
       <title>trialr</title>
-      <link>/project/trialr/</link>
+      <link>https://www.kristianbrock.com/project/trialr/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/project/trialr/</guid>
+      <guid>https://www.kristianbrock.com/project/trialr/</guid>
       <description>&lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; is an R package that implements Bayesian clinical trial design in &lt;a href=&#34;https://mc-stan.org/&#34;&gt;Stan&lt;/a&gt;, a modern enviroment for probabilistic programming that implements Hamiltonian Monte Carlo Markov Chain sampling.
 Bayesian models are relatively abundant in early phase clinical trials where information is scarce and sensible inference is required practically from the moment the trial begins.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; implements:&lt;/p&gt;

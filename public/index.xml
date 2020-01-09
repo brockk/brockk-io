@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kristian Brock</title>
-    <link>/</link>
-      <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/</link>
+      <atom:link href="https://www.kristianbrock.com/index.xml" rel="self" type="application/rss+xml" />
     <description>Kristian Brock</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Kristian Brock</title>
-      <link>/</link>
+      <link>https://www.kristianbrock.com/</link>
     </image>
     
     <item>
       <title>Example Talk</title>
-      <link>/talk/example/</link>
+      <link>https://www.kristianbrock.com/talk/example/</link>
       <pubDate>Sat, 01 Jun 2030 13:00:00 +0000</pubDate>
-      <guid>/talk/example/</guid>
+      <guid>https://www.kristianbrock.com/talk/example/</guid>
       <description>&lt;div class=&#34;alert alert-note&#34;&gt;
   &lt;div&gt;
     Click on the &lt;strong&gt;Slides&lt;/strong&gt; button above to view the built-in slides feature.
@@ -34,9 +34,9 @@
     
     <item>
       <title>First post</title>
-      <link>/post/first-post/first-post/</link>
+      <link>https://www.kristianbrock.com/post/first-post/first-post/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/post/first-post/first-post/</guid>
+      <guid>https://www.kristianbrock.com/post/first-post/first-post/</guid>
       <description>
 
 
@@ -47,9 +47,9 @@
     
     <item>
       <title>PePS2</title>
-      <link>/project/peps2/</link>
+      <link>https://www.kristianbrock.com/project/peps2/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/project/peps2/</guid>
+      <guid>https://www.kristianbrock.com/project/peps2/</guid>
       <description>&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 &lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 (PS2) non-small-cell lung cancer (NSCLC) patients.
 It is run by the &lt;a href=&#34;https://www.birmingham.ac.uk/research/activity/mds/trials/crctu/&#34;&gt;Cancer Research UK Clinical Trials Unit&lt;/a&gt;.&lt;/p&gt;
@@ -72,9 +72,9 @@ I worked up the design as part of my PhD, eventually published a design paper, a
     
     <item>
       <title>trialr</title>
-      <link>/project/trialr/</link>
+      <link>https://www.kristianbrock.com/project/trialr/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/project/trialr/</guid>
+      <guid>https://www.kristianbrock.com/project/trialr/</guid>
       <description>&lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; is an R package that implements Bayesian clinical trial design in &lt;a href=&#34;https://mc-stan.org/&#34;&gt;Stan&lt;/a&gt;, a modern enviroment for probabilistic programming that implements Hamiltonian Monte Carlo Markov Chain sampling.
 Bayesian models are relatively abundant in early phase clinical trials where information is scarce and sensible inference is required practically from the moment the trial begins.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; implements:&lt;/p&gt;
@@ -105,17 +105,17 @@ There is a manuscript currently under peer-review (pre-print linked below) and i
     
     <item>
       <title>A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates</title>
-      <link>/publication/peps2-design/</link>
+      <link>https://www.kristianbrock.com/publication/peps2-design/</link>
       <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/peps2-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/peps2-design/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ibrutinib Plus Venetoclax in Relapsed/Refractory Chronic Lymphocytic Leukemia - The CLARITY Study</title>
-      <link>/publication/clarity-results/</link>
+      <link>https://www.kristianbrock.com/publication/clarity-results/</link>
       <pubDate>Thu, 11 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/clarity-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/clarity-results/</guid>
       <description>&lt;p&gt;This publication is important to me because Clarity was my first successful grant application.
 It is a simple trial with modest sample size but the results are absolutely amazing, with an iwCLL response rate of 89% and minimum disease negative status achieved in the peripheral blood of 53% of patients.&lt;/p&gt;
 </description>
@@ -123,17 +123,17 @@ It is a simple trial with modest sample size but the results are absolutely amaz
     
     <item>
       <title>trialr - Bayesian Clinical Trial Designs in R and Stan</title>
-      <link>/publication/trialr/</link>
+      <link>https://www.kristianbrock.com/publication/trialr/</link>
       <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/trialr/</guid>
+      <guid>https://www.kristianbrock.com/publication/trialr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Slides</title>
-      <link>/slides/example/</link>
+      <link>https://www.kristianbrock.com/slides/example/</link>
       <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      <guid>/slides/example/</guid>
+      <guid>https://www.kristianbrock.com/slides/example/</guid>
       <description>&lt;h1 id=&#34;create-slides-in-markdown-with-academic&#34;&gt;Create slides in Markdown with Academic&lt;/h1&gt;
 &lt;p&gt;&lt;a href=&#34;https://sourcethemes.com/academic/&#34;&gt;Academic&lt;/a&gt; | &lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content/#create-slides&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
 &lt;hr&gt;
@@ -259,9 +259,9 @@ Three
     
     <item>
       <title>How to design a dose-finding study using the continual reassessment method</title>
-      <link>/publication/crm-tutorial/</link>
+      <link>https://www.kristianbrock.com/publication/crm-tutorial/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/crm-tutorial/</guid>
+      <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
 The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
 This tutorial paper was produced by a group of attendees to promote model-based methods.&lt;/p&gt;
@@ -270,9 +270,9 @@ This tutorial paper was produced by a group of attendees to promote model-based 
     
     <item>
       <title>Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</title>
-      <link>/publication/viola-results/</link>
+      <link>https://www.kristianbrock.com/publication/viola-results/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/viola-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/viola-results/</guid>
       <description>&lt;p&gt;This publication is important to me because Viola was the first dose-finding trial that I worked on.
 It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
 This was also one of my first published sets of trial results.&lt;/p&gt;
@@ -280,28 +280,10 @@ This was also one of my first published sets of trial results.&lt;/p&gt;
     </item>
     
     <item>
-      <title>Privacy Policy</title>
-      <link>/privacy/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/privacy/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Terms</title>
-      <link>/terms/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/terms/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
-      <link>/publication/matchpoint-design/</link>
+      <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
       <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/matchpoint-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
       <description></description>
     </item>
     

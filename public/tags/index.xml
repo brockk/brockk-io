@@ -2,61 +2,61 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags | Kristian Brock</title>
-    <link>/tags/</link>
-      <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/tags/</link>
+      <atom:link href="https://www.kristianbrock.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Tags</title>
-      <link>/tags/</link>
+      <link>https://www.kristianbrock.com/tags/</link>
     </image>
     
     <item>
       <title>Academic</title>
-      <link>/tags/academic/</link>
+      <link>https://www.kristianbrock.com/tags/academic/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/academic/</guid>
+      <guid>https://www.kristianbrock.com/tags/academic/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bayes</title>
-      <link>/tags/bayes/</link>
+      <link>https://www.kristianbrock.com/tags/bayes/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/bayes/</guid>
+      <guid>https://www.kristianbrock.com/tags/bayes/</guid>
       <description></description>
     </item>
     
     <item>
       <title>PhaseII</title>
-      <link>/tags/phaseii/</link>
+      <link>https://www.kristianbrock.com/tags/phaseii/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/phaseii/</guid>
+      <guid>https://www.kristianbrock.com/tags/phaseii/</guid>
       <description></description>
     </item>
     
     <item>
       <title>TrialResults</title>
-      <link>/tags/trialresults/</link>
+      <link>https://www.kristianbrock.com/tags/trialresults/</link>
       <pubDate>Thu, 11 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/trialresults/</guid>
+      <guid>https://www.kristianbrock.com/tags/trialresults/</guid>
       <description></description>
     </item>
     
     <item>
       <title>trialr</title>
-      <link>/tags/trialr/</link>
+      <link>https://www.kristianbrock.com/tags/trialr/</link>
       <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/trialr/</guid>
+      <guid>https://www.kristianbrock.com/tags/trialr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>DoseFinding</title>
-      <link>/tags/dosefinding/</link>
+      <link>https://www.kristianbrock.com/tags/dosefinding/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/dosefinding/</guid>
+      <guid>https://www.kristianbrock.com/tags/dosefinding/</guid>
       <description></description>
     </item>
     

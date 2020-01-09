@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Kristian Brock</title>
-    <link>/authors/admin/</link>
-      <atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/authors/admin/</link>
+      <atom:link href="https://www.kristianbrock.com/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     <description>Kristian Brock</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Kristian Brock</title>
-      <link>/authors/admin/</link>
+      <link>https://www.kristianbrock.com/authors/admin/</link>
     </image>
     
     <item>
       <title>First post</title>
-      <link>/post/first-post/first-post/</link>
+      <link>https://www.kristianbrock.com/post/first-post/first-post/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/post/first-post/first-post/</guid>
+      <guid>https://www.kristianbrock.com/post/first-post/first-post/</guid>
       <description>
 
 
@@ -27,17 +27,17 @@
     
     <item>
       <title>A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates</title>
-      <link>/publication/peps2-design/</link>
+      <link>https://www.kristianbrock.com/publication/peps2-design/</link>
       <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/peps2-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/peps2-design/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ibrutinib Plus Venetoclax in Relapsed/Refractory Chronic Lymphocytic Leukemia - The CLARITY Study</title>
-      <link>/publication/clarity-results/</link>
+      <link>https://www.kristianbrock.com/publication/clarity-results/</link>
       <pubDate>Thu, 11 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/clarity-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/clarity-results/</guid>
       <description>&lt;p&gt;This publication is important to me because Clarity was my first successful grant application.
 It is a simple trial with modest sample size but the results are absolutely amazing, with an iwCLL response rate of 89% and minimum disease negative status achieved in the peripheral blood of 53% of patients.&lt;/p&gt;
 </description>
@@ -45,17 +45,17 @@ It is a simple trial with modest sample size but the results are absolutely amaz
     
     <item>
       <title>trialr - Bayesian Clinical Trial Designs in R and Stan</title>
-      <link>/publication/trialr/</link>
+      <link>https://www.kristianbrock.com/publication/trialr/</link>
       <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/trialr/</guid>
+      <guid>https://www.kristianbrock.com/publication/trialr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>How to design a dose-finding study using the continual reassessment method</title>
-      <link>/publication/crm-tutorial/</link>
+      <link>https://www.kristianbrock.com/publication/crm-tutorial/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/crm-tutorial/</guid>
+      <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
 The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
 This tutorial paper was produced by a group of attendees to promote model-based methods.&lt;/p&gt;
@@ -64,9 +64,9 @@ This tutorial paper was produced by a group of attendees to promote model-based 
     
     <item>
       <title>Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</title>
-      <link>/publication/viola-results/</link>
+      <link>https://www.kristianbrock.com/publication/viola-results/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/viola-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/viola-results/</guid>
       <description>&lt;p&gt;This publication is important to me because Viola was the first dose-finding trial that I worked on.
 It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
 This was also one of my first published sets of trial results.&lt;/p&gt;
@@ -75,9 +75,9 @@ This was also one of my first published sets of trial results.&lt;/p&gt;
     
     <item>
       <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
-      <link>/publication/matchpoint-design/</link>
+      <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
       <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/matchpoint-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
       <description></description>
     </item>
     

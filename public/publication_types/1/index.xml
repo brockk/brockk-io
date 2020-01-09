@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>1 | Kristian Brock</title>
-    <link>/publication_types/1/</link>
-      <atom:link href="/publication_types/1/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/publication_types/1/</link>
+      <atom:link href="https://www.kristianbrock.com/publication_types/1/index.xml" rel="self" type="application/rss+xml" />
     <description>1</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 22 Nov 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>1</title>
-      <link>/publication_types/1/</link>
+      <link>https://www.kristianbrock.com/publication_types/1/</link>
     </image>
     
     <item>
       <title>A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates</title>
-      <link>/publication/peps2-design/</link>
+      <link>https://www.kristianbrock.com/publication/peps2-design/</link>
       <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/peps2-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/peps2-design/</guid>
       <description></description>
     </item>
     
