@@ -23,12 +23,11 @@ projects: []
 During 2019, I was working on simulations using CRM designs in several different trials.
 I found I would frequently get the designs mixed up:
 
-> "We are targeting 20% toxicity this trial, right? No, that was the other trial...we are targeting 33% here..."
+> "We are targeting 20% toxicity in this trial, right? No, that was the other trial...we are targeting 33% here..."
 
 Similarly, once or twice, I got to the stage where I wanted to run simulations only to discover we had not specified some important design aspect, like when the trial should stop.
 To bring all the pertinent information to the fore, I wrote a checklist.
 I would take the list and fill it out for each trial to ensure I had all the right information before I started simulating.
-In this post, I describe that checklist.
 
 Download the checklist as [PDF](/doc/CrmSimulationChecklist-1.0.pdf), [editable Word version](/doc/CrmSimulationChecklist-1.0.docx), or [completed example](/doc/CrmSimulationChecklist-Example-1.0.pdf).
 
@@ -38,7 +37,7 @@ Download the checklist as [PDF](/doc/CrmSimulationChecklist-1.0.pdf), [editable 
 ### 1. Doses under investigation?
 Put simply, which doses are you investigating?
 And how many are there?
-In this post, we will refer to the number of doses as $n$.
+Let's refer to the number of doses as $n$.
 For the plain vanilla CRM, the doses should be fully orderable, meaning it should be possible to unambiguously state that $a > b$ or $a < b$ for each pair of doses $a, b$.
 Incidentally, this is also true of the 3+3.
 It is easy to inadvertently violate the _total orderability_ rule when you have combinations (e.g. is 10mg A + 10mb B a greater or lesser dose than 5mg A + 20mg B?) or when you are varying doses and frequencies (e.g. is 20mg of A each day a greater or lesser dose than 100mg of A once per week?).
@@ -64,7 +63,7 @@ Having a dose or two to de-escalate to might be preferable in case your toxicity
 
 
 ### 5. Model type?
-There have been various suggestions for the dose-toxicity curve model.
+There have been various suggestions to model the dose-toxicity curve.
 Will you use the empiric approach, or a one parameter logisitic approach, etc?
 
 
@@ -77,9 +76,10 @@ I will let you research why.
 
 
 ### 7. How to select dose?
-Will you select the dose with estimate DLT probability closest to target?
-Or closest without exceeding?
+Will you select the dose with estimated DLT probability closest to the target?
+Or closest to target without exceeding the target?
 Will you permit skipping doses in escalation?
+How about de-escalation?
 
 
 ### 8. When to stop?
@@ -90,7 +90,6 @@ Do you want to evaluate a minimum number of patients at the candidate dose befor
 Also, check that these constraints do not contradict one another!
 
 
-
 ### 9. Length of DLT assessment window?
 How long is the DLT assessment window?
 
@@ -98,8 +97,8 @@ How long is the DLT assessment window?
 ## If using non-time-to-event method:
 
 ### 10. How to select cohort size?
-Commonly designs have used fixed cohort sizes of three.
-But perhaps you want to tolerate flexible cohort sizes of 2-5 patients, depending on the times at which they present.
+Commonly, designs have used fixed cohort sizes of three.
+But perhaps you want to use flexible cohort sizes of 2-5 patients, depending on the times at which the patients arrive?
 How will you simulate this?
 
 
@@ -107,7 +106,7 @@ How will you simulate this?
 
 ### 11. How to calculate weight of observation?
 Under the Time-to-Event CRM (TITE-CRM), censored observations of non-DLT are weighted somewhere between 0 and 1.
-Logically, the weight should be a non-increasing function of the length of follow-up.
+Logically, the weight should be a non-decreasing function of the length of follow-up.
 If DLT is experienced, the weight should be 1.
 Several weight functions have been proposed.
 A simple option is linear, i.e. 50% of the evaluation period without DLT is considered to be 0.5 non-DLT events.
@@ -126,14 +125,14 @@ If you have a rule for early stopping, you might want to consider a scenario whe
 
 ### 13. What is time between patient arrivals?
 When simulating using the TITE-CRM method, you will need to randomly sample patient arrival times. 
-For instance, for memoryless waiting times, the exponential distribution would do the job.
+For memoryless waiting times, the exponential distribution would do the job.
 
 
 ### 14. What is time between patient arrivals?
-Generally in simulation, you sample whether toxicity will happen in a patient given their assigned dose and the associated probability of DLT using a fraw from a Bernoulli random variable.
+Generally in simulation, you sample whether toxicity will happen in a patient given their assigned dose and the associated probability of DLT using a random draw from a Bernoulli distribution.
 Once you have established that toxicity occurs in a given patient, you will need to sample the time of the DLT. 
 How will you do that?
-You might assume for constant hazard, for example, and thus use an exponential distribution.
+You might assume a constant hazard, for example, and thus use an exponential distribution.
 Obviously, if a patient does not experience DLT then their DLT time is infinite.
 
 
@@ -142,7 +141,7 @@ Obviously, if a patient does not experience DLT then their DLT time is infinite.
 Having made all these choices (and it is exhausting to even think of all these things), you then have to find or write code to make it happen.
 You may find you do not have the time or programming skill to write exactly what you want and opt for an off-the-shelf solution.
 Each of [dfcrm](https://cran.r-project.org/package=dfcrm), [bcrm](https://cran.r-project.org/package=bcrm), and [crmPack](https://cran.r-project.org/package=crmPack) offer methods for simulating CRM trials, and my very own [trialr]({{< ref "/project/trialr/index.md" >}}) will have CRM simulation methods soon.
-Each differs in what they offer however (that feels like a blog post for another day).
+However, each differs in what they offer (that feels like a blog post for another day).
 You may discover that no off-the-shelf package does exactly what you want and find yourself tweaking your choices above in light of what is feasible.
 It is an iterative process.
 
