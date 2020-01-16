@@ -8,3 +8,7 @@ library(blogdown)
 blogdown::serve_site()
 blogdown::stop_server()
 blogdown::build_site(local = FALSE)
+
+# Posts
+blogdown::new_post(title = 'CRM Simulations Checklist', 
+                   tags = c('DoseFinding', 'CRM'))

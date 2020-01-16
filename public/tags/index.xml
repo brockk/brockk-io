@@ -5,12 +5,28 @@
     <link>https://www.kristianbrock.com/tags/</link>
       <atom:link href="https://www.kristianbrock.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Tags</title>
       <link>https://www.kristianbrock.com/tags/</link>
     </image>
+    
+    <item>
+      <title>CRM</title>
+      <link>https://www.kristianbrock.com/tags/crm/</link>
+      <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/tags/crm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DoseFinding</title>
+      <link>https://www.kristianbrock.com/tags/dosefinding/</link>
+      <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/tags/dosefinding/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Academic</title>
@@ -49,14 +65,6 @@
       <link>https://www.kristianbrock.com/tags/trialr/</link>
       <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/tags/trialr/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>DoseFinding</title>
-      <link>https://www.kristianbrock.com/tags/dosefinding/</link>
-      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/tags/dosefinding/</guid>
       <description></description>
     </item>
     

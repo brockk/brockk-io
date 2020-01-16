@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail...">
+  <meta name="description" content="During 2019 I was working on simulations using CRM designs in several different trials. I found I would frequently get the design aspects mixed up. &ldquo;Is the toxicity target 20% this trial? No, that was the other trial. It is 25% here.&rdquo; Once or twice, I got to the stage where I wanted to run simulations to discover we had not specified some forget To bring all the pertinent information to the fore, I wrote a checklist.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/publication/trialr/">
+  <link rel="alternate" hreflang="en-us" href="../../../post/crm-simulations-checklist/crm-simulations-checklist/">
 
   
 
@@ -45,7 +45,7 @@
   
   
   
-  <script src="/js/mathjax-config.js"></script>
+  <script src="../../../js/mathjax-config.js"></script>
   
 
   
@@ -195,7 +195,7 @@
   
   
   
-  <link rel="stylesheet" href="/css/academic.css">
+  <link rel="stylesheet" href="../../../css/academic.css">
 
   
 
@@ -207,34 +207,35 @@
 
   
 
-  <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/img/icon-32.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+  <link rel="manifest" href="../../../index.webmanifest">
+  <link rel="icon" type="image/png" href="../../../img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="../../../img/icon-192.png">
 
-  <link rel="canonical" href="https://www.kristianbrock.com/publication/trialr/">
+  <link rel="canonical" href="../../../post/crm-simulations-checklist/crm-simulations-checklist/">
 
   
   
   
   
     
+    
   
   
-  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:card" content="summary">
   
   <meta property="twitter:site" content="@CatchTwentyToo">
   <meta property="twitter:creator" content="@CatchTwentyToo">
   
   <meta property="og:site_name" content="Kristian Brock">
-  <meta property="og:url" content="https://www.kristianbrock.com/publication/trialr/">
-  <meta property="og:title" content="trialr - Bayesian Clinical Trial Designs in R and Stan | Kristian Brock">
-  <meta property="og:description" content="This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail..."><meta property="og:image" content="https://www.kristianbrock.com/publication/trialr/featured.jpg">
-  <meta property="twitter:image" content="https://www.kristianbrock.com/publication/trialr/featured.jpg"><meta property="og:locale" content="en-us">
+  <meta property="og:url" content="/post/crm-simulations-checklist/crm-simulations-checklist/">
+  <meta property="og:title" content="CRM Simulations Checklist | Kristian Brock">
+  <meta property="og:description" content="During 2019 I was working on simulations using CRM designs in several different trials. I found I would frequently get the design aspects mixed up. &ldquo;Is the toxicity target 20% this trial? No, that was the other trial. It is 25% here.&rdquo; Once or twice, I got to the stage where I wanted to run simulations to discover we had not specified some forget To bring all the pertinent information to the fore, I wrote a checklist."><meta property="og:image" content="/img/icon-192.png">
+  <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2019-06-29T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-01-15T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-01-09T21:02:00&#43;00:00">
+    <meta property="article:modified_time" content="2020-01-15T05:39:45&#43;00:00">
   
 
   
@@ -246,6 +247,8 @@
 
 
 
+
+  
 
 
 
@@ -255,19 +258,15 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://www.kristianbrock.com/publication/trialr/"
+    "@id": "/post/crm-simulations-checklist/crm-simulations-checklist/"
   },
-  "headline": "trialr - Bayesian Clinical Trial Designs in R and Stan",
+  "headline": "CRM Simulations Checklist",
   
-  "image": [
-    "https://www.kristianbrock.com/publication/trialr/featured.jpg"
-  ],
-  
-  "datePublished": "2019-06-29T00:00:00Z",
-  "dateModified": "2020-01-09T21:02:00Z",
+  "datePublished": "2020-01-15T00:00:00Z",
+  "dateModified": "2020-01-15T05:39:45Z",
   
   "author": {
     "@type": "Person",
@@ -279,10 +278,10 @@
     "name": "Kristian Brock",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.kristianbrock.com/img/icon-512.png"
+      "url": "/img/icon-512.png"
     }
   },
-  "description": "This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail..."
+  "description": "During 2019 I was working on simulations using CRM designs in several different trials. I found I would frequently get the design aspects mixed up. \u0026ldquo;Is the toxicity target 20% this trial? No, that was the other trial. It is 25% here.\u0026rdquo; Once or twice, I got to the stage where I wanted to run simulations to discover we had not specified some forget To bring all the pertinent information to the fore, I wrote a checklist."
 }
 </script>
 
@@ -300,7 +299,7 @@
 
 
 
-  <title>trialr - Bayesian Clinical Trial Designs in R and Stan | Kristian Brock</title>
+  <title>CRM Simulations Checklist | Kristian Brock</title>
 
 </head>
 
@@ -345,7 +344,7 @@
 
     
     <div class="d-none d-lg-inline-flex">
-      <a class="navbar-brand" href="/">Kristian Brock</a>
+      <a class="navbar-brand" href="../../../">Kristian Brock</a>
     </div>
     
 
@@ -358,7 +357,7 @@
 
     
     <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
-      <a class="navbar-brand" href="/">Kristian Brock</a>
+      <a class="navbar-brand" href="../../../">Kristian Brock</a>
     </div>
     
 
@@ -393,7 +392,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#about"><span>Home</span></a>
+          <a class="nav-link " href="../../../#about"><span>Home</span></a>
         </li>
 
         
@@ -422,7 +421,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+          <a class="nav-link " href="../../../#posts"><span>Posts</span></a>
         </li>
 
         
@@ -451,7 +450,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+          <a class="nav-link " href="../../../#projects"><span>Projects</span></a>
         </li>
 
         
@@ -480,7 +479,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          <a class="nav-link " href="../../../#featured"><span>Publications</span></a>
         </li>
 
         
@@ -502,7 +501,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/courses/"><span>Teaching</span></a>
+          <a class="nav-link " href="../../../courses/"><span>Teaching</span></a>
         </li>
 
         
@@ -531,7 +530,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link " href="/#contact"><span>Contact Me</span></a>
+          <a class="nav-link " href="../../../#contact"><span>Contact Me</span></a>
         </li>
 
         
@@ -564,7 +563,7 @@
 </nav>
 
 
-  <div class="pub">
+  <article class="article">
 
   
 
@@ -579,43 +578,22 @@
 
 
 
-
-
-
-
-
-
-
+  
 
   
+  
+  
+<div class="article-container pt-3">
+  <h1>CRM Simulations Checklist</h1>
+
+  
+
   
     
-  
-
-
-<div class="article-container pt-3">
-  <h1>trialr - Bayesian Clinical Trial Designs in R and Stan</h1>
-
-  
-
-  
 
 
 <div class="article-metadata">
 
-  
-  
-  
-  
-  <div>
-    
-
-
-
-  
-  <span><a href="/authors/admin/">Kristian Brock</a></span>
-
-  </div>
   
   
 
@@ -624,14 +602,21 @@
     
     
       
+          Last updated on
+      
     
-    June 2019
+    Jan 15, 2020
   </span>
   
 
   
 
   
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 min read
+  </span>
+  
 
   
   
@@ -642,60 +627,14 @@
 
 </div>
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="btn-links mb-3">
-  
-  
-
-
-
-
-
-
-
-
-  
     
-  
-
-
-
-<a class="btn btn-outline-primary my-1 mr-1" href="https://arxiv.org/abs/1907.00161" target="_blank" rel="noopener">
-  PDF
-</a>
 
 
 
 
-  
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/brockk/trialr" target="_blank" rel="noopener">
-  Code
-</a>
 
 
 
-
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="/project/trialr/">
-    Project
-  </a>
-  
 
 
 
@@ -704,113 +643,21 @@
 
 
   
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://www.youtube.com/watch?v=4SyxMMPYruI&amp;t=56s" target="_blank" rel="noopener">
-  Video
-</a>
-
-
-  
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/brockk/trialr-jss" target="_blank" rel="noopener">
-  Source Document
-</a>
-
-
-
-  
-  
-  
-    
-  
-  
-  
-  
-  
-    
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="https://cran.r-project.org/package=trialr" target="_blank" rel="noopener">
-    
-    CRAN package
-  </a>
-
-  
-  
-  
-    
-  
-  
-  
-  
-  
-    
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="https://arxiv.org/abs/1907.00161" target="_blank" rel="noopener">
-    
-    arXiv
-  </a>
-
-
-</div>
-
-
-</div>
-
-
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 516px;">
-  <div style="position: relative">
-    <img src="/publication/trialr/featured_hu48adcc0311006fbe882260d61c33c17d_247517_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
-    <span class="article-header-caption">Image credit: <a href="https://unsplash.com/photos/7Z03R1wOdmI">Carson Arias on Unsplash</a></span>
-  </div>
 </div>
 
 
 
   <div class="article-container">
 
-    
-    <h3>Abstract</h3>
-    <p class="pub-abstract">This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail. The first is the continual reassessment method for conducting phase I dose-finding trials that seek a maximum tolerable dose. The second is EffTox, a dose-finding design that scrutinises doses by joint efficacy and toxicity outcomes. The third is the augmented binary method for modelling the probability of treatment success in phase II oncology trials with reference to repeated measures of continuous tumour size and binary indicators of treatment failure. We emphasise in this article the benefits that stem from having access to posterior samples, including flexible inference and powerful visualisation. We hope that this package encourages the use of Bayesian methods in clinical trials.</p>
-    
+    <div class="article-style">
+      <p>During 2019 I was working on simulations using CRM designs in several different trials.
+I found I would frequently get the design aspects mixed up.
+&ldquo;Is the toxicity target 20% this trial? No, that was the other trial. It is 25% here.&rdquo;
+Once or twice, I got to the stage where I wanted to run simulations to discover we had not specified some forget
+To bring all the pertinent information to the fore, I wrote a checklist.
+I</p>
 
-    
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Type</div>
-          <div class="col-12 col-md-9">
-            
-            
-            <a href="/publication/#3">
-              Preprint
-            </a>
-            
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
     </div>
-    <div class="d-md-none space-below"></div>
-    
-
-    
-
-    <div class="space-below"></div>
-
-    <div class="article-style"><h3 id="about-this-publication">About this publication</h3>
-<p>I became aware of Stan whilst working on some Bayesian clinical trial designs.
-I recall using Monte Carlo integration to resolve six-dimensional integrals to estimate posterior means and thinking that there must be a better way.
-In fact, there were probably many better ways.
-However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
-This manuscript is my first sole-author attempt at research.
-It was particularly pleasing to implement James Wason and Shaun Seaman's augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
-<code>trial</code> is on CRAN.</p>
-</div>
 
     
 
@@ -820,9 +667,9 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tags/trialr/">trialr</a>
+  <a class="badge badge-light" href="../../../tags/dosefinding/">DoseFinding</a>
   
-  <a class="badge badge-light" href="/tags/bayes/">Bayes</a>
+  <a class="badge badge-light" href="../../../tags/crm/">CRM</a>
   
 </div>
 
@@ -839,7 +686,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/publication/trialr/&amp;text=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=/post/crm-simulations-checklist/crm-simulations-checklist/&amp;text=CRM%20Simulations%20Checklist" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -852,7 +699,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/publication/trialr/&amp;t=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=/post/crm-simulations-checklist/crm-simulations-checklist/&amp;t=CRM%20Simulations%20Checklist" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -865,7 +712,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="mailto:?subject=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan&amp;body=https://www.kristianbrock.com/publication/trialr/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=CRM%20Simulations%20Checklist&amp;body=/post/crm-simulations-checklist/crm-simulations-checklist/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -878,7 +725,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/publication/trialr/&amp;title=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=/post/crm-simulations-checklist/crm-simulations-checklist/&amp;title=CRM%20Simulations%20Checklist" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -891,7 +738,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan%20https://www.kristianbrock.com/publication/trialr/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=CRM%20Simulations%20Checklist%20/post/crm-simulations-checklist/crm-simulations-checklist/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -904,7 +751,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/publication/trialr/&amp;title=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=/post/crm-simulations-checklist/crm-simulations-checklist/&amp;title=CRM%20Simulations%20Checklist" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -924,10 +771,6 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
 
 
   
-  
-    
-  
-  
 
 
 
@@ -946,7 +789,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
     
 
     <div class="media-body">
-      <h5 class="card-title"><a href="https://www.kristianbrock.com/">Kristian Brock</a></h5>
+      <h5 class="card-title"><a href="../../../">Kristian Brock</a></h5>
       <h6 class="card-subtitle">Principal Biostatistician</h6>
       <p class="card-text">I am an academic early phase clincial trial statistician.</p>
       <ul class="network-icon" aria-hidden="true">
@@ -963,7 +806,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
     
     <li>
-      <a href="/#contact" >
+      <a href="../../../#contact" >
         <i class="fas fa-envelope"></i>
       </a>
     </li>
@@ -1036,11 +879,11 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
     <h3>Related</h3>
     <ul>
       
-      <li><a href="/publication/crm-tutorial/">How to design a dose-finding study using the continual reassessment method</a></li>
+      <li><a href="../../../publication/crm-tutorial/">How to design a dose-finding study using the continual reassessment method</a></li>
       
-      <li><a href="/publication/viola-results/">Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</a></li>
+      <li><a href="../../../publication/viola-results/">Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</a></li>
       
-      <li><a href="/publication/matchpoint-design/">Implementing the EffTox dose-finding design in the Matchpoint trial</a></li>
+      <li><a href="../../../publication/matchpoint-design/">Implementing the EffTox dose-finding design in the Matchpoint trial</a></li>
       
     </ul>
   </div>
@@ -1049,7 +892,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
 
 
   </div>
-</div>
+</article>
 
       
 
@@ -1147,7 +990,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
     
     
     
-    <script src="/js/academic.min.600a2e440c16093e23e26e90951c4d4b.js"></script>
+    <script src="../../../js/academic.min.600a2e440c16093e23e26e90951c4d4b.js"></script>
 
     
 
@@ -1160,6 +1003,16 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
   
   <div class="container">
     <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="../../../privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="../../../terms/">Terms</a>
+    
+  </p>
   
 
   <p class="powered-by">

@@ -28,10 +28,12 @@
   
     
   
-  <meta name="description" content="This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail...">
+  <meta name="description" content="During 2019, I was working on simulations using CRM designs in several different trials. I found I would frequently get the designs mixed up:
+ &ldquo;We are targeting 20% toxicity this trial, right? No, that was the other trial&hellip;we are targeting 33% here&hellip;&rdquo;
+ Similarly, once or twice, I got to the stage where I wanted to run simulations only to discover we had not specified some important design aspect, like when the trial should stop.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/publication/trialr/">
+  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/post/crm-simulations-checklist/">
 
   
 
@@ -211,7 +213,7 @@
   <link rel="icon" type="image/png" href="/img/icon-32.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://www.kristianbrock.com/publication/trialr/">
+  <link rel="canonical" href="https://www.kristianbrock.com/post/crm-simulations-checklist/">
 
   
   
@@ -226,15 +228,17 @@
   <meta property="twitter:creator" content="@CatchTwentyToo">
   
   <meta property="og:site_name" content="Kristian Brock">
-  <meta property="og:url" content="https://www.kristianbrock.com/publication/trialr/">
-  <meta property="og:title" content="trialr - Bayesian Clinical Trial Designs in R and Stan | Kristian Brock">
-  <meta property="og:description" content="This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail..."><meta property="og:image" content="https://www.kristianbrock.com/publication/trialr/featured.jpg">
-  <meta property="twitter:image" content="https://www.kristianbrock.com/publication/trialr/featured.jpg"><meta property="og:locale" content="en-us">
+  <meta property="og:url" content="https://www.kristianbrock.com/post/crm-simulations-checklist/">
+  <meta property="og:title" content="CRM Simulation Checklist | Kristian Brock">
+  <meta property="og:description" content="During 2019, I was working on simulations using CRM designs in several different trials. I found I would frequently get the designs mixed up:
+ &ldquo;We are targeting 20% toxicity this trial, right? No, that was the other trial&hellip;we are targeting 33% here&hellip;&rdquo;
+ Similarly, once or twice, I got to the stage where I wanted to run simulations only to discover we had not specified some important design aspect, like when the trial should stop."><meta property="og:image" content="https://www.kristianbrock.com/post/crm-simulations-checklist/featured.jpg">
+  <meta property="twitter:image" content="https://www.kristianbrock.com/post/crm-simulations-checklist/featured.jpg"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2019-06-29T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-01-15T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-01-09T21:02:00&#43;00:00">
+    <meta property="article:modified_time" content="2020-01-15T05:39:45&#43;00:00">
   
 
   
@@ -246,6 +250,8 @@
 
 
 
+
+  
 
 
 
@@ -255,19 +261,19 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://www.kristianbrock.com/publication/trialr/"
+    "@id": "https://www.kristianbrock.com/post/crm-simulations-checklist/"
   },
-  "headline": "trialr - Bayesian Clinical Trial Designs in R and Stan",
+  "headline": "CRM Simulation Checklist",
   
   "image": [
-    "https://www.kristianbrock.com/publication/trialr/featured.jpg"
+    "https://www.kristianbrock.com/post/crm-simulations-checklist/featured.jpg"
   ],
   
-  "datePublished": "2019-06-29T00:00:00Z",
-  "dateModified": "2020-01-09T21:02:00Z",
+  "datePublished": "2020-01-15T00:00:00Z",
+  "dateModified": "2020-01-15T05:39:45Z",
   
   "author": {
     "@type": "Person",
@@ -282,7 +288,7 @@
       "url": "https://www.kristianbrock.com/img/icon-512.png"
     }
   },
-  "description": "This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail..."
+  "description": "During 2019, I was working on simulations using CRM designs in several different trials. I found I would frequently get the designs mixed up:\n \u0026ldquo;We are targeting 20% toxicity this trial, right? No, that was the other trial\u0026hellip;we are targeting 33% here\u0026hellip;\u0026rdquo;\n Similarly, once or twice, I got to the stage where I wanted to run simulations only to discover we had not specified some important design aspect, like when the trial should stop."
 }
 </script>
 
@@ -300,7 +306,7 @@
 
 
 
-  <title>trialr - Bayesian Clinical Trial Designs in R and Stan | Kristian Brock</title>
+  <title>CRM Simulation Checklist | Kristian Brock</title>
 
 </head>
 
@@ -564,7 +570,7 @@
 </nav>
 
 
-  <div class="pub">
+  <article class="article">
 
   
 
@@ -594,7 +600,7 @@
 
 
 <div class="article-container pt-3">
-  <h1>trialr - Bayesian Clinical Trial Designs in R and Stan</h1>
+  <h1>CRM Simulation Checklist</h1>
 
   
 
@@ -605,33 +611,27 @@
 
   
   
-  
-  
-  <div>
-    
-
-
-
-  
-  <span><a href="/authors/admin/">Kristian Brock</a></span>
-
-  </div>
-  
-  
 
   
   <span class="article-date">
     
     
       
+          Last updated on
+      
     
-    June 2019
+    Jan 15, 2020
   </span>
   
 
   
 
   
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
 
   
   
@@ -656,115 +656,14 @@
 
 
 
-<div class="btn-links mb-3">
-  
-  
-
-
-
-
-
-
-
-
-  
-    
-  
-
-
-
-<a class="btn btn-outline-primary my-1 mr-1" href="https://arxiv.org/abs/1907.00161" target="_blank" rel="noopener">
-  PDF
-</a>
-
-
-
-
-  
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/brockk/trialr" target="_blank" rel="noopener">
-  Code
-</a>
-
-
-
-
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="/project/trialr/">
-    Project
-  </a>
-  
-
-
-
-
-
-
-
-  
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://www.youtube.com/watch?v=4SyxMMPYruI&amp;t=56s" target="_blank" rel="noopener">
-  Video
-</a>
-
-
-  
-  
-    
-  
-<a class="btn btn-outline-primary my-1 mr-1" href="https://github.com/brockk/trialr-jss" target="_blank" rel="noopener">
-  Source Document
-</a>
-
-
-
-  
-  
-  
-    
-  
-  
-  
-  
-  
-    
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="https://cran.r-project.org/package=trialr" target="_blank" rel="noopener">
-    
-    CRAN package
-  </a>
-
-  
-  
-  
-    
-  
-  
-  
-  
-  
-    
-  
-  <a class="btn btn-outline-primary my-1 mr-1" href="https://arxiv.org/abs/1907.00161" target="_blank" rel="noopener">
-    
-    arXiv
-  </a>
-
 
 </div>
 
 
-</div>
-
-
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 516px;">
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 479px;">
   <div style="position: relative">
-    <img src="/publication/trialr/featured_hu48adcc0311006fbe882260d61c33c17d_247517_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
-    <span class="article-header-caption">Image credit: <a href="https://unsplash.com/photos/7Z03R1wOdmI">Carson Arias on Unsplash</a></span>
+    <img src="/post/crm-simulations-checklist/featured_hu33d8f2710ea4928d295bd08cdc05f6eb_99443_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Photo by : <a href="https://unsplash.com/photos/RLw-UC03Gwc">Glenn Carstens-Peters on Unsplash</a></span>
   </div>
 </div>
 
@@ -772,45 +671,110 @@
 
   <div class="article-container">
 
-    
-    <h3>Abstract</h3>
-    <p class="pub-abstract">This manuscript introduces an R package called trialr that implements a collection of clinical trial methods in Stan and R. In this article, we explore three methods in detail. The first is the continual reassessment method for conducting phase I dose-finding trials that seek a maximum tolerable dose. The second is EffTox, a dose-finding design that scrutinises doses by joint efficacy and toxicity outcomes. The third is the augmented binary method for modelling the probability of treatment success in phase II oncology trials with reference to repeated measures of continuous tumour size and binary indicators of treatment failure. We emphasise in this article the benefits that stem from having access to posterior samples, including flexible inference and powerful visualisation. We hope that this package encourages the use of Bayesian methods in clinical trials.</p>
-    
+    <div class="article-style">
+      <p>During 2019, I was working on simulations using CRM designs in several different trials.
+I found I would frequently get the designs mixed up:</p>
+<blockquote>
+<p>&ldquo;We are targeting 20% toxicity this trial, right? No, that was the other trial&hellip;we are targeting 33% here&hellip;&rdquo;</p>
+</blockquote>
+<p>Similarly, once or twice, I got to the stage where I wanted to run simulations only to discover we had not specified some important design aspect, like when the trial should stop.
+To bring all the pertinent information to the fore, I wrote a checklist.
+I would take the list and fill it out for each trial to ensure I had all the right information before I started simulating.
+In this post, I describe that checklist.</p>
+<p>Download the checklist as <a href="/doc/CrmSimulationChecklist-1.0.pdf">PDF</a>, <a href="/doc/CrmSimulationChecklist-1.0.docx">editable Word version</a>, or <a href="/doc/CrmSimulationChecklist-Example-1.0.pdf">completed example</a>.</p>
+<h1 id="checklist">Checklist</h1>
+<h3 id="1-doses-under-investigation">1. Doses under investigation?</h3>
+<p>Put simply, which doses are you investigating?
+And how many are there?
+In this post, we will refer to the number of doses as $n$.
+For the plain vanilla CRM, the doses should be fully orderable, meaning it should be possible to unambiguously state that $a &gt; b$ or $a &lt; b$ for each pair of doses $a, b$.
+Incidentally, this is also true of the 3+3.
+It is easy to inadvertently violate the <em>total orderability</em> rule when you have combinations (e.g. is 10mg A + 10mb B a greater or lesser dose than 5mg A + 20mg B?) or when you are varying doses and frequencies (e.g. is 20mg of A each day a greater or lesser dose than 100mg of A once per week?).</p>
+<h3 id="2-target-toxicity-level">2. Target toxicity level?</h3>
+<p>What probability of dose-limiting toxicity are you targeting?
+CRM and 3+3 are toxicity-chasing designs - they will escalate dose until toxicity is seen.
+There must be a rationale for why escalation is anticipated to be beneficial to the patient.
+So what probability of toxicity are you targeting?
+If it is hard to specify an acceptable target, or the target is very low, that might be a sign that CRM and 3+3 are not suitable approaches.</p>
+<h3 id="3-skeleton">3. Skeleton?</h3>
+<p>What is your <em>a-priori</em> expectation of the rate of toxicity at each dose?
+This should be a monotonically-increasing vector of probabilities of length $n$.</p>
+<h3 id="4-starting-dose">4. Starting dose?</h3>
+<p>Which dose will you start at?
+Having a dose or two to de-escalate to might be preferable in case your toxicity expectations are wrong.</p>
+<h3 id="5-model-type">5. Model type?</h3>
+<p>There have been various suggestions for the dose-toxicity curve model.
+Will you use the empiric approach, or a one parameter logisitic approach, etc?</p>
+<h3 id="6-model-parameters">6. Model parameters?</h3>
+<p>Different model types require different parameters and hyperparameters.
+E.g. the empiric model shifts the skeleton up and down as DLT outcomes are evaluated in patients, using a single parameter, often called $\beta$.
+That parameter needs a prior distribution.
+The default prior on $\beta$ in <a href="https://cran.r-project.org/package=dfcrm">dfcrm</a> is $\beta \sim N(0, 1.34)$.
+I will let you research why.</p>
+<h3 id="7-how-to-select-dose">7. How to select dose?</h3>
+<p>Will you select the dose with estimate DLT probability closest to target?
+Or closest without exceeding?
+Will you permit skipping doses in escalation?</p>
+<h3 id="8-when-to-stop">8. When to stop?</h3>
+<p>Trials end<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> - when will your trial end?
+What is the maximum sample size?
+Do you have a stopping rule for excess toxicity?
+Do you want to evaluate a minimum number of patients at the candidate dose before you stop?
+Also, check that these constraints do not contradict one another!</p>
+<h3 id="9-length-of-dlt-assessment-window">9. Length of DLT assessment window?</h3>
+<p>How long is the DLT assessment window?</p>
+<h2 id="if-using-non-time-to-event-method">If using non-time-to-event method:</h2>
+<h3 id="10-how-to-select-cohort-size">10. How to select cohort size?</h3>
+<p>Commonly designs have used fixed cohort sizes of three.
+But perhaps you want to tolerate flexible cohort sizes of 2-5 patients, depending on the times at which they present.
+How will you simulate this?</p>
+<h2 id="if-using-time-to-event-method">If using time-to-event method:</h2>
+<h3 id="11-how-to-calculate-weight-of-observation">11. How to calculate weight of observation?</h3>
+<p>Under the Time-to-Event CRM (TITE-CRM), censored observations of non-DLT are weighted somewhere between 0 and 1.
+Logically, the weight should be a non-increasing function of the length of follow-up.
+If DLT is experienced, the weight should be 1.
+Several weight functions have been proposed.
+A simple option is linear, i.e. 50% of the evaluation period without DLT is considered to be 0.5 non-DLT events.</p>
+<h2 id="for-simulation">For simulation:</h2>
+<h3 id="12-what-is-assumed-true-probdlt">12. What is assumed true Prob(DLT)?</h3>
+<p>The key simulation parameter, what is the true probability of DLT at each dose?
+It will be tempting to choose a true dose-DLT curve that looks similar to your skeleton but do not stop there.
+Naturally, a thorough simulation study will look at many true dose-DLT curves, with the sought dose appearing at different positions.
+If you have a rule for early stopping, you might want to consider a scenario where the true DLT probabilities are all too high.</p>
+<h2 id="for-simulation-using-time-to-event-method">For simulation using time-to-event method:</h2>
+<h3 id="13-what-is-time-between-patient-arrivals">13. What is time between patient arrivals?</h3>
+<p>When simulating using the TITE-CRM method, you will need to randomly sample patient arrival times.
+For instance, for memoryless waiting times, the exponential distribution would do the job.</p>
+<h3 id="14-what-is-time-between-patient-arrivals">14. What is time between patient arrivals?</h3>
+<p>Generally in simulation, you sample whether toxicity will happen in a patient given their assigned dose and the associated probability of DLT using a fraw from a Bernoulli random variable.
+Once you have established that toxicity occurs in a given patient, you will need to sample the time of the DLT.
+How will you do that?
+You might assume for constant hazard, for example, and thus use an exponential distribution.
+Obviously, if a patient does not experience DLT then their DLT time is infinite.</p>
+<h1 id="availability-of-software">Availability of software</h1>
+<p>Having made all these choices (and it is exhausting to even think of all these things), you then have to find or write code to make it happen.
+You may find you do not have the time or programming skill to write exactly what you want and opt for an off-the-shelf solution.
+Each of <a href="https://cran.r-project.org/package=dfcrm">dfcrm</a>, <a href="https://cran.r-project.org/package=bcrm">bcrm</a>, and <a href="https://cran.r-project.org/package=crmPack">crmPack</a> offer methods for simulating CRM trials, and my very own <a href="https://www.kristianbrock.com/project/trialr/">trialr</a> will have CRM simulation methods soon.
+Each differs in what they offer however (that feels like a blog post for another day).
+You may discover that no off-the-shelf package does exactly what you want and find yourself tweaking your choices above in light of what is feasible.
+It is an iterative process.</p>
+<h3 id="read-more">Read more</h3>
+<p>Graham Wheeler and co-authors <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> wrote a tutorial for designing dose-finding trials using the CRM.
+You can read more about that article <a href="https://www.kristianbrock.com/publication/crm-tutorial/">here</a>.</p>
+<h3 id="footnotes">Footnotes</h3>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>even <a href="http://www.stampedetrial.org/">STAMPEDE</a>, one imagines. <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>Wheeler, G.M., Mander, A.P., Bedding, A., Brock, K., Cornelius, V., Grieve, A.P., Jaki, T., Love, S.B., Odondi, L., Weir, C.J., Yap, C., Bond, S.J., 2019. How to design a dose-finding study using the continual reassessment method. BMC Medical Research Methodology 19. <a href="https://doi.org/10.1186/s12874-018-0638-z">https://doi.org/10.1186/s12874-018-0638-z</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 
-    
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-10">
-        <div class="row">
-          <div class="col-12 col-md-3 pub-row-heading">Type</div>
-          <div class="col-12 col-md-9">
-            
-            
-            <a href="/publication/#3">
-              Preprint
-            </a>
-            
-          </div>
-        </div>
-      </div>
-      <div class="col-md-1"></div>
     </div>
-    <div class="d-md-none space-below"></div>
-    
-
-    
-
-    <div class="space-below"></div>
-
-    <div class="article-style"><h3 id="about-this-publication">About this publication</h3>
-<p>I became aware of Stan whilst working on some Bayesian clinical trial designs.
-I recall using Monte Carlo integration to resolve six-dimensional integrals to estimate posterior means and thinking that there must be a better way.
-In fact, there were probably many better ways.
-However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
-This manuscript is my first sole-author attempt at research.
-It was particularly pleasing to implement James Wason and Shaun Seaman's augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
-<code>trial</code> is on CRAN.</p>
-</div>
 
     
 
@@ -820,9 +784,9 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
 
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tags/trialr/">trialr</a>
+  <a class="badge badge-light" href="/tags/dosefinding/">DoseFinding</a>
   
-  <a class="badge badge-light" href="/tags/bayes/">Bayes</a>
+  <a class="badge badge-light" href="/tags/crm/">CRM</a>
   
 </div>
 
@@ -839,7 +803,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/publication/trialr/&amp;text=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/post/crm-simulations-checklist/&amp;text=CRM%20Simulation%20Checklist" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -852,7 +816,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/publication/trialr/&amp;t=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/post/crm-simulations-checklist/&amp;t=CRM%20Simulation%20Checklist" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -865,7 +829,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="mailto:?subject=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan&amp;body=https://www.kristianbrock.com/publication/trialr/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=CRM%20Simulation%20Checklist&amp;body=https://www.kristianbrock.com/post/crm-simulations-checklist/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -878,7 +842,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/publication/trialr/&amp;title=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/post/crm-simulations-checklist/&amp;title=CRM%20Simulation%20Checklist" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -891,7 +855,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan%20https://www.kristianbrock.com/publication/trialr/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=CRM%20Simulation%20Checklist%20https://www.kristianbrock.com/post/crm-simulations-checklist/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -904,7 +868,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/publication/trialr/&amp;title=trialr%20-%20Bayesian%20Clinical%20Trial%20Designs%20in%20R%20and%20Stan" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/post/crm-simulations-checklist/&amp;title=CRM%20Simulation%20Checklist" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -923,10 +887,6 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
 
 
 
-  
-  
-    
-  
   
 
 
@@ -1049,7 +1009,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman's augment
 
 
   </div>
-</div>
+</article>
 
       
 
