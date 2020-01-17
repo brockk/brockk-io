@@ -7,7 +7,7 @@ menu:
   example:
     name: Early Phase Trials
     weight: 1
-summary: TODO
+summary: A module of the MSc in Clinical Trials offered by the University of Birmingham, focussing on phase I and phase II clinical trials.
 title: Early Phase Clinical Trials
 toc: true
 type: docs

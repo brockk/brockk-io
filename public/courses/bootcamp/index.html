@@ -572,7 +572,13 @@
       <nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#running-bootcamp-tutorials">Running bootcamp tutorials</a></li>
+    <li><a href="#material">Material</a></li>
+    <li><a href="#running-bootcamp-tutorials">Running bootcamp tutorials</a>
+      <ul>
+        <li><a href="#locally">Locally</a></li>
+        <li><a href="#on-rstudio-cloud">On RStudio Cloud</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -589,30 +595,46 @@
 
           <div class="article-style">
             <h2 id="introduction">Introduction</h2>
-<p>I wrote the bootcamp programme to teach technical skills to new biostatisticians at the Cancer Research UK Clinical Trials Unit, University of Birmingham.
-Sessions are presented as <a href="https://rstudio.github.io/learnr/"><code>learnr</code></a> tutorials and packaged as an R-package called <code>bootcamp</code> <a href="https://github.com/brockk/bootcamp">hosted on GitHub</a>.</p>
+<p>I lead the bootcamp programme to teach technical skills to new biostatisticians at the Cancer Research UK Clinical Trials Unit, University of Birmingham.
+The programme was delivered for the first time during Sep-Dec 2019, consisting of 42 hours of tuition delivered over 21 sessions by 10 members of CRCTU's Biostatistics team.
+Sessions were taught in computer laboratories and material was example-based so attendees devoted a lot of time to implementing what they were learning.</p>
+<p>A cornerstone of the programme was to teach methods for repeatable research, like using statistical software to automatically create reports and source control software to manage mission-critical code.
+The course also covered modern statistical approaches to common yet sometimes thorny tasks like dose-finding, sub-group analyses, Bayesian analysis, and modelling of repeated measures.</p>
+<p>Bootcamp was primarily aimed at new recruits but statisticians with many years&rsquo; experience also attended to develop their technical skills.
+Sessions were presented by members of the team in their particular field of expertise, creating an environment where the team educated itself.
+In some sessions, even the professors of biostatistics featured amongst the attendees.</p>
+<p>The programme will be implemented again to train recruits in 2020, and expanded to cover further trials topics.</p>
+<h2 id="material">Material</h2>
+<p>Sessions are presented as <a href="https://rstudio.github.io/learnr/"><code>learnr</code></a> tutorials and packaged as an R-package called <code>bootcamp</code> <a href="https://github.com/brockk/bootcamp">hosted on GitHub</a>.</p>
 <p>To install the package on your computer, run</p>
 <p><code>devtools::install_github('brockk/bootcamp')</code></p>
 <p>in R.</p>
 <h2 id="running-bootcamp-tutorials">Running bootcamp tutorials</h2>
+<h3 id="locally">Locally</h3>
+<p>To run a tutorial locally, you use a command like:</p>
+<p><code>learnr::run_tutorial('intro', package = 'bootcamp')</code></p>
+<p>You can substitute <code>intro</code> above for:</p>
+<ul>
+<li><code>bootcamp</code></li>
+<li><code>intro</code></li>
+<li><code>folders</code></li>
+<li><code>git</code></li>
+<li><code>ggplot2</code></li>
+<li><code>markdown</code></li>
+<li><code>rmarkdown</code></li>
+<li><code>snapshots</code></li>
+<li><code>tidyverse</code></li>
+<li><code>models</code></li>
+<li><code>repeatedmeasures</code></li>
+<li><code>subgroups</code></li>
+<li><code>stan</code></li>
+</ul>
+<h3 id="on-rstudio-cloud">On RStudio Cloud</h3>
 <p>You do not have to install <code>bootcamp</code> to use it, however.
 The tutorials are installed on a public RStudio Cloud instance at:</p>
 <p><a href="https://rstudio.cloud/project/454702">https://rstudio.cloud/project/454702</a></p>
 <p>You are free to run them there.
 Look for the Run.R file.</p>
-<p>There are sessions on:</p>
-<ul>
-<li>using git</li>
-<li>dplyr</li>
-<li>ggplot2</li>
-<li>markdown</li>
-<li>rmarkdown</li>
-<li>subgroup analyses in clinical trials</li>
-<li>hierarchical models</li>
-<li>Continual Reassessment Method (CRM) for dose-finding</li>
-<li>Bayesian models in <a href="https://mc-stan.org/">Stan</a></li>
-<li>and more.</li>
-</ul>
 <p>Further details are available at <a href="https://github.com/brockk/bootcamp">https://github.com/brockk/bootcamp</a>.
 Please note, the <code>bootcamp</code> package is not on CRAN.</p>
 <p>Happy learning.
