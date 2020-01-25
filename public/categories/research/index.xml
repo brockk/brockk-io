@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kristian Brock</title>
-    <link>https://www.kristianbrock.com/authors/admin/</link>
-      <atom:link href="https://www.kristianbrock.com/authors/admin/index.xml" rel="self" type="application/rss+xml" />
-    <description>Kristian Brock</description>
+    <title>Research | Kristian Brock</title>
+    <link>https://www.kristianbrock.com/categories/research/</link>
+      <atom:link href="https://www.kristianbrock.com/categories/research/index.xml" rel="self" type="application/rss+xml" />
+    <description>Research</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
-      <title>Kristian Brock</title>
-      <link>https://www.kristianbrock.com/authors/admin/</link>
+      <title>Research</title>
+      <link>https://www.kristianbrock.com/categories/research/</link>
     </image>
     
     <item>
@@ -118,99 +118,6 @@ You can read more about that article &lt;a href=&#34;https://www.kristianbrock.c
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/section&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>First post</title>
-      <link>https://www.kristianbrock.com/post/first-post/first-post/</link>
-      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/post/first-post/first-post/</guid>
-      <description>
-
-
-&lt;p&gt;I have started this site to record things I am working on in R during my duties as an academic clinical trial statistician.&lt;/p&gt;
-&lt;p&gt;Fingers crossed.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates</title>
-      <link>https://www.kristianbrock.com/publication/peps2-design/</link>
-      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/peps2-design/</guid>
-      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
-&lt;p&gt;Getting this paper published was a big deal for me because it was the first design idea I had had that was completely my own.
-Well, so I thought.
-An erudite peer-reviewer pointed out that the method (which I had named Bayesian Evaluation of Bivariate Outcomes and Predictive variables, or BEBOP) was actually a special case of a design by Thall, Nguyen &amp;amp; Estey.
-In response, I re-wrote the paper presenting the design as a novel refinement of their method suitable for phase II trials, called P2TNE for &lt;em&gt;Phase II Thall Nguyen &amp;amp; Estey&lt;/em&gt;.
-Anyway, after being rejected twice from big journals, it was a big relief to get the paper published in the BAYSM2018 conference proceedings.
-It was especially classy of Springer to give a complementary hard cover copy of the book to each contributing author.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Ibrutinib Plus Venetoclax in Relapsed/Refractory Chronic Lymphocytic Leukemia - The CLARITY Study</title>
-      <link>https://www.kristianbrock.com/publication/clarity-results/</link>
-      <pubDate>Thu, 11 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/clarity-results/</guid>
-      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
-&lt;p&gt;This publication is important to me because Clarity was my first successful grant application.
-It is a simple trial with modest sample size but the results are absolutely amazing, with an iwCLL response rate of 89% and minimum disease negative status achieved in the peripheral blood of 53% of patients.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>trialr - Bayesian Clinical Trial Designs in R and Stan</title>
-      <link>https://www.kristianbrock.com/publication/trialr/</link>
-      <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/trialr/</guid>
-      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
-&lt;p&gt;I became aware of Stan whilst working on some Bayesian clinical trial designs.
-I recall using Monte Carlo integration to resolve six-dimensional integrals to estimate posterior means and thinking that there must be a better way.
-In fact, there were probably many better ways.
-However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
-This manuscript is my first sole-author attempt at research.
-It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
-&lt;code&gt;trial&lt;/code&gt; is on CRAN.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>How to design a dose-finding study using the continual reassessment method</title>
-      <link>https://www.kristianbrock.com/publication/crm-tutorial/</link>
-      <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
-      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
-&lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
-The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
-This tutorial paper was produced by a group of attendees to promote model-based methods.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</title>
-      <link>https://www.kristianbrock.com/publication/viola-results/</link>
-      <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/viola-results/</guid>
-      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
-&lt;p&gt;This paper is important to me because Viola was the first dose-finding trial that I worked on.
-It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
-This was also one of my first published sets of trial results.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
-      <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
-      <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
-      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
-&lt;p&gt;This was my first first-author publication and a chapter in my PhD thesis.
-Working with EffTox was great, but challenging at times.
-The seamless phase I/II approach to dose-finding, where efficacy and toxicity outcomes guide dose selection, has never been more important in this era of targeted therapies in oncology.
-However, the EffTox design and the suite of phase I/II methods in general have been relatively underutilised.
-We hope this paper demonstrating our experiences with EffTox will inspire early phase trialists to look further than the 3+3.&lt;/p&gt;
 </description>
     </item>
     

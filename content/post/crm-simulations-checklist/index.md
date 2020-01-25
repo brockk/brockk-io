@@ -1,23 +1,23 @@
 ---
 title: CRM Simulation Checklist
-author: 
-  - admin
-date: '2020-01-15'
-slug: crm-simulations-checklist
-categories: []
+subtitle: ''
+summary: ''
+authors:
+- admin
+categories:
+- Research
 tags:
   - DoseFinding
   - CRM
-subtitle: ''
-summary: ''
-authors: []
+projects: []
+date: '2020-01-15'
 lastmod: '2020-01-15T05:39:45Z'
+draft: false
 featured: no
 image:
   caption: 'Photo by : [Glenn Carstens-Peters on Unsplash](https://unsplash.com/photos/RLw-UC03Gwc)'
   focal_point: ''
   preview_only: no
-projects: []
 ---
 
 During 2019, I was working on simulations using CRM designs in several different trials.

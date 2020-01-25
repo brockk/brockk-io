@@ -1,9 +1,14 @@
 ---
+title: 'First post'
+subtitle: ''
+summary: I have a new website and blog. I hope to share stuff I am working on.
 authors:
 - admin
 categories:
 - 
+projects: []
 date: "2019-12-27"
+lastmod: "2019-12-27"
 draft: false
 featured: false
 image:
@@ -11,13 +16,6 @@ image:
   focal_point: ""
   placement: 2
   preview_only: false
-lastmod: "2019-12-27"
-projects: []
-subtitle: ''
-summary: I have a new website and blog. I hope to share stuff I am working on.
-tags:
-- Academic
-title: 'First post'
 ---
 
 ```{r setup, include=FALSE}

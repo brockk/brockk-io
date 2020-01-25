@@ -1,0 +1,56 @@
+---
+title: R Markdown is a miracle for scientific communication and repeatable research
+subtitle: All clinical trials researchers should know about it!
+summary: 'RMarkdown is a key tool for communicating research. We teach it to new starters at CRCTU.'
+authors: 
+  - admin
+categories:
+- Teaching
+tags:
+  - bootcamp
+  - training
+projects: []
+date: '2020-01-19'
+lastmod: '2020-01-19T20:02:56Z'
+draft: true
+featured: no
+image:
+  caption: 'Photo by [Patrick Tomasso on Unsplash](https://unsplash.com/photos/QMDap1TAu0g)'
+  focal_point: ''
+  preview_only: no
+---
+
+At CRCTU, we recently ran our [bootcamp course](/courses/bootcamp/) for the first time, a programme of core technical training for newly recruited biostatisticians.
+
+Clinical trials units are busy centres of research where collaboration is the default.
+Being able to visualise data and communicate technical details to others quickly and effectively is important.
+Being able to reproduce something you calculated last month is necessary.
+R Markdown addresses both of these problems by interweaving prose and code to produce rich, interactive documents in ... whatever format you need.
+
+Here is RStudio explaining better than I could:
+
+{{% vimeo 178485416 %}}
+
+R Markdown is super flexible. Some things I have created in it are:
+
+* A complete [journal article](https://arxiv.org/pdf/1907.00161.pdf), including abstract, authors and affiliations, keywords, figures and tables with captions, cross-referencing, bibliography [(link to source)](https://raw.githubusercontent.com/brockk/trialr-jss/master/trialr.Rmd)
+* Literally *this exact webpage* you are reading right now [(link to source)](https://raw.githubusercontent.com/brockk/brockk-io/master/content/post/rmarkdown-in-trials/index.Rmd)
+* Interactive tutorials at https://rstudio.cloud/project/454702. Look for the Run.R file to launch a tutorial. [(link to source)](https://raw.githubusercontent.com/brockk/bootcamp/master/inst/tutorials/intro/intro.Rmd)
+
+In each example, the source code is written 100% in R Markdown and then compiled to create the article PDF or the web page or the Word doc or whatever.
+To emphasise that point, I have provided a link to the source Rmd file in each instance.
+
+The R users at CRCTU use R Markdown files to conduct trial analyses and produce DMC reports.
+We trained new statisticians in this area because we knew that it is not the kind of thing universities would teach in their MSc programmes.
+However, reproducible research is one of the core pillars of our *bootcamp* programme and we see R Markdown as the key technology in this area.
+
+Do you train statisticians in this area at your institution?
+Do you want to?
+Are you a statistician that wishes they had access to this type of training?
+If so, feel free to get in contact and we could bring it to your CTU.
+
+Also, please fill in our brief questionnaire on how CTUs train statisticians!
+
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLScjzv7bka0qonsyvYpZ-__OiOXThaVfc99JAF5f3JruTEZbYg/viewform?embedded=true" width="640" height="1976" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+Thanks!
