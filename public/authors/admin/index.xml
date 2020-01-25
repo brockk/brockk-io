@@ -5,12 +5,54 @@
     <link>https://www.kristianbrock.com/authors/admin/</link>
       <atom:link href="https://www.kristianbrock.com/authors/admin/index.xml" rel="self" type="application/rss+xml" />
     <description>Kristian Brock</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 19 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Kristian Brock</title>
       <link>https://www.kristianbrock.com/authors/admin/</link>
     </image>
+    
+    <item>
+      <title>R Markdown is a miracle for scientific communication and repeatable research</title>
+      <link>https://www.kristianbrock.com/post/rmarkdown-in-trials/</link>
+      <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/rmarkdown-in-trials/</guid>
+      <description>
+
+
+&lt;p&gt;At CRCTU, we recently ran our &lt;a href=&#34;https://www.kristianbrock.com/courses/bootcamp/&#34;&gt;bootcamp course&lt;/a&gt; for the first time, a programme of core technical training for newly recruited biostatisticians.&lt;/p&gt;
+&lt;p&gt;Clinical trials units are busy centres of research where collaboration is the default.
+Being able to visualise data and communicate technical details to others quickly and effectively is important.
+Being able to reproduce something you calculated last month is necessary.
+R Markdown addresses both of these problems by interweaving prose and code to produce rich, interactive documents in … whatever format you need.&lt;/p&gt;
+&lt;p&gt;Here is RStudio explaining better than I could:&lt;/p&gt;
+&lt;p&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://player.vimeo.com/video/178485416&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;vimeo video&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;R Markdown is super flexible. Some things I have created in it are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A complete &lt;a href=&#34;https://arxiv.org/pdf/1907.00161.pdf&#34;&gt;journal article&lt;/a&gt;, including abstract, authors and affiliations, keywords, figures and tables with captions, cross-referencing, bibliography &lt;a href=&#34;https://raw.githubusercontent.com/brockk/trialr-jss/master/trialr.Rmd&#34;&gt;(link to source)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Literally &lt;em&gt;this exact webpage&lt;/em&gt; you are reading right now &lt;a href=&#34;https://raw.githubusercontent.com/brockk/brockk-io/master/content/post/rmarkdown-in-trials/index.Rmd&#34;&gt;(link to source)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Interactive tutorials at &lt;a href=&#34;https://rstudio.cloud/project/454702&#34; class=&#34;uri&#34;&gt;https://rstudio.cloud/project/454702&lt;/a&gt;. Look for the Run.R file to launch a tutorial. &lt;a href=&#34;https://raw.githubusercontent.com/brockk/bootcamp/master/inst/tutorials/intro/intro.Rmd&#34;&gt;(link to source)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In each example, the source code is written 100% in R Markdown and then compiled to create the article PDF or the web page or the Word doc or whatever.
+To emphasise that point, I have provided a link to the source Rmd file in each instance.&lt;/p&gt;
+&lt;p&gt;The R users at CRCTU use R Markdown files to conduct trial analyses and produce DMC reports.
+We trained new statisticians in this area because we knew that it is not the kind of thing universities would teach in their MSc programmes.
+However, reproducible research is one of the core pillars of our &lt;em&gt;bootcamp&lt;/em&gt; programme and we see R Markdown as the key technology in this area.&lt;/p&gt;
+&lt;p&gt;Do you train statisticians in this area at your institution?
+Do you want to?
+Are you a statistician that wishes they had access to this type of training?
+If so, feel free to get in contact and we could bring it to your CTU.&lt;/p&gt;
+&lt;p&gt;Also, please fill in our brief questionnaire on how CTUs train statisticians!&lt;/p&gt;
+&lt;iframe src=&#34;https://docs.google.com/forms/d/e/1FAIpQLScjzv7bka0qonsyvYpZ-__OiOXThaVfc99JAF5f3JruTEZbYg/viewform?embedded=true&#34; width=&#34;640&#34; height=&#34;1976&#34; frameborder=&#34;0&#34; marginheight=&#34;0&#34; marginwidth=&#34;0&#34;&gt;
+Loading…
+&lt;/iframe&gt;
+&lt;p&gt;Thanks!&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>CRM Simulation Checklist</title>
