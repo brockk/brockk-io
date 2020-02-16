@@ -1,0 +1,277 @@
+---
+title: "Introducing `escalation`"
+subtitle: "An R package to unify the interface of dose-escalation models in R."
+summary: "An R package to unify the interface of dose-escalation models in R. A modular approach that is scalable and extensible."
+authors: 
+  - admin
+categories:
+- Code
+tags:
+  - escalation
+  - rcode
+projects: []
+date: '2020-02-13'
+lastmod: '2020-02-13T20:02:56Z'
+draft: false
+featured: yes
+image:
+  caption: 'Photo by [Martin Adams on Unsplash](https://unsplash.com/photos/sson9rOoy5Y)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+
+
+<div id="escalation" class="section level1">
+<h1>escalation <img src="https://github.com/brockk/escalation/raw/master/man/figures/logo.png" align="right" height=140/></h1>
+<p><a href="https://github.com/brockk/escalation"><strong>escalation</strong></a> is a new R package that takes existing dose-finding models and gives them a common interface.
+To use the language of <a href="https://www.tidyverse.org/">tidyverse</a> R, <strong>escalation</strong> provides a grammar for dose-finding by breaking the dose-finding process into chunks.
+What model should I use?
+How should I select dose during the trial?
+How will I know when to stop?
+Which restrictions should I place on escalation and de-escalation?
+You can create the dose-finding design you want in <strong>escalation</strong> by combining elements that perform all of these tasks.
+This might all sound a little obtuse.
+Some examples will make it clear.</p>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<div id="crm" class="section level4">
+<h4>CRM</h4>
+<p><span class="citation">O’Quigley, Pepe, and Fisher (1990)</span> introduced the classic continual reassessment method (CRM) and it has been implemented in many software packages since.
+One of the most popular R implementations is the <a href="https://CRAN.R-project.org/package=dfcrm">dfcrm</a> package by <span class="citation">Cheung (2013)</span>.
+Let’s fit a model using dfcrm.</p>
+<p>The very least information we need to provide is a dose-toxicity skeleton, and our target toxicity level:</p>
+<pre class="r"><code>skeleton &lt;- c(0.05, 0.1, 0.25, 0.4, 0.6)
+target &lt;- 0.25</code></pre>
+<p>We use these to create a model-fitting object:</p>
+<pre class="r"><code>library(escalation)
+model &lt;- get_dfcrm(skeleton = skeleton, target = target)</code></pre>
+<p>The model can then be fit to outcomes.
+The escalation package uses the outcome syntax introduced for phase I trials in <span class="citation">Brock (2019)</span> and for seamless phase I/II trials in <span class="citation">Brock et al. (2017)</span>.
+Let’s assume we have treated 3 patients at dose-level 2 and none of them experienced toxicity.
+We represent this using the outcome string <code>2NNN</code>.
+Fitting the model to the set of outcomes invokes the dose-selection algorithm:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN&#39;)</code></pre>
+<p>and the fit object will tell you the dose recommended by the CRM model to be administered next:</p>
+<pre class="r"><code>fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>The model advocates skipping straight from dose 2 to dose 4.
+Clinicians are unlikely to feel comfortable with this.
+We can respecify the model to expressly not skip doses in escalation:</p>
+<pre class="r"><code>model &lt;- get_dfcrm(skeleton = skeleton, target = target) %&gt;% 
+  dont_skip_doses(when_escalating = TRUE)</code></pre>
+<p>We have taken the original dfcrm model and added an extra module to prevent skipping doses in escalation.
+Refitting the new model to the same outcomes gives:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>We see that the ensemble now decides to select dose 3.
+We can ask the trial design whether it wants to keep recruting patients:</p>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Naturally it wants to continue because <code>dfcrm</code> does not implement any stopping rules.
+However, we can easily add some.
+Let us say that we want to stop once the model has evaluated 18 patients, or at least 9 at the dose being recommended, whichever occurs first.
+We specify this model by adding more behaviours:</p>
+<pre class="r"><code>model &lt;- get_dfcrm(skeleton = skeleton, target = target) %&gt;% 
+  dont_skip_doses(when_escalating = TRUE) %&gt;% 
+  stop_at_n(n = 18) %&gt;% 
+  stop_when_n_at_dose(dose = &#39;recommended&#39;, n = 9)</code></pre>
+<p>Let’s fit this model to some more patients to see how this trial plays out:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>After seeing two-in-three patients in the second cohort experience toxicity at dose 3, the design understandably wants to de-escalate.
+Let’s do that:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN 2TNN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>The third cohort yielded one-in-three tox at dose 2.
+The design wants to continue at dose 2 so let’s do that:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN 2TNN 2NNT&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Notice that the call to continue() now returns FALSE.
+The design wants to stop now and recommend dose 2.
+It does this because it has seen 9 patients at the recommended dose.
+We can see the number of patients treated at each of the five doses under investigation:</p>
+<pre class="r"><code>fit %&gt;% n_at_dose()</code></pre>
+<pre><code>## [1] 0 9 3 0 0</code></pre>
+<p>Our stopping criteria have been met.
+We can verify that dose 2 is indeed the dose with posterior expected toxicity rate closest to our target of 25%:</p>
+<pre class="r"><code>fit %&gt;% mean_prob_tox()</code></pre>
+<pre><code>## [1] 0.1845713 0.2728713 0.4575229 0.5964102 0.7496662</code></pre>
+</div>
+<div id="boin" class="section level4">
+<h4>BOIN</h4>
+<p><code>escalate</code> also implements the BOIN dose-finding design by <span class="citation">Liu and Yuan (2015)</span> via the <a href="https://CRAN.R-project.org/package=BOIN"><code>BOIN</code></a> R-package <span class="citation">(Yuan and Liu 2018)</span>.</p>
+<p>In contrast to CRM, BOIN does not require a dose-toxicity skeleton.
+In its simplest case, it requires merely the number of doses under investigation and our target toxicity level:</p>
+<pre class="r"><code>target &lt;- 0.25
+model &lt;- get_boin(num_doses = 5, target = target)</code></pre>
+<p>As before, we can fit the model to some observed outcomes:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>The BOIN dose selector natively implements stopping rules, as described by Liu &amp; Yuan.
+For instance, if the bottom dose is too toxic, the design will advise the trial halts:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NTN 1TTT&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Nevertheless, as with the CRM examples above, our BOIN selector can be adorned with various behaviours to tailor stopping and skipping.
+In fact, we can add the exact same behaviours as before because all <code>escalation</code> objects support exactly the same interface.
+This makes the package completely modular.
+We are building the design we want from pieces of Lego:</p>
+<pre class="r"><code>model &lt;- get_boin(num_doses = 5, target = target) %&gt;% 
+  dont_skip_doses(when_escalating = TRUE) %&gt;% 
+  stop_at_n(n = 18) %&gt;% 
+  stop_when_n_at_dose(dose = &#39;recommended&#39;, n = 9)
+
+fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN 2TNN 2NNT&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>fit %&gt;% mean_prob_tox()</code></pre>
+<pre><code>## [1]   NA 0.23 0.66   NA   NA</code></pre>
+<p>Notice that the posterior toxicity estimate is similar to the CRM model at dose 2, but ultimately different because the two approaches use different model forms.
+BOIN does not estimate the tox rate at doses that have not been administered.</p>
+</div>
+<div id="initial-escalation-plans" class="section level4">
+<h4>Initial escalation plans</h4>
+<p>Another dose-selection mechanism supported by escalation is the concept of an <em>initial escalation plan</em>.
+These can be used at the start of a trial to show how escalation should proceed initially.
+As soon as the realised outcomes diverge from the prespecified path, or the path reaches the end, a secondary model takes over.</p>
+<p>For instance, let us assume we would like to treat one patient per dose so long as no toxicity is seen, in order to facilitate fast escalation.
+When toxicity is seen, or dose five is reached, we would like to hand control to a CRM model.
+We can write:</p>
+<pre class="r"><code>model &lt;- follow_path(&#39;1N 2N 3N 4N 5N&#39;) %&gt;% 
+  get_dfcrm(skeleton = skeleton, target = target)</code></pre>
+<p>So long as the idealised path is realised, it continues:</p>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N 2N&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>But if the path is deviated from, the secondary model takes over:</p>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N 2N 3T&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<p>Also, when the initial path is completed, the secondary model continues:</p>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N 2N 3N 4N 5N&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 5</code></pre>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>The <strong>escalation</strong> package takes dose-finding methods that other authors have provided and gives them a consistent interface.
+This makes it simple to add any behaviour to any method, creating a modular Lego-like approach to creating dose-finding designs.
+For instance, we can take any dose-selection model and tweak the way it selects the next dose, the way it escalates, de-escalates and stops.
+I hope eventually that <strong>escalation</strong> makes it easy to specify, assess and compare all dose-escalation designs.</p>
+</div>
+<div id="roadmap" class="section level2">
+<h2>Roadmap</h2>
+<p>Version 0.0.1 has been submitted to CRAN (but as of 2020-02-17, not yet accepted) with the following base dose-finding approaches:</p>
+<ul>
+<li>the CRM model from the <a href="https://CRAN.R-project.org/package=dfcrm"><code>dfcrm</code></a> package</li>
+<li>the BOIN model from the <a href="https://CRAN.R-project.org/package=BOIN"><code>BOIN</code></a> package</li>
+<li>the perennial 3+3 model without dose de-escalation</li>
+</ul>
+<p>and the following optional embellishments:</p>
+<ul>
+<li>don’t skip doses in escalation and/or de-escalation</li>
+<li>stop when dose(s) are too toxic</li>
+<li>stop when <span class="math inline">\(n\)</span> patients have been treated in total</li>
+<li>stop when <span class="math inline">\(n\)</span> patients have been treated at a particular dose</li>
+<li>use an initial fixed dose-escalation plan</li>
+<li>demand at least <span class="math inline">\(n\)</span> patients have been treated at a particular dose before stopping is permitted.</li>
+</ul>
+<p>In future versions, the following base dose-finding approaches will probably be added:</p>
+<ul>
+<li>the EWOC model from the <a href="https://CRAN.R-project.org/package=EWOC"><code>EWOC</code></a> package</li>
+<li>the CRM and EffTox models from the <a href="https://CRAN.R-project.org/package=trialr"><code>trialr</code></a> package</li>
+<li>the CRM model from the <a href="https://CRAN.R-project.org/package=bcrm"><code>bcrm</code></a> package</li>
+<li>the CRM model from the <a href="https://CRAN.R-project.org/package=crmPack"><code>crmPack</code></a> package</li>
+</ul>
+<p>Before I plough into the MCMC methods (trialr, bcrm, crmPack), I want to understand the implications of adding other software to the dependency chain to what at the moment is a very lightweight package.</p>
+<p>In addition to those, I plan to add further behaviours that allow:</p>
+<ul>
+<li>stopping under the conditions investigated by <span class="citation">Zohar and Chevret (2001)</span>;</li>
+<li>selecting dose by the CIBP criterion of <span class="citation">Mozgunov and Jaki (2020)</span>.</li>
+</ul>
+<p>Independent to the work described above, I will add functions that run simulations and calculate dose pathways.</p>
+</div>
+<div id="how-escalation-came-about" class="section level2">
+<h2>How escalation came about</h2>
+<p>It had bothered me for several years that it always seemed so difficult to tweak behaviour of dose-finging designs to allow flexible stopping (etc).
+In my trials unit, we frequently started with the dfcrm code and then added custom embellishments to achieve the design and behaviour we wanted in each particular trial.
+Running simulations or calculating future dose pathways was never as simple as it should have been.
+The approach we used of tweaking dfcrm implicitly assumed we needed a more complex dose-fitting function.
+And then one night at about 4am when I was neither asleep nor awake, I realised that we needed to daisy-chain the dose-selecting classes together to augment behaviour.
+We did not need a more complex dose-fitting function, we needed a flexible way of combining simple functions.
+Having used dplyr and tidyverse packages for years now, the <code>%&gt;%</code> operator seemed the natural solution.</p>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<pre class="r"><code># Once it hits CRAN, install the latest official version with:
+install.packages(&quot;escalation&quot;)
+
+# Alternatively, install the latest code at any time from GitHub:
+devtools::install_github(&quot;brockk/escalation&quot;)</code></pre>
+</div>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<p><img src="https://github.com/brockk/escalation/raw/master/man/figures/logo.png" align="right" height=140/></p>
+<!-- * [CRAN package page](https://cran.r-project.org/package=escalation) -->
+<ul>
+<li><a href="https://github.com/brockk/escalation">GitHub repo</a></li>
+<li><a href="https://brockk.github.io/escalation/">Documentation</a></li>
+</ul>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-Brock2019">
+<p>Brock, Kristian. 2019. “trialr: Bayesian Clinical Trial Designs in R and Stan.” <em>arXiv E-Prints</em>, June, arXiv:1907.00161.</p>
+</div>
+<div id="ref-Brock2017a">
+<p>Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” <em>BMC Medical Research Methodology</em> 17 (1): 112. <a href="https://doi.org/10.1186/s12874-017-0381-x">https://doi.org/10.1186/s12874-017-0381-x</a>.</p>
+</div>
+<div id="ref-dfcrm">
+<p>Cheung, Ken. 2013. <em>Dfcrm: Dose-Finding by the Continual Reassessment Method</em>. <a href="https://CRAN.R-project.org/package=dfcrm">https://CRAN.R-project.org/package=dfcrm</a>.</p>
+</div>
+<div id="ref-liu_bayesian_2015">
+<p>Liu, Suyu, and Ying Yuan. 2015. “Bayesian Optimal Interval Designs for Phase I Clinical Trials.” <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em> 64 (3): 507–23. <a href="https://doi.org/10.1111/rssc.12089">https://doi.org/10.1111/rssc.12089</a>.</p>
+</div>
+<div id="ref-mozgunovImprovingSafetyContinual">
+<p>Mozgunov, Pavel, and Thomas Jaki. 2020. “Improving Safety of the Continual Reassessment Method via a Modified Allocation Rule.” <em>Statistics in Medicine</em>, 1–17. <a href="https://doi.org/10.1002/sim.8450">https://doi.org/10.1002/sim.8450</a>.</p>
+</div>
+<div id="ref-OQuigley1990">
+<p>O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” <em>Biometrics</em> 46 (1): 33–48. <a href="https://doi.org/10.2307/2531628">https://doi.org/10.2307/2531628</a>.</p>
+</div>
+<div id="ref-BOIN">
+<p>Yuan, Ying, and Suyu Liu. 2018. <em>BOIN: Bayesian Optimal Interval (Boin) Design for Single-Agent and Drug- Combination Phase I Clinical Trials</em>. <a href="https://CRAN.R-project.org/package=BOIN">https://CRAN.R-project.org/package=BOIN</a>.</p>
+</div>
+<div id="ref-zohar_continual_2001">
+<p>Zohar, Sarah, and Sylvie Chevret. 2001. “The Continual Reassessment Method: Comparison of Bayesian Stopping Rules for Dose-Ranging Studies.” <em>Statistics in Medicine</em> 20 (19): 2827–43. <a href="https://doi.org/10.1002/sim.920">https://doi.org/10.1002/sim.920</a>.</p>
+</div>
+</div>
+</div>
+</div>

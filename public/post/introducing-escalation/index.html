@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.3">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Kristian Brock">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="An R package to unify the interface of dose-escalation models in R. A modular approach that is scalable and extensible.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/post/introducing-escalation/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#EF525B">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cutive+Mono%7CLora:400,700%7CRoboto:400,700&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157979306-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           document.location = url;
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target);  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-157979306-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://www.kristianbrock.com/post/introducing-escalation/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@CatchTwentyToo">
+  <meta property="twitter:creator" content="@CatchTwentyToo">
+  
+  <meta property="og:site_name" content="Kristian Brock">
+  <meta property="og:url" content="https://www.kristianbrock.com/post/introducing-escalation/">
+  <meta property="og:title" content="Introducing `escalation` | Kristian Brock">
+  <meta property="og:description" content="An R package to unify the interface of dose-escalation models in R. A modular approach that is scalable and extensible."><meta property="og:image" content="https://www.kristianbrock.com/post/introducing-escalation/featured.jpg">
+  <meta property="twitter:image" content="https://www.kristianbrock.com/post/introducing-escalation/featured.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-02-13T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-02-13T20:02:56&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kristianbrock.com/post/introducing-escalation/"
+  },
+  "headline": "Introducing `escalation`",
+  
+  "image": [
+    "https://www.kristianbrock.com/post/introducing-escalation/featured.jpg"
+  ],
+  
+  "datePublished": "2020-02-13T00:00:00Z",
+  "dateModified": "2020-02-13T20:02:56Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kristian Brock"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kristian Brock",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kristianbrock.com/img/icon-512.png"
+    }
+  },
+  "description": "An R package to unify the interface of dose-escalation models in R. A modular approach that is scalable and extensible."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Introducing `escalation` | Kristian Brock</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Teaching</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact Me</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1>Introducing `escalation`</h1>
+
+  
+  <p class="page-subtitle">An R package to unify the interface of dose-escalation models in R.</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  
+  <span><a href="/authors/admin/">Kristian Brock</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Feb 13, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    9 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/code/">Code</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 440px;">
+  <div style="position: relative">
+    <img src="/post/introducing-escalation/featured_hua3b5842416e236feee515aa55043fe9c_127801_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Photo by <a href="https://unsplash.com/photos/sson9rOoy5Y">Martin Adams on Unsplash</a></span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<div id="escalation" class="section level1">
+<h1>escalation <img src="https://github.com/brockk/escalation/raw/master/man/figures/logo.png" align="right" height=140/></h1>
+<p><a href="https://github.com/brockk/escalation"><strong>escalation</strong></a> is a new R package that takes existing dose-finding models and gives them a common interface.
+To use the language of <a href="https://www.tidyverse.org/">tidyverse</a> R, <strong>escalation</strong> provides a grammar for dose-finding by breaking the dose-finding process into chunks.
+What model should I use?
+How should I select dose during the trial?
+How will I know when to stop?
+Which restrictions should I place on escalation and de-escalation?
+You can create the dose-finding design you want in <strong>escalation</strong> by combining elements that perform all of these tasks.
+This might all sound a little obtuse.
+Some examples will make it clear.</p>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<div id="crm" class="section level4">
+<h4>CRM</h4>
+<p><span class="citation">O’Quigley, Pepe, and Fisher (1990)</span> introduced the classic continual reassessment method (CRM) and it has been implemented in many software packages since.
+One of the most popular R implementations is the <a href="https://CRAN.R-project.org/package=dfcrm">dfcrm</a> package by <span class="citation">Cheung (2013)</span>.
+Let’s fit a model using dfcrm.</p>
+<p>The very least information we need to provide is a dose-toxicity skeleton, and our target toxicity level:</p>
+<pre class="r"><code>skeleton &lt;- c(0.05, 0.1, 0.25, 0.4, 0.6)
+target &lt;- 0.25</code></pre>
+<p>We use these to create a model-fitting object:</p>
+<pre class="r"><code>library(escalation)
+model &lt;- get_dfcrm(skeleton = skeleton, target = target)</code></pre>
+<p>The model can then be fit to outcomes.
+The escalation package uses the outcome syntax introduced for phase I trials in <span class="citation">Brock (2019)</span> and for seamless phase I/II trials in <span class="citation">Brock et al. (2017)</span>.
+Let’s assume we have treated 3 patients at dose-level 2 and none of them experienced toxicity.
+We represent this using the outcome string <code>2NNN</code>.
+Fitting the model to the set of outcomes invokes the dose-selection algorithm:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN&#39;)</code></pre>
+<p>and the fit object will tell you the dose recommended by the CRM model to be administered next:</p>
+<pre class="r"><code>fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>The model advocates skipping straight from dose 2 to dose 4.
+Clinicians are unlikely to feel comfortable with this.
+We can respecify the model to expressly not skip doses in escalation:</p>
+<pre class="r"><code>model &lt;- get_dfcrm(skeleton = skeleton, target = target) %&gt;% 
+  dont_skip_doses(when_escalating = TRUE)</code></pre>
+<p>We have taken the original dfcrm model and added an extra module to prevent skipping doses in escalation.
+Refitting the new model to the same outcomes gives:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>We see that the ensemble now decides to select dose 3.
+We can ask the trial design whether it wants to keep recruting patients:</p>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>Naturally it wants to continue because <code>dfcrm</code> does not implement any stopping rules.
+However, we can easily add some.
+Let us say that we want to stop once the model has evaluated 18 patients, or at least 9 at the dose being recommended, whichever occurs first.
+We specify this model by adding more behaviours:</p>
+<pre class="r"><code>model &lt;- get_dfcrm(skeleton = skeleton, target = target) %&gt;% 
+  dont_skip_doses(when_escalating = TRUE) %&gt;% 
+  stop_at_n(n = 18) %&gt;% 
+  stop_when_n_at_dose(dose = &#39;recommended&#39;, n = 9)</code></pre>
+<p>Let’s fit this model to some more patients to see how this trial plays out:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>After seeing two-in-three patients in the second cohort experience toxicity at dose 3, the design understandably wants to de-escalate.
+Let’s do that:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN 2TNN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>The third cohort yielded one-in-three tox at dose 2.
+The design wants to continue at dose 2 so let’s do that:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN 2TNN 2NNT&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Notice that the call to continue() now returns FALSE.
+The design wants to stop now and recommend dose 2.
+It does this because it has seen 9 patients at the recommended dose.
+We can see the number of patients treated at each of the five doses under investigation:</p>
+<pre class="r"><code>fit %&gt;% n_at_dose()</code></pre>
+<pre><code>## [1] 0 9 3 0 0</code></pre>
+<p>Our stopping criteria have been met.
+We can verify that dose 2 is indeed the dose with posterior expected toxicity rate closest to our target of 25%:</p>
+<pre class="r"><code>fit %&gt;% mean_prob_tox()</code></pre>
+<pre><code>## [1] 0.1845713 0.2728713 0.4575229 0.5964102 0.7496662</code></pre>
+</div>
+<div id="boin" class="section level4">
+<h4>BOIN</h4>
+<p><code>escalate</code> also implements the BOIN dose-finding design by <span class="citation">Liu and Yuan (2015)</span> via the <a href="https://CRAN.R-project.org/package=BOIN"><code>BOIN</code></a> R-package <span class="citation">(Yuan and Liu 2018)</span>.</p>
+<p>In contrast to CRM, BOIN does not require a dose-toxicity skeleton.
+In its simplest case, it requires merely the number of doses under investigation and our target toxicity level:</p>
+<pre class="r"><code>target &lt;- 0.25
+model &lt;- get_boin(num_doses = 5, target = target)</code></pre>
+<p>As before, we can fit the model to some observed outcomes:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NNN&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>The BOIN dose selector natively implements stopping rules, as described by Liu &amp; Yuan.
+For instance, if the bottom dose is too toxic, the design will advise the trial halts:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;2NTN 1TTT&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<p>Nevertheless, as with the CRM examples above, our BOIN selector can be adorned with various behaviours to tailor stopping and skipping.
+In fact, we can add the exact same behaviours as before because all <code>escalation</code> objects support exactly the same interface.
+This makes the package completely modular.
+We are building the design we want from pieces of Lego:</p>
+<pre class="r"><code>model &lt;- get_boin(num_doses = 5, target = target) %&gt;% 
+  dont_skip_doses(when_escalating = TRUE) %&gt;% 
+  stop_at_n(n = 18) %&gt;% 
+  stop_when_n_at_dose(dose = &#39;recommended&#39;, n = 9)
+
+fit &lt;- model %&gt;% fit(&#39;2NNN 3TTN 2TNN 2NNT&#39;)
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>fit %&gt;% continue()</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>fit %&gt;% mean_prob_tox()</code></pre>
+<pre><code>## [1]   NA 0.23 0.66   NA   NA</code></pre>
+<p>Notice that the posterior toxicity estimate is similar to the CRM model at dose 2, but ultimately different because the two approaches use different model forms.
+BOIN does not estimate the tox rate at doses that have not been administered.</p>
+</div>
+<div id="initial-escalation-plans" class="section level4">
+<h4>Initial escalation plans</h4>
+<p>Another dose-selection mechanism supported by escalation is the concept of an <em>initial escalation plan</em>.
+These can be used at the start of a trial to show how escalation should proceed initially.
+As soon as the realised outcomes diverge from the prespecified path, or the path reaches the end, a secondary model takes over.</p>
+<p>For instance, let us assume we would like to treat one patient per dose so long as no toxicity is seen, in order to facilitate fast escalation.
+When toxicity is seen, or dose five is reached, we would like to hand control to a CRM model.
+We can write:</p>
+<pre class="r"><code>model &lt;- follow_path(&#39;1N 2N 3N 4N 5N&#39;) %&gt;% 
+  get_dfcrm(skeleton = skeleton, target = target)</code></pre>
+<p>So long as the idealised path is realised, it continues:</p>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N 2N&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>But if the path is deviated from, the secondary model takes over:</p>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N 2N 3T&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<p>Also, when the initial path is completed, the secondary model continues:</p>
+<pre class="r"><code>model %&gt;% 
+  fit(&#39;1N 2N 3N 4N 5N&#39;) %&gt;% 
+  recommended_dose()</code></pre>
+<pre><code>## [1] 5</code></pre>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>The <strong>escalation</strong> package takes dose-finding methods that other authors have provided and gives them a consistent interface.
+This makes it simple to add any behaviour to any method, creating a modular Lego-like approach to creating dose-finding designs.
+For instance, we can take any dose-selection model and tweak the way it selects the next dose, the way it escalates, de-escalates and stops.
+I hope eventually that <strong>escalation</strong> makes it easy to specify, assess and compare all dose-escalation designs.</p>
+</div>
+<div id="roadmap" class="section level2">
+<h2>Roadmap</h2>
+<p>Version 0.0.1 has been submitted to CRAN (but as of 2020-02-17, not yet accepted) with the following base dose-finding approaches:</p>
+<ul>
+<li>the CRM model from the <a href="https://CRAN.R-project.org/package=dfcrm"><code>dfcrm</code></a> package</li>
+<li>the BOIN model from the <a href="https://CRAN.R-project.org/package=BOIN"><code>BOIN</code></a> package</li>
+<li>the perennial 3+3 model without dose de-escalation</li>
+</ul>
+<p>and the following optional embellishments:</p>
+<ul>
+<li>don’t skip doses in escalation and/or de-escalation</li>
+<li>stop when dose(s) are too toxic</li>
+<li>stop when <span class="math inline">\(n\)</span> patients have been treated in total</li>
+<li>stop when <span class="math inline">\(n\)</span> patients have been treated at a particular dose</li>
+<li>use an initial fixed dose-escalation plan</li>
+<li>demand at least <span class="math inline">\(n\)</span> patients have been treated at a particular dose before stopping is permitted.</li>
+</ul>
+<p>In future versions, the following base dose-finding approaches will probably be added:</p>
+<ul>
+<li>the EWOC model from the <a href="https://CRAN.R-project.org/package=EWOC"><code>EWOC</code></a> package</li>
+<li>the CRM and EffTox models from the <a href="https://CRAN.R-project.org/package=trialr"><code>trialr</code></a> package</li>
+<li>the CRM model from the <a href="https://CRAN.R-project.org/package=bcrm"><code>bcrm</code></a> package</li>
+<li>the CRM model from the <a href="https://CRAN.R-project.org/package=crmPack"><code>crmPack</code></a> package</li>
+</ul>
+<p>Before I plough into the MCMC methods (trialr, bcrm, crmPack), I want to understand the implications of adding other software to the dependency chain to what at the moment is a very lightweight package.</p>
+<p>In addition to those, I plan to add further behaviours that allow:</p>
+<ul>
+<li>stopping under the conditions investigated by <span class="citation">Zohar and Chevret (2001)</span>;</li>
+<li>selecting dose by the CIBP criterion of <span class="citation">Mozgunov and Jaki (2020)</span>.</li>
+</ul>
+<p>Independent to the work described above, I will add functions that run simulations and calculate dose pathways.</p>
+</div>
+<div id="how-escalation-came-about" class="section level2">
+<h2>How escalation came about</h2>
+<p>It had bothered me for several years that it always seemed so difficult to tweak behaviour of dose-finging designs to allow flexible stopping (etc).
+In my trials unit, we frequently started with the dfcrm code and then added custom embellishments to achieve the design and behaviour we wanted in each particular trial.
+Running simulations or calculating future dose pathways was never as simple as it should have been.
+The approach we used of tweaking dfcrm implicitly assumed we needed a more complex dose-fitting function.
+And then one night at about 4am when I was neither asleep nor awake, I realised that we needed to daisy-chain the dose-selecting classes together to augment behaviour.
+We did not need a more complex dose-fitting function, we needed a flexible way of combining simple functions.
+Having used dplyr and tidyverse packages for years now, the <code>%&gt;%</code> operator seemed the natural solution.</p>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<pre class="r"><code># Once it hits CRAN, install the latest official version with:
+install.packages(&quot;escalation&quot;)
+
+# Alternatively, install the latest code at any time from GitHub:
+devtools::install_github(&quot;brockk/escalation&quot;)</code></pre>
+</div>
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<p><img src="https://github.com/brockk/escalation/raw/master/man/figures/logo.png" align="right" height=140/></p>
+<!-- * [CRAN package page](https://cran.r-project.org/package=escalation) -->
+<ul>
+<li><a href="https://github.com/brockk/escalation">GitHub repo</a></li>
+<li><a href="https://brockk.github.io/escalation/">Documentation</a></li>
+</ul>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-Brock2019">
+<p>Brock, Kristian. 2019. “trialr: Bayesian Clinical Trial Designs in R and Stan.” <em>arXiv E-Prints</em>, June, arXiv:1907.00161.</p>
+</div>
+<div id="ref-Brock2017a">
+<p>Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” <em>BMC Medical Research Methodology</em> 17 (1): 112. <a href="https://doi.org/10.1186/s12874-017-0381-x">https://doi.org/10.1186/s12874-017-0381-x</a>.</p>
+</div>
+<div id="ref-dfcrm">
+<p>Cheung, Ken. 2013. <em>Dfcrm: Dose-Finding by the Continual Reassessment Method</em>. <a href="https://CRAN.R-project.org/package=dfcrm">https://CRAN.R-project.org/package=dfcrm</a>.</p>
+</div>
+<div id="ref-liu_bayesian_2015">
+<p>Liu, Suyu, and Ying Yuan. 2015. “Bayesian Optimal Interval Designs for Phase I Clinical Trials.” <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em> 64 (3): 507–23. <a href="https://doi.org/10.1111/rssc.12089">https://doi.org/10.1111/rssc.12089</a>.</p>
+</div>
+<div id="ref-mozgunovImprovingSafetyContinual">
+<p>Mozgunov, Pavel, and Thomas Jaki. 2020. “Improving Safety of the Continual Reassessment Method via a Modified Allocation Rule.” <em>Statistics in Medicine</em>, 1–17. <a href="https://doi.org/10.1002/sim.8450">https://doi.org/10.1002/sim.8450</a>.</p>
+</div>
+<div id="ref-OQuigley1990">
+<p>O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” <em>Biometrics</em> 46 (1): 33–48. <a href="https://doi.org/10.2307/2531628">https://doi.org/10.2307/2531628</a>.</p>
+</div>
+<div id="ref-BOIN">
+<p>Yuan, Ying, and Suyu Liu. 2018. <em>BOIN: Bayesian Optimal Interval (Boin) Design for Single-Agent and Drug- Combination Phase I Clinical Trials</em>. <a href="https://CRAN.R-project.org/package=BOIN">https://CRAN.R-project.org/package=BOIN</a>.</p>
+</div>
+<div id="ref-zohar_continual_2001">
+<p>Zohar, Sarah, and Sylvie Chevret. 2001. “The Continual Reassessment Method: Comparison of Bayesian Stopping Rules for Dose-Ranging Studies.” <em>Statistics in Medicine</em> 20 (19): 2827–43. <a href="https://doi.org/10.1002/sim.920">https://doi.org/10.1002/sim.920</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/escalation/">escalation</a>
+  
+  <a class="badge badge-light" href="/tags/rcode/">rcode</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/post/introducing-escalation/&amp;text=Introducing%20%60escalation%60" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/post/introducing-escalation/&amp;t=Introducing%20%60escalation%60" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Introducing%20%60escalation%60&amp;body=https://www.kristianbrock.com/post/introducing-escalation/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/post/introducing-escalation/&amp;title=Introducing%20%60escalation%60" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Introducing%20%60escalation%60%20https://www.kristianbrock.com/post/introducing-escalation/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/post/introducing-escalation/&amp;title=Introducing%20%60escalation%60" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/ba2fdaa5d7c978ce64a39a93043d05ca?s=200')" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kristianbrock.com/">Kristian Brock</a></h5>
+      <h6 class="card-subtitle">Principal Biostatistician</h6>
+      <p class="card-text">I am an academic early phase clincial trial statistician.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/CatchTwentyToo" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.co.uk/citations?user=zoh03M4AAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/brockk/" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.3/mermaid.min.js" integrity="" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.600a2e440c16093e23e26e90951c4d4b.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
