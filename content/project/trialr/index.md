@@ -13,7 +13,7 @@ slides: example
 summary: _trialr_ is an R package implementing Bayesian clinical trial methods in Stan.
 tags:
 - Bayes
-title: trialr
+title: The trialr package
 url_code: "https://github.com/brockk/trialr"
 url_pdf: "https://cran.r-project.org/web/packages/trialr/trialr.pdf"
 url_slides: ""

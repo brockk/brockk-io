@@ -5,7 +5,7 @@
     <link>https://www.kristianbrock.com/tags/phaseii/</link>
       <atom:link href="https://www.kristianbrock.com/tags/phaseii/index.xml" rel="self" type="application/rss+xml" />
     <description>PhaseII</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>PhaseII</title>
@@ -13,9 +13,100 @@
     </image>
     
     <item>
-      <title>PePS2</title>
+      <title>Pembrolizumab in patients with non-small-cell lung cancer of performance status 2 (PePS2) - a single arm, phase 2 trial</title>
+      <link>https://www.kristianbrock.com/publication/peps2-results/</link>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/publication/peps2-results/</guid>
+      <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
+&lt;p&gt;I became involved in the PePS2 trial shortly after joining CRCTU in 2014.
+I developed a Bayesian statistical method for this trial that would analyse co-primary efficacy and toxicity outcomes whilst adjusting for baseline covariates as a substantial part of my PhD thesis.
+This publication is important to me because PePS2 became the first trial where I published a statistical design paper and results paper.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>PePS2 Results</title>
+      <link>https://www.kristianbrock.com/post/peps2-results/</link>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/peps2-results/</guid>
+      <description>
+
+
+&lt;div id=&#34;summary&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Summary&lt;/h1&gt;
+&lt;p&gt;PePS2 is a phase II clinical trial of pembrolizumab in non-small-cell lung cancer (NSCLC) patients with a performance status of 2.
+Trial results were recently published in Lancet Respiratory Medicine &lt;span class=&#34;citation&#34;&gt;(Middleton et al. 2020)&lt;/span&gt;.
+Previous trials in the KEYNOTE series &lt;span class=&#34;citation&#34;&gt;(Garon et al. 2015; Herbst et al. 2016)&lt;/span&gt; had showed that pembrolizumab was efficacious in NSCLC patients.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-gap-in-the-evidence&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The gap in the evidence&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Performance_status#ECOG/WHO/Zubrod_score&#34;&gt;Performance status&lt;/a&gt; (PS) is a variable defined by the Eastern Cooperative Oncology Group to reflect cancer patients’ general well-being and activities of daily life.
+It is an ordered variable with five levels reflecting greater levels of disability:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;0 – patients are asymptomatic;&lt;/li&gt;
+&lt;li&gt;1 – patients are symptomatic but completely ambulatory;&lt;/li&gt;
+&lt;li&gt;2 – patients are symptomatic, spending up to 50% of day time in bed;&lt;/li&gt;
+&lt;li&gt;3 – patients are symptomatic, spending at least 50% of day time in bed;&lt;/li&gt;
+&lt;li&gt;4 – patients are bedbound.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We will say that a patient with a peformance status of 2 is &lt;em&gt;PS2&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The KEYNOTE-001 trial &lt;span class=&#34;citation&#34;&gt;(Garon et al. 2015)&lt;/span&gt; showed that pembrolizumab was efficacious in NSCLC patients.
+The subsequent KEYNOTE-010 trial &lt;span class=&#34;citation&#34;&gt;(Herbst et al. 2016)&lt;/span&gt; showed that pembrolizumab was superior to docetaxel chemotherapy.
+However, it is doubtful that a PS2 patient would be strong enough to tolerate chemotherapy.
+Hence, to maintain equipoise in KEYNOTE-010, the trialists restricted randomisation to PS0 and PS1 patients.
+That trial was successful and pembrolizumab was licenced in NSCLC.
+However, as is typical, the treatment was licenced in the patient population that had been investigated in the trial.
+This covered just the PS0 and PS1 patients and crucially excluded PS2 patients.
+The KEYNOTE trials had showed that pembrolizumab was tolerable, particularly compared to the harsh chemotherapy alternatives.
+It is precisely in the PS2 population where a relatively tolerable but effective treatment was sorely needed.
+However, by virtue of their probable unsuitablility to chemotherapy, PS2 patients had been excluded from a promising new treatment.&lt;/p&gt;
+&lt;p&gt;The PePS2 trial sought to address this gap in the evidence.&lt;/p&gt;
+&lt;div id=&#34;stratification&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Stratification&lt;/h2&gt;
+&lt;p&gt;In the KEYNOTE-001 trial, &lt;span class=&#34;citation&#34;&gt;Garon et al. (2015)&lt;/span&gt; had introduced the programmed death ligand 1 tumour proportion score biomarker (PD-L1 TPS, or simply TPS), being the percentage of cells in a tumour biopsy that expressed PD-L1.
+Pembrolizumab is a PD-L1 blockade drug so it was reasonably hypothesised that the treatment would work best in those patients whose tumours expressed lots of PD-L1.
+The KEYNOTE-001 showed this to be precisely the case.&lt;/p&gt;
+&lt;p&gt;KEYNOTE-001 also showed that first-line patients (those patients who had received no previous anti-cancer therapy) achieved outcomes that appeared to be slightly different to patients receiving pembrolizumab as a subsequent-line therapy.&lt;/p&gt;
+&lt;p&gt;In PePS2, we sought to evaluate the effects of pembrolizumab on co-primary efficacy and toxicity outcomes whilst stratifying the analysis for these baseline covariates.
+I developed a statistical design for this purpose, described &lt;a href=&#34;https://www.kristianbrock.com/publication/peps2-design/&#34;&gt;here&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock et al. 2019)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;results&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Results&lt;/h2&gt;
+&lt;p&gt;On 19-March-2020, the &lt;a href=&#34;https://www.thelancet.com/journals/lanres/article/PIIS2213-2600(20)30033-3/fulltext&#34;&gt;results were published&lt;/a&gt; in Lancet Respiratory Medicine.
+&lt;span class=&#34;citation&#34;&gt;Alessi and Awad (2020)&lt;/span&gt; provided an accompanying commentary of the data in that same journal.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;more&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;More&lt;/h2&gt;
+&lt;p&gt;Information on the PePS2 project is collated on the &lt;a href=&#34;https://www.kristianbrock.com/project/peps2/&#34;&gt;project page&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-alessi_immunotherapy_2020&#34;&gt;
+&lt;p&gt;Alessi, Joao V, and Mark M Awad. 2020. “Immunotherapy in Lung Cancer: Effective for Patients with Poor Performance Status?” &lt;em&gt;The Lancet Respiratory Medicine&lt;/em&gt;, March, S2213260020301077. &lt;a href=&#34;https://doi.org/10.1016/S2213-2600(20)30107-7&#34;&gt;https://doi.org/10.1016/S2213-2600(20)30107-7&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-brock_phase_2019&#34;&gt;
+&lt;p&gt;Brock, Kristian, Lucinda Billingham, Christina Yap, and Gary Middleton. 2019. “A Phase II Clinical Trial Design for Associated Co-Primary Efficacy and Toxicity Outcomes with Baseline Covariates.” In &lt;em&gt;Bayesian Statistics and New Generations&lt;/em&gt;, edited by Raffaele Argiento, Daniele Durante, and Sara Wade, 125–33. Springer Proceedings in Mathematics &amp;amp; Statistics. Cham: Springer International Publishing. &lt;a href=&#34;https://doi.org/10.1007/978-3-030-30611-3_13&#34;&gt;https://doi.org/10.1007/978-3-030-30611-3_13&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Garon2015&#34;&gt;
+&lt;p&gt;Garon, Edward B, Naiyer a Rizvi, Rina Hui, Natasha Leighl, Ani S Balmanoukian, Joseph Paul Eder, Amita Patnaik, et al. 2015. “Pembrolizumab for the Treatment of Non-Small-Cell Lung Cancer.” &lt;em&gt;The New England Journal of Medicine&lt;/em&gt; 372 (21): 2018–28. &lt;a href=&#34;https://doi.org/10.1056/NEJMoa1501824&#34;&gt;https://doi.org/10.1056/NEJMoa1501824&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Herbst2016&#34;&gt;
+&lt;p&gt;Herbst, Roy S., Paul Baas, Dong Wan Kim, Enriqueta Felip, José L. Pérez-Gracia, Ji Youn Han, Julian Molina, et al. 2016. “Pembrolizumab Versus Docetaxel for Previously Treated, PD-L1-Positive, Advanced Non-Small-Cell Lung Cancer (KEYNOTE-010): A Randomised Controlled Trial.” &lt;em&gt;The Lancet&lt;/em&gt; 387 (10027): 1540–50. &lt;a href=&#34;https://doi.org/10.1016/S0140-6736(15)01281-7&#34;&gt;https://doi.org/10.1016/S0140-6736(15)01281-7&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-middleton_pembrolizumab_2020&#34;&gt;
+&lt;p&gt;Middleton, Gary, Kristian Brock, Joshua Savage, Rhys Mant, Yvonne Summers, John Connibear, Riyaz Shah, et al. 2020. “Pembrolizumab in Patients with Non-Small-Cell Lung Cancer of Performance Status 2 (PePS2): A Single Arm, Phase 2 Trial.” &lt;em&gt;The Lancet Respiratory Medicine&lt;/em&gt; 0 (0). &lt;a href=&#34;https://doi.org/10.1016/S2213-2600(20)30033-3&#34;&gt;https://doi.org/10.1016/S2213-2600(20)30033-3&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The PePS2 Trial</title>
       <link>https://www.kristianbrock.com/project/peps2/</link>
-      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/project/peps2/</guid>
       <description>&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 &lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 (PS2) non-small-cell lung cancer (NSCLC) patients.
@@ -33,7 +124,10 @@ We expected each of these variables to remain predictive in the performance stat
 Unfortunately, Bryant &amp;amp; Day&#39;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
 &lt;p&gt;I happened to be working on a dose-finding trial at the time that used the EffTox design of Thall &amp;amp; Cook (2004) to appraise joint efficacy and toxicity rates at different doses of experimental agents.
 It struck me on a cycle home that the EffTox design could be adjusted with variables reflecting PD-L1 and line-of-therapy status in place of dose to study our co-primary outcomes whilst adjusting for our putative predictive factors.
-I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the outcomes in a results manuscript that is currently in peer-review.&lt;/p&gt;
+I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the trial outcomes.&lt;/p&gt;
+&lt;h3 id=&#34;results&#34;&gt;Results&lt;/h3&gt;
+&lt;p&gt;The results for PePS2 were published in March 2020 in Lancet Respiratory Medicine.
+There are links below.&lt;/p&gt;
 </description>
     </item>
     

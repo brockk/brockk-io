@@ -1,0 +1,82 @@
+---
+title: "PePS2 Results"
+subtitle: "Results of the PePS2 trial of pembrolizumab in performance status 2 non-small-cell lung cancer patients published in Lancet Respiratory Medicine."
+summary: "Results of the PePS2 trial of pembrolizumab in performance status 2 non-small-cell lung cancer patients published in Lancet Respiratory Medicine."
+authors: 
+  - admin
+categories:
+- TrialResults
+tags:
+  - Bayes
+  - PhaseII
+  - TrialResults
+projects: 
+  - PePS2
+date: '2020-04-06'
+lastmod: '2020-04-06T10:02:56Z'
+draft: false
+featured: yes
+image:
+  caption: 'Photo by [Sara Bakhshi on Unsplash](https://unsplash.com/photos/_-DIX0c_Q1Y)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+# Summary
+PePS2 is a phase II clinical trial of pembrolizumab in non-small-cell lung cancer (NSCLC) patients with a performance status of 2.
+Trial results were recently published in Lancet Respiratory Medicine [@middleton_pembrolizumab_2020].
+Previous trials in the KEYNOTE series [@Garon2015; @Herbst2016] had showed that pembrolizumab was efficacious in NSCLC patients.
+
+
+# The gap in the evidence 
+
+[Performance status](https://en.wikipedia.org/wiki/Performance_status#ECOG/WHO/Zubrod_score) (PS) is a variable defined by the Eastern Cooperative Oncology Group to reflect cancer patients' general well-being and activities of daily life.
+It is an ordered variable with five levels reflecting greater levels of disability:
+
+- 0 – patients are asymptomatic;
+- 1 – patients are symptomatic but completely ambulatory;
+- 2 – patients are symptomatic, spending up to 50% of day time in bed;
+- 3 – patients are symptomatic, spending at least 50% of day time in bed;
+- 4 – patients are bedbound.
+
+We will say that a patient with a peformance status of 2 is _PS2_.
+
+The KEYNOTE-001 trial [@Garon2015] showed that pembrolizumab was efficacious in NSCLC patients.
+The subsequent KEYNOTE-010 trial [@Herbst2016] showed that pembrolizumab was superior to docetaxel chemotherapy.
+However, it is doubtful that a PS2 patient would be strong enough to tolerate chemotherapy. 
+Hence, to maintain equipoise in KEYNOTE-010, the trialists restricted randomisation to PS0 and PS1 patients.
+That trial was successful and pembrolizumab was licenced in NSCLC.
+However, as is typical, the treatment was licenced in the patient population that had been investigated in the trial.
+This covered just the PS0 and PS1 patients and crucially excluded PS2 patients.
+The KEYNOTE trials had showed that pembrolizumab was tolerable, particularly compared to the harsh chemotherapy alternatives.
+It is precisely in the PS2 population where a relatively tolerable but effective treatment was sorely needed.
+However, by virtue of their probable unsuitablility to chemotherapy, PS2 patients had been excluded from a promising new treatment.
+
+The PePS2 trial sought to address this gap in the evidence.
+
+
+##  Stratification
+
+In the KEYNOTE-001 trial, @Garon2015 had introduced the programmed death ligand 1 tumour proportion score biomarker (PD-L1 TPS, or simply TPS), being the percentage of cells in a tumour biopsy that expressed PD-L1. 
+Pembrolizumab is a PD-L1 blockade drug so it was reasonably hypothesised that the treatment would work best in those patients whose tumours expressed lots of PD-L1.
+The KEYNOTE-001 showed this to be precisely the case.
+
+KEYNOTE-001 also showed that first-line patients (those patients who had received no previous anti-cancer therapy) achieved outcomes that appeared to be slightly different to patients receiving pembrolizumab as a subsequent-line therapy.
+
+In PePS2, we sought to evaluate the effects of pembrolizumab on co-primary efficacy and toxicity outcomes whilst stratifying the analysis for these baseline covariates.
+I developed a statistical design for this purpose, described [here](/publication/peps2-design/) [@brock_phase_2019].
+
+
+##  Results
+On 19-March-2020, the [results were published](https://www.thelancet.com/journals/lanres/article/PIIS2213-2600(20)30033-3/fulltext) in Lancet Respiratory Medicine.
+@alessi_immunotherapy_2020 provided an accompanying commentary of the data in that same journal.
+
+
+##  More
+Information on the PePS2 project is collated on the [project page](/project/peps2/).
+
+
+
+## References
+

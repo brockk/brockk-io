@@ -5,7 +5,7 @@
     <link>https://www.kristianbrock.com/project/</link>
       <atom:link href="https://www.kristianbrock.com/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 27 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Projects</title>
@@ -13,9 +13,9 @@
     </image>
     
     <item>
-      <title>PePS2</title>
+      <title>The PePS2 Trial</title>
       <link>https://www.kristianbrock.com/project/peps2/</link>
-      <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/project/peps2/</guid>
       <description>&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 &lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 (PS2) non-small-cell lung cancer (NSCLC) patients.
@@ -33,12 +33,15 @@ We expected each of these variables to remain predictive in the performance stat
 Unfortunately, Bryant &amp;amp; Day&#39;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
 &lt;p&gt;I happened to be working on a dose-finding trial at the time that used the EffTox design of Thall &amp;amp; Cook (2004) to appraise joint efficacy and toxicity rates at different doses of experimental agents.
 It struck me on a cycle home that the EffTox design could be adjusted with variables reflecting PD-L1 and line-of-therapy status in place of dose to study our co-primary outcomes whilst adjusting for our putative predictive factors.
-I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the outcomes in a results manuscript that is currently in peer-review.&lt;/p&gt;
+I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the trial outcomes.&lt;/p&gt;
+&lt;h3 id=&#34;results&#34;&gt;Results&lt;/h3&gt;
+&lt;p&gt;The results for PePS2 were published in March 2020 in Lancet Respiratory Medicine.
+There are links below.&lt;/p&gt;
 </description>
     </item>
     
     <item>
-      <title>trialr</title>
+      <title>The trialr package</title>
       <link>https://www.kristianbrock.com/project/trialr/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/project/trialr/</guid>
