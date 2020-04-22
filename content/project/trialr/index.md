@@ -37,7 +37,7 @@ There is a manuscript currently under peer-review (pre-print linked below) and i
 
 CRAN listing
 
-* [https://cran.r-project.org/web/packages/trialr/index.html](https://cran.r-project.org/web/packages/trialr/index.html)
+* [https://cran.r-project.org/package=trialr](https://cran.r-project.org/package=trialr)
 
 Source code
 

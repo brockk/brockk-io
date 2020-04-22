@@ -3,372 +3,397 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.kristianbrock.com/courses/bootcamp/</loc>
+    <loc>/courses/bootcamp/</loc>
     <lastmod>2020-01-17T07:34:42+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/courses/epct/</loc>
+    <loc>/courses/epct/</loc>
     <lastmod>2020-01-17T07:34:42+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/talk/example/</loc>
+    <loc>/talk/example/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/authors/admin/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/authors/admin/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/publication_types/2/</loc>
-    <lastmod>2020-04-06T00:00:00+00:00</lastmod>
+    <loc>/authors/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/authors/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/categories/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/bayes/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/categories/code/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/categories/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/tags/dosefinding/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/publication/peps2-results/</loc>
-    <lastmod>2020-04-06T00:00:00+00:00</lastmod>
+    <loc>/tags/escalation/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/post/peps2-results/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/tags/r/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/phaseii/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/post/simulate-vs-enumerate-dose-finding/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/project/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+    <loc>/tags/</loc>
+    <lastmod>2020-04-22T21:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/publication_types/</loc>
-    <lastmod>2020-04-06T00:00:00+00:00</lastmod>
+    <loc>/post/dose-paths/</loc>
+    <lastmod>2020-04-21T20:41:56+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/project/</loc>
+    <lastmod>2020-04-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/project/peps2/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+    <loc>/project/escalation/</loc>
+    <lastmod>2020-04-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/trialresults/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/publication_types/2/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/categories/trialresults/</loc>
-    <lastmod>2020-04-06T10:02:56+00:00</lastmod>
+    <loc>/tags/bayes/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/categories/code/</loc>
+    <loc>/publication/peps2-results/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/peps2-results/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/phaseii/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication_types/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/peps2/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/trialresults/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/trialresults/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/introducing-escalation/</loc>
     <lastmod>2020-02-16T18:54:06+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/escalation/</loc>
-    <lastmod>2020-02-16T18:54:06+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/post/introducing-escalation/</loc>
-    <lastmod>2020-02-16T18:54:06+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/tags/rcode/</loc>
-    <lastmod>2020-02-16T18:54:06+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/tags/bootcamp/</loc>
+    <loc>/tags/bootcamp/</loc>
     <lastmod>2020-01-25T08:33:13+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/post/rmarkdown-in-trials/</loc>
+    <loc>/post/rmarkdown-in-trials/</loc>
     <lastmod>2020-01-25T08:33:13+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/categories/teaching/</loc>
+    <loc>/categories/teaching/</loc>
     <lastmod>2020-01-25T08:33:13+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/training/</loc>
+    <loc>/tags/training/</loc>
     <lastmod>2020-01-25T08:33:13+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/crm/</loc>
+    <loc>/tags/crm/</loc>
     <lastmod>2020-01-25T07:07:40+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/post/crm-simulations-checklist/</loc>
+    <loc>/post/crm-simulations-checklist/</loc>
     <lastmod>2020-01-25T07:07:40+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/dosefinding/</loc>
+    <loc>/categories/research/</loc>
     <lastmod>2020-01-25T07:07:40+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/categories/research/</loc>
+    <loc>/post/first-post/first-post/</loc>
     <lastmod>2020-01-25T07:07:40+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/post/first-post/first-post/</loc>
-    <lastmod>2020-01-25T07:07:40+00:00</lastmod>
+    <loc>/project/trialr/</loc>
+    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/project/trialr/</loc>
+    <loc>/publication_types/1/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/peps2-design/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/christina-yap/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/gary-middleton/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/lucinda-billingham/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/clarity-results/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication_types/3/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/trialr/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/trialr/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/slides/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/publication_types/1/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/publication/peps2-design/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/christina-yap/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/gary-middleton/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/lucinda-billingham/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/publication/clarity-results/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/publication_types/3/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/tags/trialr/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/publication/trialr/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/slides/</loc>
+    <loc>/slides/example/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/slides/example/</loc>
+    <loc>/authors/adrian-mander/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/alun-bedding/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/andrew-grieve/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/christopher-weir/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/graham-wheeler/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/crm-tutorial/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/lango-odondi/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/sharon-love/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/simon-bond/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/thomas-jaki/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/victoria-cornelius/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/andrea-hodgkinson/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/carmela-de-santo/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/charles-craddock/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/publication/viola-results/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/daniel-slade/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/francis-mussai/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/jamie-cavenagh/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/mike-dennis/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/paul-ferguson/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/rachel-wheat/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/ram-malladi/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/shamyla-siddique/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/wendy-ingram/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/privacy/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/authors/adrian-mander/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/alun-bedding/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/andrew-grieve/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/christopher-weir/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/graham-wheeler/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/publication/crm-tutorial/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/lango-odondi/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/sharon-love/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/simon-bond/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/thomas-jaki/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/victoria-cornelius/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/andrea-hodgkinson/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/carmela-de-santo/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/charles-craddock/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/publication/viola-results/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/daniel-slade/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/francis-mussai/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/jamie-cavenagh/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/mike-dennis/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/paul-ferguson/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/rachel-wheat/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/ram-malladi/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/shamyla-siddique/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/wendy-ingram/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/publication/matchpoint-design/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/mhairi-copland/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/mirjana-sirovica/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/post/</loc>
+    <loc>/terms/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/publication/</loc>
+    <loc>/publication/matchpoint-design/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/mhairi-copland/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/authors/mirjana-sirovica/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/talk/</loc>
+    <loc>/publication/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/courses/</loc>
+    <loc>/talk/</loc>
+    <lastmod>2019-12-29T09:27:53+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/courses/</loc>
     <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bayes | Kristian Brock</title>
-    <link>https://www.kristianbrock.com/tags/bayes/</link>
-      <atom:link href="https://www.kristianbrock.com/tags/bayes/index.xml" rel="self" type="application/rss+xml" />
+    <link>/tags/bayes/</link>
+      <atom:link href="/tags/bayes/index.xml" rel="self" type="application/rss+xml" />
     <description>Bayes</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://www.kristianbrock.com/img/icon-192.png</url>
+      <url>/img/icon-192.png</url>
       <title>Bayes</title>
-      <link>https://www.kristianbrock.com/tags/bayes/</link>
+      <link>/tags/bayes/</link>
     </image>
     
     <item>
       <title>PePS2 Results</title>
-      <link>https://www.kristianbrock.com/post/peps2-results/</link>
+      <link>/post/peps2-results/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/post/peps2-results/</guid>
+      <guid>/post/peps2-results/</guid>
       <description>
 
 
@@ -56,7 +56,7 @@ Pembrolizumab is a PD-L1 blockade drug so it was reasonably hypothesised that th
 The KEYNOTE-001 showed this to be precisely the case.&lt;/p&gt;
 &lt;p&gt;KEYNOTE-001 also showed that first-line patients (those patients who had received no previous anti-cancer therapy) achieved outcomes that appeared to be slightly different to patients receiving pembrolizumab as a subsequent-line therapy.&lt;/p&gt;
 &lt;p&gt;In PePS2, we sought to evaluate the effects of pembrolizumab on co-primary efficacy and toxicity outcomes whilst stratifying the analysis for these baseline covariates.
-I developed a statistical design for this purpose, described &lt;a href=&#34;https://www.kristianbrock.com/publication/peps2-design/&#34;&gt;here&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock et al. 2019)&lt;/span&gt;.&lt;/p&gt;
+I developed a statistical design for this purpose, described &lt;a href=&#34;../../publication/peps2-design/&#34;&gt;here&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock et al. 2019)&lt;/span&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;results&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Results&lt;/h2&gt;
@@ -65,7 +65,7 @@ I developed a statistical design for this purpose, described &lt;a href=&#34;htt
 &lt;/div&gt;
 &lt;div id=&#34;more&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;More&lt;/h2&gt;
-&lt;p&gt;Information on the PePS2 project is collated on the &lt;a href=&#34;https://www.kristianbrock.com/project/peps2/&#34;&gt;project page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Information on the PePS2 project is collated on the &lt;a href=&#34;../../project/peps2/&#34;&gt;project page&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
 &lt;h2&gt;References&lt;/h2&gt;
@@ -93,9 +93,9 @@ I developed a statistical design for this purpose, described &lt;a href=&#34;htt
     
     <item>
       <title>The PePS2 Trial</title>
-      <link>https://www.kristianbrock.com/project/peps2/</link>
+      <link>/project/peps2/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/project/peps2/</guid>
+      <guid>/project/peps2/</guid>
       <description>&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 &lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 (PS2) non-small-cell lung cancer (NSCLC) patients.
 It is run by the &lt;a href=&#34;https://www.birmingham.ac.uk/research/activity/mds/trials/crctu/&#34;&gt;Cancer Research UK Clinical Trials Unit&lt;/a&gt;.&lt;/p&gt;
@@ -121,9 +121,9 @@ There are links below.&lt;/p&gt;
     
     <item>
       <title>The trialr package</title>
-      <link>https://www.kristianbrock.com/project/trialr/</link>
+      <link>/project/trialr/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/project/trialr/</guid>
+      <guid>/project/trialr/</guid>
       <description>&lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; is an R package that implements Bayesian clinical trial design in &lt;a href=&#34;https://mc-stan.org/&#34;&gt;Stan&lt;/a&gt;, a modern enviroment for probabilistic programming that implements Hamiltonian Monte Carlo Markov Chain sampling.
 Bayesian models are relatively abundant in early phase clinical trials where information is scarce and sensible inference is required practically from the moment the trial begins.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; implements:&lt;/p&gt;
@@ -139,7 +139,7 @@ Bayesian models are relatively abundant in early phase clinical trials where inf
 There is a manuscript currently under peer-review (pre-print linked below) and it has been used to analyse outcomes in a forthcoming set of clinical trial results.&lt;/p&gt;
 &lt;p&gt;CRAN listing&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/web/packages/trialr/index.html&#34;&gt;https://cran.r-project.org/web/packages/trialr/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/package=trialr&#34;&gt;https://cran.r-project.org/package=trialr&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Source code&lt;/p&gt;
 &lt;ul&gt;
@@ -154,9 +154,9 @@ There is a manuscript currently under peer-review (pre-print linked below) and i
     
     <item>
       <title>A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates</title>
-      <link>https://www.kristianbrock.com/publication/peps2-design/</link>
+      <link>/publication/peps2-design/</link>
       <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/peps2-design/</guid>
+      <guid>/publication/peps2-design/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;Getting this paper published was a big deal for me because it was the first design idea I had had that was completely my own.
 Well, so I thought.
@@ -169,9 +169,9 @@ It was especially classy of Springer to give a complementary hard cover copy of 
     
     <item>
       <title>trialr - Bayesian Clinical Trial Designs in R and Stan</title>
-      <link>https://www.kristianbrock.com/publication/trialr/</link>
+      <link>/publication/trialr/</link>
       <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/trialr/</guid>
+      <guid>/publication/trialr/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I became aware of Stan whilst working on some Bayesian clinical trial designs.
 I recall using Monte Carlo integration to resolve six-dimensional integrals to estimate posterior means and thinking that there must be a better way.
@@ -185,9 +185,9 @@ It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s aug
     
     <item>
       <title>How to design a dose-finding study using the continual reassessment method</title>
-      <link>https://www.kristianbrock.com/publication/crm-tutorial/</link>
+      <link>/publication/crm-tutorial/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
+      <guid>/publication/crm-tutorial/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
 The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
@@ -197,9 +197,9 @@ This tutorial paper was produced by a group of attendees to promote model-based 
     
     <item>
       <title>Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</title>
-      <link>https://www.kristianbrock.com/publication/viola-results/</link>
+      <link>/publication/viola-results/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/viola-results/</guid>
+      <guid>/publication/viola-results/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This paper is important to me because Viola was the first dose-finding trial that I worked on.
 It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
@@ -209,9 +209,9 @@ This was also one of my first published sets of trial results.&lt;/p&gt;
     
     <item>
       <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
-      <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
+      <link>/publication/matchpoint-design/</link>
       <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
+      <guid>/publication/matchpoint-design/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This was my first first-author publication and a chapter in my PhD thesis.
 Working with EffTox was great, but challenging at times.

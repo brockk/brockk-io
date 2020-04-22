@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>bootcamp | Kristian Brock</title>
-    <link>https://www.kristianbrock.com/tags/bootcamp/</link>
-      <atom:link href="https://www.kristianbrock.com/tags/bootcamp/index.xml" rel="self" type="application/rss+xml" />
+    <link>/tags/bootcamp/</link>
+      <atom:link href="/tags/bootcamp/index.xml" rel="self" type="application/rss+xml" />
     <description>bootcamp</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 19 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://www.kristianbrock.com/img/icon-192.png</url>
+      <url>/img/icon-192.png</url>
       <title>bootcamp</title>
-      <link>https://www.kristianbrock.com/tags/bootcamp/</link>
+      <link>/tags/bootcamp/</link>
     </image>
     
     <item>
       <title>R Markdown is a miracle for scientific communication and repeatable research</title>
-      <link>https://www.kristianbrock.com/post/rmarkdown-in-trials/</link>
+      <link>/post/rmarkdown-in-trials/</link>
       <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/post/rmarkdown-in-trials/</guid>
+      <guid>/post/rmarkdown-in-trials/</guid>
       <description>
 
 
-&lt;p&gt;At CRCTU, we recently ran our &lt;a href=&#34;https://www.kristianbrock.com/courses/bootcamp/&#34;&gt;bootcamp course&lt;/a&gt; for the first time, a programme of core technical training for newly recruited biostatisticians.&lt;/p&gt;
+&lt;p&gt;At CRCTU, we recently ran our &lt;a href=&#34;../../courses/bootcamp/&#34;&gt;bootcamp course&lt;/a&gt; for the first time, a programme of core technical training for newly recruited biostatisticians.&lt;/p&gt;
 &lt;p&gt;Clinical trials units are busy centres of research where collaboration is the default.
 Being able to visualise data and communicate technical details to others quickly and effectively is important.
 Being able to reproduce something you calculated last month is necessary.

@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R | Kristian Brock</title>
+    <link>/tags/r/</link>
+      <atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>R</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 22 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/icon-192.png</url>
+      <title>R</title>
+      <link>/tags/r/</link>
+    </image>
+    
+    <item>
+      <title>Simulation or enumeration with dose-finding designs?</title>
+      <link>/post/simulate-vs-enumerate-dose-finding/</link>
+      <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>/post/simulate-vs-enumerate-dose-finding/</guid>
+      <description>
+
+
+&lt;p&gt;If operating performance of a dose-finding clinical trial design is sought, it is practically guaranteed that this will be by computer simulation.
+In a dose-finding simulation, a dose is selected and toxicity (and perhaps also efficacy) outcomes are sampled according to some assumed true event probabilities to reflect that this dose has been given to some imaginary patients.
+The model is fit to the new data and the subsequent dose recommendation is given to the next group of imaginary patients.
+This iterative and adaptive process continues to conduct a virtual trial.
+In this manner, many virtual trials are run to inform the trialists of the operating performance of the design.&lt;/p&gt;
+&lt;p&gt;However, simulating random virtual trials is not the only way to measure operating performance.
+&lt;a href=&#34;https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/&#34;&gt;Richard McElreath said&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If there’s a random way to do something, there’s usually a less random way that is both better and requires more thought.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In dose-finding trials, a less random method is to calculate each trial path using brute force.
+I demonstrated this topic &lt;span class=&#34;citation&#34;&gt;(Yap et al. 2017; Brock et al. 2017)&lt;/span&gt; in a recent post using the &lt;code&gt;escalation&lt;/code&gt; package.
+For illustration, let’s view the&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: magrittr&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This method has the benefit of providing exact operating characteristics, free from the Monte Carlo error that clouds inferences from simulations.
+As we will see below, the enumeration method is faster than simulation in some scenarios too.&lt;/p&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-Brock2017a&#34;&gt;
+&lt;p&gt;Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 17 (1): 112. &lt;a href=&#34;https://doi.org/10.1186/s12874-017-0381-x&#34;&gt;https://doi.org/10.1186/s12874-017-0381-x&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Yap2017&#34;&gt;
+&lt;p&gt;Yap, Christina, Lucinda J. Billingham, Ying Kuen Cheung, Charlie Craddock, and John O’Quigley. 2017. “Dose Transition Pathways: The Missing Link Between Complex Dose-Finding Designs and Simple Decision-Making.” &lt;em&gt;Clinical Cancer Research&lt;/em&gt; 23 (24): 7440–7. &lt;a href=&#34;https://doi.org/10.1158/1078-0432.CCR-17-0582&#34;&gt;https://doi.org/10.1158/1078-0432.CCR-17-0582&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Dose-paths in the escalation package</title>
+      <link>/post/dose-paths/</link>
+      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>/post/dose-paths/</guid>
+      <description>
+&lt;script src=&#34;../../rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;../../rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;../../rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;../../rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Dose-finding clinical trials investigate experimental agents, seeking doses that are tolerable and active.
+They commonly use some dose-selection model to analyse binary outcomes at increasing doses in cohorts of patients.
+It is possible to analyse the behaviour of a dose-finding design by exhaustively calculating every possible set of outcomes and invoking the dose selection model on each.
+We will refer to these hypothetical sequences of doses in response to outcomes as &lt;em&gt;dose-paths&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;An example will make this clear.
+The 3+3 design is widely understood.
+One of its benefits is its simplicity.
+Let us investigate the first two cohorts of three patients in the 3+3 variant that permits de-escalation.
+We calculate dose-paths in &lt;code&gt;escalation&lt;/code&gt; using the &lt;code&gt;get_dose_paths&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: magrittr&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_three_plus_three(num_doses = 5, allow_deescalate = TRUE) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = c(3, 3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;get_dose_paths&lt;/code&gt; takes a dose-selection methodology and enumerates every possible path according to the cohort sizes that you specify.
+The returned &lt;code&gt;paths&lt;/code&gt; object contains lot of information but the most pertinent perhaps is the sequence of dose-recommendations in response to hypothetical outcomes:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Give dose 1: 
+##   NNN -&amp;gt; 2 
+##     NNN -&amp;gt; 3 
+##     NNT -&amp;gt; 2 
+##     NTT -&amp;gt; 1 
+##     TTT -&amp;gt; 1 
+##   NNT -&amp;gt; 1 
+##     NNN -&amp;gt; 2 
+##     NNT -&amp;gt; NA 
+##     NTT -&amp;gt; NA 
+##     TTT -&amp;gt; NA 
+##   NTT -&amp;gt; NA 
+##   TTT -&amp;gt; NA&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see above that the trial starts at dose 1.
+If three non-toxicities (N) are seen, the algorithm advocates escalation to dose 2.
+In constrast if two or more toxicities (T) are seen in the first cohort, no dose is selected (the dose is &lt;code&gt;NA&lt;/code&gt;) and the trial stops.
+Subsequent cohorts are represented by greater levels of indentation.&lt;/p&gt;
+&lt;p&gt;This information is better represented by a graph.
+If you are using RStudio, the graph will appear in the &lt;em&gt;Viewer&lt;/em&gt; pane.
+(In this vignette, we suppress non-RStudio demonstration of the graphs to avoid problems on CRAN computers.)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;graph_paths(paths)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;2\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;3\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#22A884FF\&#34;] \n  \&#34;4\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;5\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;6\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#22A884FF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;7\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#22A884FF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;8\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;9\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#22A884FF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;10\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;11\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#22A884FF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;13\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#22A884FF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;7\&#34; [label = \&#34;TTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;8\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NNT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;12\&#34; [label = \&#34;TTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;13\&#34; [label = \&#34;TTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;The blue node towards the centre bearing the number &lt;code&gt;1&lt;/code&gt; represents the start of the trial.
+The edges of the graph (the lines connecting the nodes) represent the outcomes in cohorts of patients.
+As before, we see that if three &lt;code&gt;N&lt;/code&gt; events are seen, the trial escalates to dose 2.
+Three patients are assumed to be treated at that dose and from there, further escalation to dose 3 will be advised if no toxicity is seen.
+In contrast, dose 2 will be retained for a further cohort of three if a single toxicity is seen, and de-escalation to dose 1 will occur if two or more toxicities are seen.
+This is exactly the behaviour we expect from the 3+3 design.&lt;/p&gt;
+&lt;p&gt;Dose-paths were introduced in the phase I setting that we consider here by &lt;span class=&#34;citation&#34;&gt;Yap et al. (2017)&lt;/span&gt;.
+Their phase I/II analogue was introduced by &lt;span class=&#34;citation&#34;&gt;Brock et al. (2017)&lt;/span&gt; for dose-finding trials that consider efficacy and toxicity outcomes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;other-models&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Other Models&lt;/h1&gt;
+&lt;div id=&#34;crm&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;CRM&lt;/h2&gt;
+&lt;p&gt;The above example uses the 3+3 design but other methods are available.
+In fact, early phase statisticians would much prefer that you use a model-based method &lt;span class=&#34;citation&#34;&gt;(Wheeler et al. 2019)&lt;/span&gt;.
+The &lt;code&gt;escalation&lt;/code&gt; package is intentionally written so that all dose selectors look the same, regardless the implementation-level details.
+In computing terminology, dose selectors in &lt;code&gt;escalation&lt;/code&gt; support a common interface.
+This makes it trivial to calculate dose-paths for all dose-selectors - we just use the &lt;code&gt;get_dose_paths&lt;/code&gt; function again.&lt;/p&gt;
+&lt;p&gt;Let us investigate a continual reassessment method (CRM) design now, as described by &lt;span class=&#34;citation&#34;&gt;O’Quigley, Pepe, and Fisher (1990)&lt;/span&gt; and implemented by the dfcrm package &lt;span class=&#34;citation&#34;&gt;(Cheung 2013)&lt;/span&gt;.
+We must specify a dose-toxicity skeleton, and a target toxicity level:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;skeleton &amp;lt;- c(0.05, 0.1, 0.25, 0.4, 0.6)
+target &amp;lt;- 0.25&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then specify a CRM model and calculate dose-paths as before:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;%
+  get_dose_paths(cohort_sizes = c(3, 3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When we graph the paths this time (and adopt a different colour palette for fun):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;graph_paths(paths, viridis_palette = &amp;#39;magma&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;2\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#3B0F70FF\&#34;, fillcolor = \&#34;#FE9F6DFF\&#34;] \n  \&#34;3\&#34; [label = \&#34;5\&#34;, fontcolor = \&#34;#8C2981FF\&#34;, fillcolor = \&#34;#FCFDBFFF\&#34;] \n  \&#34;4\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;5\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FCFDBFFF\&#34;, fillcolor = \&#34;#8C2981FF\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;8\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;9\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;10\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#000004FF\&#34;, fillcolor = \&#34;#DE4968FF\&#34;] \n  \&#34;11\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;13\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;14\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FCFDBFFF\&#34;, fillcolor = \&#34;#8C2981FF\&#34;] \n  \&#34;15\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;16\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;17\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;18\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;19\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;20\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n  \&#34;21\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FE9F6DFF\&#34;, fillcolor = \&#34;#3B0F70FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NNT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;12\&#34; [label = \&#34;NNT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NNT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;14\&#34; [label = \&#34;NTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;15\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;16\&#34; [label = \&#34;NTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;17\&#34; [label = \&#34;NTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;18\&#34; [label = \&#34;TTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;19\&#34; [label = \&#34;TTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;20\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;21\&#34; [label = \&#34;TTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;we see that the &lt;code&gt;Stop&lt;/code&gt; node is absent - all paths recommend a dose, even those seeing substantial toxicity.
+Stopping behaviours must be specified for the CRM method.
+Fortunately, &lt;code&gt;escalation&lt;/code&gt; makes this simple.&lt;/p&gt;
+&lt;p&gt;An intuitive method for stopping in the Bayesian setting is to test the posterior distribution for the probability of toxicity.
+In our example, we will stop if there is at least a 90% probability that the toxicity rate at the lowest dose is 35% or greater:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;%
+  stop_when_too_toxic(dose = 1, tox_threshold = 0.35, confidence = 0.9) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = c(3, 3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When we visualise the paths from the updated model:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;graph_paths(paths, viridis_palette = &amp;#39;inferno&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;2\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#420A68FF\&#34;, fillcolor = \&#34;#FCA50AFF\&#34;] \n  \&#34;3\&#34; [label = \&#34;5\&#34;, fontcolor = \&#34;#932667FF\&#34;, fillcolor = \&#34;#FCFFA4FF\&#34;] \n  \&#34;4\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;5\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FCFFA4FF\&#34;, fillcolor = \&#34;#932667FF\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;8\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#DD513AFF\&#34;, fillcolor = \&#34;#000004FF\&#34;] \n  \&#34;9\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#000004FF\&#34;, fillcolor = \&#34;#DD513AFF\&#34;] \n  \&#34;10\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;11\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;12\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FCFFA4FF\&#34;, fillcolor = \&#34;#932667FF\&#34;] \n  \&#34;13\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;14\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;15\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;16\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA50AFF\&#34;, fillcolor = \&#34;#420A68FF\&#34;] \n  \&#34;17\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#DD513AFF\&#34;, fillcolor = \&#34;#000004FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NNT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NNT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;12\&#34; [label = \&#34;NTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;14\&#34; [label = \&#34;NTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;15\&#34; [label = \&#34;TTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;16\&#34; [label = \&#34;TTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;17\&#34; [label = \&#34;TTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;we see that some paths once again recommend stopping.
+The paths that recommend a dose are otherwise unchanged.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;boin&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;BOIN&lt;/h2&gt;
+&lt;p&gt;Another dose-escalation model implemented in &lt;code&gt;escalation&lt;/code&gt; is the Bayesian optimal interval (BOIN) method by &lt;span class=&#34;citation&#34;&gt;Liu and Yuan (2015)&lt;/span&gt;, implemented in the &lt;code&gt;BOIN&lt;/code&gt; package &lt;span class=&#34;citation&#34;&gt;(Yuan and Liu 2018)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;To spice things up, we will visualise how this model behaves over four cohorts of two patients:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_boin(num_doses = 4, target = target) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = rep(2, 4))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## You have requested 121 model evaluations. Be patient.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;graph_paths(paths, RColorBrewer_palette = &amp;#39;YlOrRd&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;2\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;3\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FFFFB2\&#34;, fillcolor = \&#34;#F03B20\&#34;] \n  \&#34;4\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#FECC5C\&#34;, fillcolor = \&#34;#BD0026\&#34;] \n  \&#34;5\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#FECC5C\&#34;, fillcolor = \&#34;#BD0026\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;8\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;9\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FFFFB2\&#34;, fillcolor = \&#34;#F03B20\&#34;] \n  \&#34;10\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;11\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;13\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;14\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;15\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;16\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;17\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;18\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;19\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;20\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;21\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;22\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;23\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;24\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;25\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;26\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;27\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FFFFB2\&#34;, fillcolor = \&#34;#F03B20\&#34;] \n  \&#34;28\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;29\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;30\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;31\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;32\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;33\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;34\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;35\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;36\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;37\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;38\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;39\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FFFFB2\&#34;, fillcolor = \&#34;#F03B20\&#34;] \n  \&#34;40\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;41\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;42\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;43\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;44\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;45\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;46\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;47\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;48\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FFFFB2\&#34;, fillcolor = \&#34;#F03B20\&#34;] \n  \&#34;49\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;50\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;51\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;52\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;53\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;54\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;55\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;56\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;57\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;58\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;59\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;60\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#BD0026\&#34;, fillcolor = \&#34;#FD8D3C\&#34;] \n  \&#34;61\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;62\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;63\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;64\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FFFFB2\&#34;, fillcolor = \&#34;#F03B20\&#34;] \n  \&#34;65\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;66\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;67\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;68\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;69\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;70\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;71\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;72\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;73\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;74\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;75\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;76\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#F03B20\&#34;, fillcolor = \&#34;#FECC5C\&#34;] \n  \&#34;77\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;78\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n  \&#34;79\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#FD8D3C\&#34;, fillcolor = \&#34;#FFFFB2\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NN\&#34;] \n\&#34;3\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NN\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NN\&#34;] \n\&#34;7\&#34;-&gt;\&#34;8\&#34; [label = \&#34;NN\&#34;] \n\&#34;8\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;10\&#34; [label = \&#34;TT\&#34;] \n\&#34;10\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NN\&#34;] \n\&#34;11\&#34;-&gt;\&#34;12\&#34; [label = \&#34;NN\&#34;] \n\&#34;12\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;14\&#34; [label = \&#34;NT\&#34;] \n\&#34;14\&#34;-&gt;\&#34;15\&#34; [label = \&#34;NN\&#34;] \n\&#34;15\&#34;-&gt;\&#34;16\&#34; [label = \&#34;NN\&#34;] \n\&#34;6\&#34;-&gt;\&#34;17\&#34; [label = \&#34;NT\&#34;] \n\&#34;17\&#34;-&gt;\&#34;18\&#34; [label = \&#34;NN\&#34;] \n\&#34;18\&#34;-&gt;\&#34;19\&#34; [label = \&#34;NN\&#34;] \n\&#34;10\&#34;-&gt;\&#34;20\&#34; [label = \&#34;NT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;21\&#34; [label = \&#34;TT\&#34;] \n\&#34;21\&#34;-&gt;\&#34;22\&#34; [label = \&#34;NN\&#34;] \n\&#34;22\&#34;-&gt;\&#34;23\&#34; [label = \&#34;NN\&#34;] \n\&#34;6\&#34;-&gt;\&#34;24\&#34; [label = \&#34;TT\&#34;] \n\&#34;10\&#34;-&gt;\&#34;25\&#34; [label = \&#34;TT\&#34;] \n\&#34;3\&#34;-&gt;\&#34;26\&#34; [label = \&#34;NT\&#34;] \n\&#34;26\&#34;-&gt;\&#34;27\&#34; [label = \&#34;NN\&#34;] \n\&#34;7\&#34;-&gt;\&#34;28\&#34; [label = \&#34;NT\&#34;] \n\&#34;28\&#34;-&gt;\&#34;29\&#34; [label = \&#34;NN\&#34;] \n\&#34;11\&#34;-&gt;\&#34;30\&#34; [label = \&#34;NT\&#34;] \n\&#34;30\&#34;-&gt;\&#34;31\&#34; [label = \&#34;NN\&#34;] \n\&#34;14\&#34;-&gt;\&#34;32\&#34; [label = \&#34;NT\&#34;] \n\&#34;32\&#34;-&gt;\&#34;33\&#34; [label = \&#34;NN\&#34;] \n\&#34;17\&#34;-&gt;\&#34;34\&#34; [label = \&#34;NT\&#34;] \n\&#34;34\&#34;-&gt;\&#34;35\&#34; [label = \&#34;NN\&#34;] \n\&#34;21\&#34;-&gt;\&#34;36\&#34; [label = \&#34;NT\&#34;] \n\&#34;36\&#34;-&gt;\&#34;37\&#34; [label = \&#34;NN\&#34;] \n\&#34;3\&#34;-&gt;\&#34;38\&#34; [label = \&#34;TT\&#34;] \n\&#34;38\&#34;-&gt;\&#34;39\&#34; [label = \&#34;NN\&#34;] \n\&#34;7\&#34;-&gt;\&#34;40\&#34; [label = \&#34;TT\&#34;] \n\&#34;40\&#34;-&gt;\&#34;41\&#34; [label = \&#34;NN\&#34;] \n\&#34;11\&#34;-&gt;\&#34;42\&#34; [label = \&#34;TT\&#34;] \n\&#34;14\&#34;-&gt;\&#34;43\&#34; [label = \&#34;TT\&#34;] \n\&#34;43\&#34;-&gt;\&#34;44\&#34; [label = \&#34;NN\&#34;] \n\&#34;17\&#34;-&gt;\&#34;45\&#34; [label = \&#34;TT\&#34;] \n\&#34;21\&#34;-&gt;\&#34;46\&#34; [label = \&#34;TT\&#34;] \n\&#34;46\&#34;-&gt;\&#34;47\&#34; [label = \&#34;NN\&#34;] \n\&#34;4\&#34;-&gt;\&#34;48\&#34; [label = \&#34;NT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;49\&#34; [label = \&#34;NT\&#34;] \n\&#34;12\&#34;-&gt;\&#34;50\&#34; [label = \&#34;NT\&#34;] \n\&#34;15\&#34;-&gt;\&#34;51\&#34; [label = \&#34;NT\&#34;] \n\&#34;18\&#34;-&gt;\&#34;52\&#34; [label = \&#34;NT\&#34;] \n\&#34;22\&#34;-&gt;\&#34;53\&#34; [label = \&#34;NT\&#34;] \n\&#34;26\&#34;-&gt;\&#34;54\&#34; [label = \&#34;NT\&#34;] \n\&#34;28\&#34;-&gt;\&#34;55\&#34; [label = \&#34;NT\&#34;] \n\&#34;30\&#34;-&gt;\&#34;56\&#34; [label = \&#34;NT\&#34;] \n\&#34;32\&#34;-&gt;\&#34;57\&#34; [label = \&#34;NT\&#34;] \n\&#34;34\&#34;-&gt;\&#34;58\&#34; [label = \&#34;NT\&#34;] \n\&#34;36\&#34;-&gt;\&#34;59\&#34; [label = \&#34;NT\&#34;] \n\&#34;38\&#34;-&gt;\&#34;60\&#34; [label = \&#34;NT\&#34;] \n\&#34;40\&#34;-&gt;\&#34;61\&#34; [label = \&#34;NT\&#34;] \n\&#34;43\&#34;-&gt;\&#34;62\&#34; [label = \&#34;NT\&#34;] \n\&#34;46\&#34;-&gt;\&#34;63\&#34; [label = \&#34;NT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;64\&#34; [label = \&#34;TT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;65\&#34; [label = \&#34;TT\&#34;] \n\&#34;12\&#34;-&gt;\&#34;66\&#34; [label = \&#34;TT\&#34;] \n\&#34;15\&#34;-&gt;\&#34;67\&#34; [label = \&#34;TT\&#34;] \n\&#34;18\&#34;-&gt;\&#34;68\&#34; [label = \&#34;TT\&#34;] \n\&#34;22\&#34;-&gt;\&#34;69\&#34; [label = \&#34;TT\&#34;] \n\&#34;26\&#34;-&gt;\&#34;70\&#34; [label = \&#34;TT\&#34;] \n\&#34;28\&#34;-&gt;\&#34;71\&#34; [label = \&#34;TT\&#34;] \n\&#34;30\&#34;-&gt;\&#34;72\&#34; [label = \&#34;TT\&#34;] \n\&#34;32\&#34;-&gt;\&#34;73\&#34; [label = \&#34;TT\&#34;] \n\&#34;34\&#34;-&gt;\&#34;74\&#34; [label = \&#34;TT\&#34;] \n\&#34;36\&#34;-&gt;\&#34;75\&#34; [label = \&#34;TT\&#34;] \n\&#34;38\&#34;-&gt;\&#34;76\&#34; [label = \&#34;TT\&#34;] \n\&#34;40\&#34;-&gt;\&#34;77\&#34; [label = \&#34;TT\&#34;] \n\&#34;43\&#34;-&gt;\&#34;78\&#34; [label = \&#34;TT\&#34;] \n\&#34;46\&#34;-&gt;\&#34;79\&#34; [label = \&#34;TT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;The first thing to note about the graph above is that it is much more complex than the previous graphs.
+The number of nodes in dose-paths increases faster than linearly as more cohorts are considered.
+Consideration of this must be given when visualising dose-paths.&lt;/p&gt;
+&lt;p&gt;Secondly, the visual method makes it simple to discern messages about future model behaviour.
+For instance, we can easily see that dose 4, the darkest red node, is only reached in the first four cohorts if the first cohort sees no toxicity.&lt;/p&gt;
+&lt;p&gt;In contrast to CRM, BOIN does have a stopping rule for excess toxicity built in.
+We see that &lt;code&gt;TT&lt;/code&gt; in the first cohort is not enough to advocate stopping but that any further toxicity in the second cohort will be sufficient to warrant stopping.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;further-options&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Further options&lt;/h1&gt;
+&lt;div id=&#34;non-uniform-cohorts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Non-uniform cohorts&lt;/h2&gt;
+&lt;p&gt;There is no reason that the cohort sizes should be uniform.
+Specify whatever &lt;code&gt;cohort_sizes&lt;/code&gt; you like:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_boin(num_doses = 4, target = target) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = c(3, 1, 2))
+
+graph_paths(paths, RColorBrewer_palette = &amp;#39;Blues&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-5&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-5&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;2\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#08519C\&#34;, fillcolor = \&#34;#6BAED6\&#34;] \n  \&#34;3\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#EFF3FF\&#34;, fillcolor = \&#34;#3182BD\&#34;] \n  \&#34;4\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#BDD7E7\&#34;, fillcolor = \&#34;#08519C\&#34;] \n  \&#34;5\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;7\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#08519C\&#34;, fillcolor = \&#34;#6BAED6\&#34;] \n  \&#34;8\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;9\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;10\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;11\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#6BAED6\&#34;, fillcolor = \&#34;#EFF3FF\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;13\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#08519C\&#34;, fillcolor = \&#34;#6BAED6\&#34;] \n  \&#34;14\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;15\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;16\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#6BAED6\&#34;, fillcolor = \&#34;#EFF3FF\&#34;] \n  \&#34;17\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#08519C\&#34;, fillcolor = \&#34;#6BAED6\&#34;] \n  \&#34;18\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;19\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;20\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;21\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;22\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#08519C\&#34;, fillcolor = \&#34;#6BAED6\&#34;] \n  \&#34;23\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;24\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#6BAED6\&#34;, fillcolor = \&#34;#EFF3FF\&#34;] \n  \&#34;25\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#3182BD\&#34;, fillcolor = \&#34;#BDD7E7\&#34;] \n  \&#34;26\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#6BAED6\&#34;, fillcolor = \&#34;#EFF3FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;N\&#34;] \n\&#34;3\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNT\&#34;] \n\&#34;5\&#34;-&gt;\&#34;6\&#34; [label = \&#34;N\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;NTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;9\&#34; [label = \&#34;N\&#34;] \n\&#34;9\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;11\&#34; [label = \&#34;TTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;12\&#34; [label = \&#34;T\&#34;] \n\&#34;12\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NN\&#34;] \n\&#34;5\&#34;-&gt;\&#34;14\&#34; [label = \&#34;T\&#34;] \n\&#34;14\&#34;-&gt;\&#34;15\&#34; [label = \&#34;NN\&#34;] \n\&#34;8\&#34;-&gt;\&#34;16\&#34; [label = \&#34;T\&#34;] \n\&#34;3\&#34;-&gt;\&#34;17\&#34; [label = \&#34;NT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;18\&#34; [label = \&#34;NT\&#34;] \n\&#34;9\&#34;-&gt;\&#34;19\&#34; [label = \&#34;NT\&#34;] \n\&#34;12\&#34;-&gt;\&#34;20\&#34; [label = \&#34;NT\&#34;] \n\&#34;14\&#34;-&gt;\&#34;21\&#34; [label = \&#34;NT\&#34;] \n\&#34;3\&#34;-&gt;\&#34;22\&#34; [label = \&#34;TT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;23\&#34; [label = \&#34;TT\&#34;] \n\&#34;9\&#34;-&gt;\&#34;24\&#34; [label = \&#34;TT\&#34;] \n\&#34;12\&#34;-&gt;\&#34;25\&#34; [label = \&#34;TT\&#34;] \n\&#34;14\&#34;-&gt;\&#34;26\&#34; [label = \&#34;TT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;You can even evaluate the dose advice after each patient using cohort sizes of 1:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_boin(num_doses = 4, target = target) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = rep(1, 4))
+
+graph_paths(paths, RColorBrewer_palette = &amp;#39;RdPu&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-6&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-6&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;2\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#7A0177\&#34;, fillcolor = \&#34;#F768A1\&#34;] \n  \&#34;3\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FEEBE2\&#34;, fillcolor = \&#34;#C51B8A\&#34;] \n  \&#34;4\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#FBB4B9\&#34;, fillcolor = \&#34;#7A0177\&#34;] \n  \&#34;5\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#FBB4B9\&#34;, fillcolor = \&#34;#7A0177\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;8\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;9\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;10\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;11\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#7A0177\&#34;, fillcolor = \&#34;#F768A1\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;13\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;14\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;15\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;16\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#7A0177\&#34;, fillcolor = \&#34;#F768A1\&#34;] \n  \&#34;17\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FEEBE2\&#34;, fillcolor = \&#34;#C51B8A\&#34;] \n  \&#34;18\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;19\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;20\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;21\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;22\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#F768A1\&#34;, fillcolor = \&#34;#FEEBE2\&#34;] \n  \&#34;23\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#FEEBE2\&#34;, fillcolor = \&#34;#C51B8A\&#34;] \n  \&#34;24\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;25\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;26\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#F768A1\&#34;, fillcolor = \&#34;#FEEBE2\&#34;] \n  \&#34;27\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n  \&#34;28\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#F768A1\&#34;, fillcolor = \&#34;#FEEBE2\&#34;] \n  \&#34;29\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#C51B8A\&#34;, fillcolor = \&#34;#FBB4B9\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;N\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;N\&#34;] \n\&#34;3\&#34;-&gt;\&#34;4\&#34; [label = \&#34;N\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;N\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;T\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;N\&#34;] \n\&#34;7\&#34;-&gt;\&#34;8\&#34; [label = \&#34;N\&#34;] \n\&#34;8\&#34;-&gt;\&#34;9\&#34; [label = \&#34;N\&#34;] \n\&#34;2\&#34;-&gt;\&#34;10\&#34; [label = \&#34;T\&#34;] \n\&#34;10\&#34;-&gt;\&#34;11\&#34; [label = \&#34;N\&#34;] \n\&#34;11\&#34;-&gt;\&#34;12\&#34; [label = \&#34;N\&#34;] \n\&#34;6\&#34;-&gt;\&#34;13\&#34; [label = \&#34;T\&#34;] \n\&#34;13\&#34;-&gt;\&#34;14\&#34; [label = \&#34;N\&#34;] \n\&#34;14\&#34;-&gt;\&#34;15\&#34; [label = \&#34;N\&#34;] \n\&#34;3\&#34;-&gt;\&#34;16\&#34; [label = \&#34;T\&#34;] \n\&#34;16\&#34;-&gt;\&#34;17\&#34; [label = \&#34;N\&#34;] \n\&#34;7\&#34;-&gt;\&#34;18\&#34; [label = \&#34;T\&#34;] \n\&#34;18\&#34;-&gt;\&#34;19\&#34; [label = \&#34;N\&#34;] \n\&#34;10\&#34;-&gt;\&#34;20\&#34; [label = \&#34;T\&#34;] \n\&#34;20\&#34;-&gt;\&#34;21\&#34; [label = \&#34;N\&#34;] \n\&#34;13\&#34;-&gt;\&#34;22\&#34; [label = \&#34;T\&#34;] \n\&#34;4\&#34;-&gt;\&#34;23\&#34; [label = \&#34;T\&#34;] \n\&#34;8\&#34;-&gt;\&#34;24\&#34; [label = \&#34;T\&#34;] \n\&#34;11\&#34;-&gt;\&#34;25\&#34; [label = \&#34;T\&#34;] \n\&#34;14\&#34;-&gt;\&#34;26\&#34; [label = \&#34;T\&#34;] \n\&#34;16\&#34;-&gt;\&#34;27\&#34; [label = \&#34;T\&#34;] \n\&#34;18\&#34;-&gt;\&#34;28\&#34; [label = \&#34;T\&#34;] \n\&#34;20\&#34;-&gt;\&#34;29\&#34; [label = \&#34;T\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;partially-completed-trials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Partially completed trials&lt;/h2&gt;
+&lt;p&gt;It is possible to calculate dose-paths from trials that are partially completed.
+For instance, let us continue with our BOIN model and assume that we have seen outcomes &lt;code&gt;1NNN 2TNT&lt;/code&gt; so far in our trial.
+Thus, we are reasonably sure that dose 1 is safe but wary that dose 2 might be too toxic.
+However, these beliefs are tempered by the tiny sample size.
+From this starting point, how might the next two cohorts of three proceed?
+We just specify the previous outcomes using the &lt;code&gt;previous_outcomes&lt;/code&gt; parameter:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_boin(num_doses = 4, target = target) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = rep(3, 2), previous_outcomes = &amp;#39;1NNN 2TNT&amp;#39;)
+
+graph_paths(paths, viridis_palette = &amp;#39;viridis&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-7&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-7&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;2\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#21908CFF\&#34;] \n  \&#34;3\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;4\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#21908CFF\&#34;] \n  \&#34;5\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;8\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;9\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;10\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;11\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;13\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;14\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;15\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;16\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;17\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#21908CFF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;18\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;19\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;20\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#21908CFF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;21\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#21908CFF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NNT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;12\&#34; [label = \&#34;NNT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NNT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;14\&#34; [label = \&#34;NTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;15\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;16\&#34; [label = \&#34;NTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;17\&#34; [label = \&#34;NTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;18\&#34; [label = \&#34;TTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;19\&#34; [label = \&#34;TTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;20\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;21\&#34; [label = \&#34;TTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Notice how this is different to the advice we get at the start of the trial (i.e. when omitting the &lt;code&gt;previous_outcomes&lt;/code&gt;):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_boin(num_doses = 4, target = target) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = rep(3, 2))
+
+graph_paths(paths, viridis_palette = &amp;#39;viridis&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-8&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-8&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;2\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#21908CFF\&#34;] \n  \&#34;3\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#5DC863FF\&#34;] \n  \&#34;4\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;5\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#21908CFF\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;8\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#21908CFF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;9\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;10\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;11\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;13\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;14\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#21908CFF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;15\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#5DC863FF\&#34;, fillcolor = \&#34;#3B528BFF\&#34;] \n  \&#34;16\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#21908CFF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n  \&#34;17\&#34; [label = \&#34;Stop\&#34;, fontcolor = \&#34;#21908CFF\&#34;, fillcolor = \&#34;#440154FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NNT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NNT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;12\&#34; [label = \&#34;NTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;14\&#34; [label = \&#34;NTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;15\&#34; [label = \&#34;TTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;16\&#34; [label = \&#34;TTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;17\&#34; [label = \&#34;TTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;This is a feature of model-based methods like CRM and BOIN - they use all information at all doses when making dose decisions.
+They are not memoryless like the 3+3.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;next-dose&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Next dose&lt;/h2&gt;
+&lt;p&gt;The dose at which dose-paths commence is inferred from the model.
+It can be specified manually, however:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_three_plus_three(num_doses = 5, allow_deescalate = TRUE) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = c(3, 3), next_dose = 3)
+
+graph_paths(paths, viridis_palette = &amp;#39;plasma&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-9&#34; style=&#34;width:672px;height:672px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-9&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#0D0887FF\&#34;, fillcolor = \&#34;#E16462FF\&#34;] \n  \&#34;2\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#6A00A8FF\&#34;, fillcolor = \&#34;#FCA636FF\&#34;] \n  \&#34;3\&#34; [label = \&#34;5\&#34;, fontcolor = \&#34;#B12A90FF\&#34;, fillcolor = \&#34;#F0F921FF\&#34;] \n  \&#34;4\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#0D0887FF\&#34;, fillcolor = \&#34;#E16462FF\&#34;] \n  \&#34;5\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#6A00A8FF\&#34;, fillcolor = \&#34;#FCA636FF\&#34;] \n  \&#34;6\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;7\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;8\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;9\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;10\&#34; [label = \&#34;4\&#34;, fontcolor = \&#34;#6A00A8FF\&#34;, fillcolor = \&#34;#FCA636FF\&#34;] \n  \&#34;11\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;12\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;13\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;14\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#0D0887FF\&#34;, fillcolor = \&#34;#E16462FF\&#34;] \n  \&#34;15\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;16\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA636FF\&#34;, fillcolor = \&#34;#6A00A8FF\&#34;] \n  \&#34;17\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA636FF\&#34;, fillcolor = \&#34;#6A00A8FF\&#34;] \n  \&#34;18\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#0D0887FF\&#34;, fillcolor = \&#34;#E16462FF\&#34;] \n  \&#34;19\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#F0F921FF\&#34;, fillcolor = \&#34;#B12A90FF\&#34;] \n  \&#34;20\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA636FF\&#34;, fillcolor = \&#34;#6A00A8FF\&#34;] \n  \&#34;21\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FCA636FF\&#34;, fillcolor = \&#34;#6A00A8FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NNT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;12\&#34; [label = \&#34;NNT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NNT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;14\&#34; [label = \&#34;NTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;15\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;16\&#34; [label = \&#34;NTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;17\&#34; [label = \&#34;NTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;18\&#34; [label = \&#34;TTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;19\&#34; [label = \&#34;TTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;20\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;21\&#34; [label = \&#34;TTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;A 3+3 trial with de-escalation enabled will de-escalate through the doses when toxicity is seen, as expected.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;crystallised-dose-paths&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Crystallised dose-paths&lt;/h1&gt;
+&lt;p&gt;Calculating dose-paths is useful for visually examining the conditions under which a dose-finding design would escalate or de-escalate or stop.
+However, that is only part of the story.
+When we marry dose-paths with assumed true event probabilities, we can calculate exact operating characteristics of a design.
+We refer to this as &lt;em&gt;crystallising&lt;/em&gt; dose paths because the likelihood of each path has been calculated precisely according to an assumed truth.&lt;/p&gt;
+&lt;p&gt;For instance, we can calculate dose-paths for the first four cohorts of three patients using the CRM with stopping design that we specified previously:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;skeleton &amp;lt;- c(0.05, 0.1, 0.25, 0.4, 0.6)
+target &amp;lt;- 0.25
+
+paths &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;%
+  stop_when_too_toxic(dose = 1, tox_threshold = 0.35, confidence = 0.9) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = rep(3, 4))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## You have requested 341 model evaluations. Be patient.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then crystallise the paths using toxicity probabilities that exactly match the beliefs in our skeleton:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;true_prob_tox &amp;lt;- skeleton
+
+x &amp;lt;- paths %&amp;gt;% calculate_probabilities(true_prob_tox = true_prob_tox)
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number of nodes: 213 
+## Number of terminal nodes: 160 
+## 
+## Number of doses: 5 
+## 
+## Probability of recommendation:
+##   NoDose        1        2        3        4        5 
+## 0.000127 0.019866 0.227135 0.451791 0.273014 0.028066 
+## 
+## Probability of continuance:
+## [1] 1
+## 
+## Probability of administration:
+##      1      2      3      4      5 
+## 0.3172 0.1602 0.1867 0.2734 0.0626 
+## 
+## Expected sample size:
+## [1] 11.99887
+## 
+## Expected total toxicities:
+## [1] 2.705489&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see that in this scenario, the probability of a path stopping and advocating no dose within the first four cohorts is very close to zero.
+In contrast, when the toxicity probabilities are much greater than anticipated:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;true_prob_tox &amp;lt;- c(0.45, 0.6, 0.68, 0.75, 0.81)
+
+x &amp;lt;- paths %&amp;gt;% calculate_probabilities(true_prob_tox = true_prob_tox)
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number of nodes: 213 
+## Number of terminal nodes: 160 
+## 
+## Number of doses: 5 
+## 
+## Probability of recommendation:
+##    NoDose         1         2         3         4         5 
+## 0.3027462 0.6407708 0.0502073 0.0055527 0.0006931 0.0000299 
+## 
+## Probability of continuance:
+## [1] 0.697
+## 
+## Probability of administration:
+##        1        2        3        4        5 
+## 0.895800 0.052921 0.008539 0.042028 0.000711 
+## 
+## Expected sample size:
+## [1] 10.73269
+## 
+## Expected total toxicities:
+## [1] 5.102913&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;the probability of selecting no dose within these first four cohorts is over 30%.
+The information labelled &lt;code&gt;Probability of continuance:&lt;/code&gt; shows the aggregate probability of paths that are continuing to advocate experimentation at doses, i.e. those paths that do not advocate stopping.&lt;/p&gt;
+&lt;p&gt;We see above that the probability of continuance is 1 minus the probability of selecting no dose.
+However, this need not necessarily be the case because paths can advocate stopping &lt;em&gt;and recommend a dose&lt;/em&gt;.
+They might do so once it is felt that a suitable dose has been identified.
+To make this point, let us imagine that we add a rule to our above design that allows stopping once there are 9 patients allocated to the recommended dose.
+We can think of this as stopping for consensus.
+Respecifying our model and recalculating dose-paths, we have:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;%
+  stop_when_too_toxic(dose = 1, tox_threshold = 0.35, confidence = 0.9) %&amp;gt;% 
+  stop_when_n_at_dose(dose = &amp;#39;recommended&amp;#39;, n = 9) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = rep(3, 4))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## You have requested 341 model evaluations. Be patient.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- paths %&amp;gt;% calculate_probabilities(true_prob_tox = true_prob_tox)
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number of nodes: 141 
+## Number of terminal nodes: 106 
+## 
+## Number of doses: 5 
+## 
+## Probability of recommendation:
+##    NoDose         1         2         3         4         5 
+## 0.2103223 0.7393498 0.0440522 0.0055527 0.0006931 0.0000299 
+## 
+## Probability of continuance:
+## [1] 0.137
+## 
+## Probability of administration:
+##        1        2        3        4        5 
+## 0.895800 0.052921 0.008539 0.042028 0.000711 
+## 
+## Expected sample size:
+## [1] 9.064864
+## 
+## Expected total toxicities:
+## [1] 4.352391&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see that this has reduced our probability of stopping for excess toxicity and inflated our chances of recommending dose 1.
+Notably, the probability of continuance is now roughly 14%, suggesting that most paths have advocated stopping by now, either for toxicity or concensus.&lt;/p&gt;
+&lt;p&gt;If we do not like that performance, we can make the consensus stopping rule more demanding by requesting 12 at the recommended dose to advocate stopping:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;%
+  stop_when_too_toxic(dose = 1, tox_threshold = 0.35, confidence = 0.9) %&amp;gt;% 
+  stop_when_n_at_dose(dose = &amp;#39;recommended&amp;#39;, n = 12) %&amp;gt;% 
+  get_dose_paths(cohort_sizes = rep(3, 4))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## You have requested 341 model evaluations. Be patient.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- paths %&amp;gt;% calculate_probabilities(true_prob_tox = true_prob_tox)
+x&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number of nodes: 213 
+## Number of terminal nodes: 160 
+## 
+## Number of doses: 5 
+## 
+## Probability of recommendation:
+##    NoDose         1         2         3         4         5 
+## 0.3027462 0.6407708 0.0502073 0.0055527 0.0006931 0.0000299 
+## 
+## Probability of continuance:
+## [1] 0.24
+## 
+## Probability of administration:
+##        1        2        3        4        5 
+## 0.895800 0.052921 0.008539 0.042028 0.000711 
+## 
+## Expected sample size:
+## [1] 10.73269
+## 
+## Expected total toxicities:
+## [1] 5.102913&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As usual, deriving an acceptable design is an iterative process.
+The tools in &lt;code&gt;escalation&lt;/code&gt; make it easier to arrive at a design that performs how you want.&lt;/p&gt;
+&lt;p&gt;Combining dose-paths with true event probabilities allows probabilistic inference on dose-finding designs.
+This is a novel extension to the use advocated by &lt;span class=&#34;citation&#34;&gt;Yap et al. (2017)&lt;/span&gt; and &lt;span class=&#34;citation&#34;&gt;Brock et al. (2017)&lt;/span&gt;.
+The use of exact operating characteristics has been implemented for the 3+3 design in the &lt;code&gt;bcrm&lt;/code&gt; package &lt;span class=&#34;citation&#34;&gt;(Sweeting and Wheeler 2019)&lt;/span&gt;.
+We generalise the method here.&lt;/p&gt;
+&lt;div id=&#34;dose-paths-vs-simulation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Dose-paths vs simulation&lt;/h2&gt;
+&lt;p&gt;We saw above that probabilistic inference was possible with dose-paths.
+Researchers have typically used simulation to achieve this task.
+&lt;code&gt;escalation&lt;/code&gt; supports simulation as well through the &lt;code&gt;simulate_trials&lt;/code&gt; function.
+However, this does raise the question, when should you use each method, and what are their relative merits?&lt;/p&gt;
+&lt;p&gt;The answer to the first question comes down to the expected number of model fits required.
+Fitting dose-finding models takes computer time.
+In dose-paths, the model is fit once at each node.
+We have seen examples above of how the number and size of cohorts affects the number of nodes in dose-paths.
+In fact, &lt;code&gt;escalation&lt;/code&gt; provides a function to calculate the number of nodes.&lt;/p&gt;
+&lt;p&gt;In a phase 1 dose-finding trial, each patient experiences exactly one of two outcomes: &lt;code&gt;T&lt;/code&gt; or &lt;code&gt;N&lt;/code&gt;.
+Let us calculate how many nodes there are in a graph of dose-paths using five cohorts of three patients.
+We run:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_dose_path_nodes(num_patient_outcomes = 2, cohort_sizes = rep(3, 5))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]    1    4   16   64  256 1024&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;num_patient_outcomes = 2&lt;/code&gt; parameter reflects that patients may experience &lt;code&gt;T&lt;/code&gt; or &lt;code&gt;N&lt;/code&gt;.
+The returned vector of integers is the number of nodes at each depth.
+There is one starting node.
+That node is connected to four children via outcomes &lt;code&gt;NNN&lt;/code&gt;, &lt;code&gt;NNT&lt;/code&gt;, &lt;code&gt;NTT&lt;/code&gt;, and &lt;code&gt;TTT&lt;/code&gt;.
+The number of nodes at greater depths proceeds multiplicatively thereafter.
+The total number of nodes is:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_dose_path_nodes(num_patient_outcomes = 2, cohort_sizes = rep(3, 5)) %&amp;gt;% 
+  sum&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1365&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Thus it requires exactly 1,365 model fits to calculate the exact operating characteristics in this &lt;span class=&#34;math inline&#34;&gt;\(n = 5 \times 3 = 15\)&lt;/span&gt; patient scenario.
+To compare this to simulations, consider that each simulated trial iteration will fit the model up to five times, once at the end of each cohort.
+The total number of model fits in a simulation study is bounded by this number multiplied by the number of simulated iterations.
+Generally simulation studies use thousands of replicates, so it is easy to see that exact inference via crystallised dose-paths will be much less computaionally burdensome, and therefore faster here.&lt;/p&gt;
+&lt;p&gt;In contrast, now consider a trial of eight cohorts of three.
+The total number of model fits to enumerate the complete graph of dose-paths is&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_dose_path_nodes(num_patient_outcomes = 2, cohort_sizes = rep(3, 8)) %&amp;gt;% 
+  sum&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 87381&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ten thousand simulated iterations of 8 cohorts each would only require up to 80,000 model fits.
+Thus, a reasonably accurate simulation study would be expected to be faster here.&lt;/p&gt;
+&lt;p&gt;However, speed is not the only concern: there is also precision to consider.
+Simulations have the disadvantage of suffering from Monte Carlo error, that is the uncertainty about the estimated statistics arising from the use of a finite number of simulated iterations.
+In contrast, exact inference via dose-paths has the great advantage of being exact.
+That is, there is no uncertainty in the calculated probabilities.
+(Note: there is still uncertainty about which path will be taken because that is determined by random patient outcomes).
+Thus, there are scenarios when dose-paths may still be preferable to simulations, even when they are expected to take longer.&lt;/p&gt;
+&lt;p&gt;It is likely that in practice, simulation is often used when dose-paths would be a better option.
+If true, that would likely be linked to provision of software that performs the two methods.
+&lt;code&gt;escalation&lt;/code&gt; plugs that gap.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level1 unnumbered&#34;&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-Brock2017a&#34;&gt;
+&lt;p&gt;Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 17 (1): 112. &lt;a href=&#34;https://doi.org/10.1186/s12874-017-0381-x&#34;&gt;https://doi.org/10.1186/s12874-017-0381-x&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-dfcrm&#34;&gt;
+&lt;p&gt;Cheung, Ken. 2013. &lt;em&gt;Dfcrm: Dose-Finding by the Continual Reassessment Method&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=dfcrm&#34;&gt;https://CRAN.R-project.org/package=dfcrm&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-liu_bayesian_2015&#34;&gt;
+&lt;p&gt;Liu, Suyu, and Ying Yuan. 2015. “Bayesian Optimal Interval Designs for Phase I Clinical Trials.” &lt;em&gt;Journal of the Royal Statistical Society: Series C (Applied Statistics)&lt;/em&gt; 64 (3): 507–23. &lt;a href=&#34;https://doi.org/10.1111/rssc.12089&#34;&gt;https://doi.org/10.1111/rssc.12089&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-OQuigley1990&#34;&gt;
+&lt;p&gt;O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” &lt;em&gt;Biometrics&lt;/em&gt; 46 (1): 33–48. &lt;a href=&#34;https://doi.org/10.2307/2531628&#34;&gt;https://doi.org/10.2307/2531628&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-bcrm&#34;&gt;
+&lt;p&gt;Sweeting, Michael, and Graham Wheeler. 2019. &lt;em&gt;Bcrm: Bayesian Continual Reassessment Method for Phase I Dose-Escalation Trials&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=bcrm&#34;&gt;https://CRAN.R-project.org/package=bcrm&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-wheelerHowDesignDosefinding2019&#34;&gt;
+&lt;p&gt;Wheeler, Graham M., Adrian P. Mander, Alun Bedding, Kristian Brock, Victoria Cornelius, Andrew P. Grieve, Thomas Jaki, et al. 2019. “How to Design a Dose-Finding Study Using the Continual Reassessment Method.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 19 (1). &lt;a href=&#34;https://doi.org/10.1186/s12874-018-0638-z&#34;&gt;https://doi.org/10.1186/s12874-018-0638-z&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Yap2017&#34;&gt;
+&lt;p&gt;Yap, Christina, Lucinda J. Billingham, Ying Kuen Cheung, Charlie Craddock, and John O’Quigley. 2017. “Dose Transition Pathways: The Missing Link Between Complex Dose-Finding Designs and Simple Decision-Making.” &lt;em&gt;Clinical Cancer Research&lt;/em&gt; 23 (24): 7440–7. &lt;a href=&#34;https://doi.org/10.1158/1078-0432.CCR-17-0582&#34;&gt;https://doi.org/10.1158/1078-0432.CCR-17-0582&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-BOIN&#34;&gt;
+&lt;p&gt;Yuan, Ying, and Suyu Liu. 2018. &lt;em&gt;BOIN: Bayesian Optimal Interval (Boin) Design for Single-Agent and Drug- Combination Phase I Clinical Trials&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=BOIN&#34;&gt;https://CRAN.R-project.org/package=BOIN&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introducing escalation</title>
+      <link>/post/introducing-escalation/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>/post/introducing-escalation/</guid>
+      <description>
+
+
+&lt;div id=&#34;escalation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;escalation &lt;img src=&#34;https://github.com/brockk/escalation/raw/master/man/figures/logo.png&#34; align=&#34;right&#34; height=140/&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/brockk/escalation&#34;&gt;&lt;strong&gt;escalation&lt;/strong&gt;&lt;/a&gt; is a new R package that takes existing dose-finding models and gives them a common interface.
+To use the language of &lt;a href=&#34;https://www.tidyverse.org/&#34;&gt;tidyverse&lt;/a&gt; R, &lt;strong&gt;escalation&lt;/strong&gt; provides a grammar for dose-finding by breaking the dose-finding process into chunks.
+What model should I use?
+How should I select dose during the trial?
+How will I know when to stop?
+Which restrictions should I place on escalation and de-escalation?
+You can create the dose-finding design you want in &lt;strong&gt;escalation&lt;/strong&gt; by combining elements that perform all of these tasks.
+This might all sound a little obtuse.
+Some examples will make it clear.&lt;/p&gt;
+&lt;div id=&#34;examples&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Examples&lt;/h2&gt;
+&lt;div id=&#34;crm&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;CRM&lt;/h4&gt;
+&lt;p&gt;&lt;span class=&#34;citation&#34;&gt;O’Quigley, Pepe, and Fisher (1990)&lt;/span&gt; introduced the classic continual reassessment method (CRM) and it has been implemented in many software packages since.
+One of the most popular R implementations is the &lt;a href=&#34;https://CRAN.R-project.org/package=dfcrm&#34;&gt;dfcrm&lt;/a&gt; package by &lt;span class=&#34;citation&#34;&gt;Cheung (2013)&lt;/span&gt;.
+Let’s fit a model using dfcrm.&lt;/p&gt;
+&lt;p&gt;The very least information we need to provide is a dose-toxicity skeleton, and our target toxicity level:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;skeleton &amp;lt;- c(0.05, 0.1, 0.25, 0.4, 0.6)
+target &amp;lt;- 0.25&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We use these to create a model-fitting object:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)
+model &amp;lt;- get_dfcrm(skeleton = skeleton, target = target)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The model can then be fit to outcomes.
+The escalation package uses the outcome syntax introduced for phase I trials in &lt;span class=&#34;citation&#34;&gt;Brock (2019)&lt;/span&gt; and for seamless phase I/II trials in &lt;span class=&#34;citation&#34;&gt;Brock et al. (2017)&lt;/span&gt;.
+Let’s assume we have treated 3 patients at dose-level 2 and none of them experienced toxicity.
+We represent this using the outcome string &lt;code&gt;2NNN&lt;/code&gt;.
+Fitting the model to the set of outcomes invokes the dose-selection algorithm:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NNN&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and the fit object will tell you the dose recommended by the CRM model to be administered next:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The model advocates skipping straight from dose 2 to dose 4.
+Clinicians are unlikely to feel comfortable with this.
+We can respecify the model to expressly not skip doses in escalation:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;% 
+  dont_skip_doses(when_escalating = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We have taken the original dfcrm model and added an extra module to prevent skipping doses in escalation.
+Refitting the new model to the same outcomes gives:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NNN&amp;#39;)
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see that the ensemble now decides to select dose 3.
+We can ask the trial design whether it wants to keep recruting patients:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% continue()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Naturally it wants to continue because &lt;code&gt;dfcrm&lt;/code&gt; does not implement any stopping rules.
+However, we can easily add some.
+Let us say that we want to stop once the model has evaluated 18 patients, or at least 9 at the dose being recommended, whichever occurs first.
+We specify this model by adding more behaviours:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;% 
+  dont_skip_doses(when_escalating = TRUE) %&amp;gt;% 
+  stop_at_n(n = 18) %&amp;gt;% 
+  stop_when_n_at_dose(dose = &amp;#39;recommended&amp;#39;, n = 9)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let’s fit this model to some more patients to see how this trial plays out:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NNN 3TTN&amp;#39;)
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% continue()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After seeing two-in-three patients in the second cohort experience toxicity at dose 3, the design understandably wants to de-escalate.
+Let’s do that:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NNN 3TTN 2TNN&amp;#39;)
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% continue()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The third cohort yielded one-in-three tox at dose 2.
+The design wants to continue at dose 2 so let’s do that:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NNN 3TTN 2TNN 2NNT&amp;#39;)
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% continue()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice that the call to continue() now returns FALSE.
+The design wants to stop now and recommend dose 2.
+It does this because it has seen 9 patients at the recommended dose.
+We can see the number of patients treated at each of the five doses under investigation:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% n_at_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0 9 3 0 0&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Our stopping criteria have been met.
+We can verify that dose 2 is indeed the dose with posterior expected toxicity rate closest to our target of 25%:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% mean_prob_tox()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1845713 0.2728713 0.4575229 0.5964102 0.7496662&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;boin&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;BOIN&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;escalate&lt;/code&gt; also implements the BOIN dose-finding design by &lt;span class=&#34;citation&#34;&gt;Liu and Yuan (2015)&lt;/span&gt; via the &lt;a href=&#34;https://CRAN.R-project.org/package=BOIN&#34;&gt;&lt;code&gt;BOIN&lt;/code&gt;&lt;/a&gt; R-package &lt;span class=&#34;citation&#34;&gt;(Yuan and Liu 2018)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;In contrast to CRM, BOIN does not require a dose-toxicity skeleton.
+In its simplest case, it requires merely the number of doses under investigation and our target toxicity level:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;target &amp;lt;- 0.25
+model &amp;lt;- get_boin(num_doses = 5, target = target)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As before, we can fit the model to some observed outcomes:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NNN&amp;#39;)
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% continue()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The BOIN dose selector natively implements stopping rules, as described by Liu &amp;amp; Yuan.
+For instance, if the bottom dose is too toxic, the design will advise the trial halts:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NTN 1TTT&amp;#39;)
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] NA&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% continue()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Nevertheless, as with the CRM examples above, our BOIN selector can be adorned with various behaviours to tailor stopping and skipping.
+In fact, we can add the exact same behaviours as before because all &lt;code&gt;escalation&lt;/code&gt; objects support exactly the same interface.
+This makes the package completely modular.
+We are building the design we want from pieces of Lego:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model &amp;lt;- get_boin(num_doses = 5, target = target) %&amp;gt;% 
+  dont_skip_doses(when_escalating = TRUE) %&amp;gt;% 
+  stop_at_n(n = 18) %&amp;gt;% 
+  stop_when_n_at_dose(dose = &amp;#39;recommended&amp;#39;, n = 9)
+
+fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;2NNN 3TTN 2TNN 2NNT&amp;#39;)
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% continue()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] FALSE&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% mean_prob_tox()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]   NA 0.23 0.66   NA   NA&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice that the posterior toxicity estimate is similar to the CRM model at dose 2, but ultimately different because the two approaches use different model forms.
+BOIN does not estimate the tox rate at doses that have not been administered.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;initial-escalation-plans&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Initial escalation plans&lt;/h4&gt;
+&lt;p&gt;Another dose-selection mechanism supported by escalation is the concept of an &lt;em&gt;initial escalation plan&lt;/em&gt;.
+These can be used at the start of a trial to show how escalation should proceed initially.
+As soon as the realised outcomes diverge from the prespecified path, or the path reaches the end, a secondary model takes over.&lt;/p&gt;
+&lt;p&gt;For instance, let us assume we would like to treat one patient per dose so long as no toxicity is seen, in order to facilitate fast escalation.
+When toxicity is seen, or dose five is reached, we would like to hand control to a CRM model.
+We can write:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model &amp;lt;- follow_path(&amp;#39;1N 2N 3N 4N 5N&amp;#39;) %&amp;gt;% 
+  get_dfcrm(skeleton = skeleton, target = target)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So long as the idealised path is realised, it continues:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model %&amp;gt;% 
+  fit(&amp;#39;1N&amp;#39;) %&amp;gt;% 
+  recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model %&amp;gt;% 
+  fit(&amp;#39;1N 2N&amp;#39;) %&amp;gt;% 
+  recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But if the path is deviated from, the secondary model takes over:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model %&amp;gt;% 
+  fit(&amp;#39;1N 2N 3T&amp;#39;) %&amp;gt;% 
+  recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Also, when the initial path is completed, the secondary model continues:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model %&amp;gt;% 
+  fit(&amp;#39;1N 2N 3N 4N 5N&amp;#39;) %&amp;gt;% 
+  recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;summary&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;The &lt;strong&gt;escalation&lt;/strong&gt; package takes dose-finding methods that other authors have provided and gives them a consistent interface.
+This makes it simple to add any behaviour to any method, creating a modular Lego-like approach to creating dose-finding designs.
+For instance, we can take any dose-selection model and tweak the way it selects the next dose, the way it escalates, de-escalates and stops.
+I hope eventually that &lt;strong&gt;escalation&lt;/strong&gt; makes it easy to specify, assess and compare all dose-escalation designs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;roadmap&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Roadmap&lt;/h2&gt;
+&lt;p&gt;Version 0.0.1 has been submitted to CRAN (but as of 2020-02-17, not yet accepted) with the following base dose-finding approaches:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the CRM model from the &lt;a href=&#34;https://CRAN.R-project.org/package=dfcrm&#34;&gt;&lt;code&gt;dfcrm&lt;/code&gt;&lt;/a&gt; package&lt;/li&gt;
+&lt;li&gt;the BOIN model from the &lt;a href=&#34;https://CRAN.R-project.org/package=BOIN&#34;&gt;&lt;code&gt;BOIN&lt;/code&gt;&lt;/a&gt; package&lt;/li&gt;
+&lt;li&gt;the perennial 3+3 model without dose de-escalation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and the following optional embellishments:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;don’t skip doses in escalation and/or de-escalation&lt;/li&gt;
+&lt;li&gt;stop when dose(s) are too toxic&lt;/li&gt;
+&lt;li&gt;stop when &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; patients have been treated in total&lt;/li&gt;
+&lt;li&gt;stop when &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; patients have been treated at a particular dose&lt;/li&gt;
+&lt;li&gt;use an initial fixed dose-escalation plan&lt;/li&gt;
+&lt;li&gt;demand at least &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; patients have been treated at a particular dose before stopping is permitted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In future versions, the following base dose-finding approaches will probably be added:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the EWOC model from the &lt;a href=&#34;https://CRAN.R-project.org/package=EWOC&#34;&gt;&lt;code&gt;EWOC&lt;/code&gt;&lt;/a&gt; package&lt;/li&gt;
+&lt;li&gt;the CRM and EffTox models from the &lt;a href=&#34;https://CRAN.R-project.org/package=trialr&#34;&gt;&lt;code&gt;trialr&lt;/code&gt;&lt;/a&gt; package&lt;/li&gt;
+&lt;li&gt;the CRM model from the &lt;a href=&#34;https://CRAN.R-project.org/package=bcrm&#34;&gt;&lt;code&gt;bcrm&lt;/code&gt;&lt;/a&gt; package&lt;/li&gt;
+&lt;li&gt;the CRM model from the &lt;a href=&#34;https://CRAN.R-project.org/package=crmPack&#34;&gt;&lt;code&gt;crmPack&lt;/code&gt;&lt;/a&gt; package&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Before I plough into the MCMC methods (trialr, bcrm, crmPack), I want to understand the implications of adding other software to the dependency chain to what at the moment is a very lightweight package.&lt;/p&gt;
+&lt;p&gt;In addition to those, I plan to add further behaviours that allow:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;stopping under the conditions investigated by &lt;span class=&#34;citation&#34;&gt;Zohar and Chevret (2001)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;selecting dose by the CIBP criterion of &lt;span class=&#34;citation&#34;&gt;Mozgunov and Jaki (2020)&lt;/span&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Independent to the work described above, I will add functions that run simulations and calculate dose pathways.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-escalation-came-about&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How escalation came about&lt;/h2&gt;
+&lt;p&gt;It had bothered me for several years that it always seemed so difficult to tweak behaviour of dose-finging designs to allow flexible stopping (etc).
+In my trials unit, we frequently started with the dfcrm code and then added custom embellishments to achieve the design and behaviour we wanted in each particular trial.
+Running simulations or calculating future dose pathways was never as simple as it should have been.
+The approach we used of tweaking dfcrm implicitly assumed we needed a more complex dose-fitting function.
+And then one night at about 4am when I was neither asleep nor awake, I realised that we needed to daisy-chain the dose-selecting classes together to augment behaviour.
+We did not need a more complex dose-fitting function, we needed a flexible way of combining simple functions.
+Having used dplyr and tidyverse packages for years now, the &lt;code&gt;%&amp;gt;%&lt;/code&gt; operator seemed the natural solution.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Installation&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Once it hits CRAN, install the latest official version with:
+install.packages(&amp;quot;escalation&amp;quot;)
+
+# Alternatively, install the latest code at any time from GitHub:
+devtools::install_github(&amp;quot;brockk/escalation&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;resources&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Resources&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/brockk/escalation/raw/master/man/figures/logo.png&#34; align=&#34;right&#34; height=140/&gt;&lt;/p&gt;
+&lt;!-- * [CRAN package page](https://cran.r-project.org/package=escalation) --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/brockk/escalation&#34;&gt;GitHub repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://brockk.github.io/escalation/&#34;&gt;Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-Brock2019&#34;&gt;
+&lt;p&gt;Brock, Kristian. 2019. “trialr: Bayesian Clinical Trial Designs in R and Stan.” &lt;em&gt;arXiv E-Prints&lt;/em&gt;, June, arXiv:1907.00161.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Brock2017a&#34;&gt;
+&lt;p&gt;Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 17 (1): 112. &lt;a href=&#34;https://doi.org/10.1186/s12874-017-0381-x&#34;&gt;https://doi.org/10.1186/s12874-017-0381-x&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-dfcrm&#34;&gt;
+&lt;p&gt;Cheung, Ken. 2013. &lt;em&gt;Dfcrm: Dose-Finding by the Continual Reassessment Method&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=dfcrm&#34;&gt;https://CRAN.R-project.org/package=dfcrm&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-liu_bayesian_2015&#34;&gt;
+&lt;p&gt;Liu, Suyu, and Ying Yuan. 2015. “Bayesian Optimal Interval Designs for Phase I Clinical Trials.” &lt;em&gt;Journal of the Royal Statistical Society: Series C (Applied Statistics)&lt;/em&gt; 64 (3): 507–23. &lt;a href=&#34;https://doi.org/10.1111/rssc.12089&#34;&gt;https://doi.org/10.1111/rssc.12089&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-mozgunovImprovingSafetyContinual&#34;&gt;
+&lt;p&gt;Mozgunov, Pavel, and Thomas Jaki. 2020. “Improving Safety of the Continual Reassessment Method via a Modified Allocation Rule.” &lt;em&gt;Statistics in Medicine&lt;/em&gt;, 1–17. &lt;a href=&#34;https://doi.org/10.1002/sim.8450&#34;&gt;https://doi.org/10.1002/sim.8450&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-OQuigley1990&#34;&gt;
+&lt;p&gt;O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” &lt;em&gt;Biometrics&lt;/em&gt; 46 (1): 33–48. &lt;a href=&#34;https://doi.org/10.2307/2531628&#34;&gt;https://doi.org/10.2307/2531628&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-BOIN&#34;&gt;
+&lt;p&gt;Yuan, Ying, and Suyu Liu. 2018. &lt;em&gt;BOIN: Bayesian Optimal Interval (Boin) Design for Single-Agent and Drug- Combination Phase I Clinical Trials&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=BOIN&#34;&gt;https://CRAN.R-project.org/package=BOIN&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-zohar_continual_2001&#34;&gt;
+&lt;p&gt;Zohar, Sarah, and Sylvie Chevret. 2001. “The Continual Reassessment Method: Comparison of Bayesian Stopping Rules for Dose-Ranging Studies.” &lt;em&gt;Statistics in Medicine&lt;/em&gt; 20 (19): 2827–43. &lt;a href=&#34;https://doi.org/10.1002/sim.920&#34;&gt;https://doi.org/10.1002/sim.920&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

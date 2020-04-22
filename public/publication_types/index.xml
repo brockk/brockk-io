@@ -2,37 +2,37 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Publication_types | Kristian Brock</title>
-    <link>https://www.kristianbrock.com/publication_types/</link>
-      <atom:link href="https://www.kristianbrock.com/publication_types/index.xml" rel="self" type="application/rss+xml" />
+    <link>/publication_types/</link>
+      <atom:link href="/publication_types/index.xml" rel="self" type="application/rss+xml" />
     <description>Publication_types</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://www.kristianbrock.com/img/icon-192.png</url>
+      <url>/img/icon-192.png</url>
       <title>Publication_types</title>
-      <link>https://www.kristianbrock.com/publication_types/</link>
+      <link>/publication_types/</link>
     </image>
     
     <item>
       <title>2</title>
-      <link>https://www.kristianbrock.com/publication_types/2/</link>
+      <link>/publication_types/2/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication_types/2/</guid>
+      <guid>/publication_types/2/</guid>
       <description></description>
     </item>
     
     <item>
       <title>1</title>
-      <link>https://www.kristianbrock.com/publication_types/1/</link>
+      <link>/publication_types/1/</link>
       <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication_types/1/</guid>
+      <guid>/publication_types/1/</guid>
       <description></description>
     </item>
     
     <item>
       <title>3</title>
-      <link>https://www.kristianbrock.com/publication_types/3/</link>
+      <link>/publication_types/3/</link>
       <pubDate>Sat, 29 Jun 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/publication_types/3/</guid>
+      <guid>/publication_types/3/</guid>
       <description></description>
     </item>
     

@@ -1,5 +1,5 @@
 ---
-title: "Introducing `escalation`"
+title: "Introducing escalation"
 subtitle: "An R package to unify the interface of dose-escalation models in R."
 summary: "An R package to unify the interface of dose-escalation models in R. A modular approach that is scalable and extensible."
 authors: 
@@ -8,7 +8,7 @@ categories:
 - Code
 tags:
   - escalation
-  - rcode
+  - R
 projects: []
 date: '2020-02-13'
 lastmod: '2020-02-13T20:02:56Z'

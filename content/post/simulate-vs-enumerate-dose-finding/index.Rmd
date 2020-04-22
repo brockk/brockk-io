@@ -1,0 +1,51 @@
+---
+title: "Simulation or enumeration with dose-finding designs?"
+subtitle: "Simulation is the popular approach but brute-force enumeration is more accurate and can even be quicker."
+summary: "Simulation is the popular approach but brute-force enumeration is more accurate and can even be quicker."
+authors: 
+  - admin
+categories:
+- Code
+tags:
+  - escalation
+  - R
+  - DoseFinding
+projects: []
+date: '2020-04-22'
+lastmod: '2020-04-22T21:41:56Z'
+draft: true
+featured: no
+image:
+  caption: 'Photo by [Mitchell Luo on Unsplash](https://unsplash.com/photos/WBu5YIjtNH4)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+If operating performance of a dose-finding clinical trial design is sought, it is practically guaranteed that this will be by computer simulation.
+In a dose-finding simulation, a dose is selected and toxicity (and perhaps also efficacy) outcomes are sampled according to some assumed true event probabilities to reflect that this dose has been given to some imaginary patients.
+The model is fit to the new data and the subsequent dose recommendation is given to the next group of imaginary patients.
+This iterative and adaptive process continues to conduct a virtual trial.
+In this manner, many virtual trials are run to inform the trialists of the operating performance of the design.
+
+However, simulating random virtual trials is not the only way to measure operating performance.
+[Richard McElreath said](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/):
+
+> If there’s a random way to do something, there’s usually a less random way that is both better and requires more thought.
+
+In dose-finding trials, a less random method is to calculate each trial path using brute force.
+I demonstrated this topic [@Yap2017; @Brock2017a] in a recent post using the `escalation` package.
+For illustration, let's view the 
+
+```{r}
+library(escalation)
+```
+
+
+
+This method has the benefit of providing exact operating characteristics, free from the Monte Carlo error that clouds inferences from simulations.
+As we will see below, the enumeration method is faster than simulation in some scenarios too.
+
+
+## References
+

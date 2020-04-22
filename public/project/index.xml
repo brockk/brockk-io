@@ -2,21 +2,48 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projects | Kristian Brock</title>
-    <link>https://www.kristianbrock.com/project/</link>
-      <atom:link href="https://www.kristianbrock.com/project/index.xml" rel="self" type="application/rss+xml" />
+    <link>/project/</link>
+      <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 11 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://www.kristianbrock.com/img/icon-192.png</url>
+      <url>/img/icon-192.png</url>
       <title>Projects</title>
-      <link>https://www.kristianbrock.com/project/</link>
+      <link>/project/</link>
     </image>
     
     <item>
+      <title>The escalation package</title>
+      <link>/project/escalation/</link>
+      <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>/project/escalation/</guid>
+      <description>&lt;p&gt;&lt;em&gt;escalation&lt;/em&gt; is an R package for dose-escalation clinical trials, providing a consistent, extensible, modular approach.&lt;/p&gt;
+&lt;p&gt;It largely uses existing R implementations of popular dose-finding designs, including the continual reassessment method (CRM) design from the &lt;code&gt;dfcrm&lt;/code&gt; package, the Bayesian optimal interval (BOIN) design from the &lt;code&gt;BOIN&lt;/code&gt; package, and the perennial 3+3.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;escalation&lt;/code&gt; bestows these model-fitting functions with a common interface.
+This allows the provision of add-on behaviours that affect the way that doses are selected, or trial stopping decisions are made.
+For example, it is simple to compose a CRM design that will not skip doses and will stop once a recommended dose has been given to $n$ patients; or a BOIN design that will demand that a certain dose is tested sufficiently before stopping is countenanced; and so on.
+Functions are provided to run simulations and enumerate all possible future dose paths.
+See related blog posts or the package documentation site for many illustrative examples.&lt;/p&gt;
+&lt;p&gt;CRAN listing&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/package=escalation&#34;&gt;https://cran.r-project.org/package=escalation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Source code&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/brockk/escalation&#34;&gt;https://github.com/brockk/escalation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Documentation&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://brockk.github.io/escalation/&#34;&gt;https://brockk.github.io/escalation/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
       <title>The PePS2 Trial</title>
-      <link>https://www.kristianbrock.com/project/peps2/</link>
+      <link>/project/peps2/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/project/peps2/</guid>
+      <guid>/project/peps2/</guid>
       <description>&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 &lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 (PS2) non-small-cell lung cancer (NSCLC) patients.
 It is run by the &lt;a href=&#34;https://www.birmingham.ac.uk/research/activity/mds/trials/crctu/&#34;&gt;Cancer Research UK Clinical Trials Unit&lt;/a&gt;.&lt;/p&gt;
@@ -42,9 +69,9 @@ There are links below.&lt;/p&gt;
     
     <item>
       <title>The trialr package</title>
-      <link>https://www.kristianbrock.com/project/trialr/</link>
+      <link>/project/trialr/</link>
       <pubDate>Fri, 27 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/project/trialr/</guid>
+      <guid>/project/trialr/</guid>
       <description>&lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; is an R package that implements Bayesian clinical trial design in &lt;a href=&#34;https://mc-stan.org/&#34;&gt;Stan&lt;/a&gt;, a modern enviroment for probabilistic programming that implements Hamiltonian Monte Carlo Markov Chain sampling.
 Bayesian models are relatively abundant in early phase clinical trials where information is scarce and sensible inference is required practically from the moment the trial begins.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; implements:&lt;/p&gt;
@@ -60,7 +87,7 @@ Bayesian models are relatively abundant in early phase clinical trials where inf
 There is a manuscript currently under peer-review (pre-print linked below) and it has been used to analyse outcomes in a forthcoming set of clinical trial results.&lt;/p&gt;
 &lt;p&gt;CRAN listing&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/web/packages/trialr/index.html&#34;&gt;https://cran.r-project.org/web/packages/trialr/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cran.r-project.org/package=trialr&#34;&gt;https://cran.r-project.org/package=trialr&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Source code&lt;/p&gt;
 &lt;ul&gt;
