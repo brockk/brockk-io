@@ -5,7 +5,7 @@
     <link>https://www.kristianbrock.com/</link>
       <atom:link href="https://www.kristianbrock.com/index.xml" rel="self" type="application/rss+xml" />
     <description>Kristian Brock</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 01 Jun 2030 13:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Kristian Brock</title>
@@ -24,11 +24,327 @@
 &lt;/div&gt;
 &lt;p&gt;Slides can be added in a few ways:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Create&lt;/strong&gt; slides using Academic&amp;rsquo;s &lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content/#create-slides&#34;&gt;&lt;em&gt;Slides&lt;/em&gt;&lt;/a&gt; feature and link using &lt;code&gt;slides&lt;/code&gt; parameter in the front matter of the talk file&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Create&lt;/strong&gt; slides using Academic&#39;s &lt;a href=&#34;https://sourcethemes.com/academic/docs/managing-content/#create-slides&#34;&gt;&lt;em&gt;Slides&lt;/em&gt;&lt;/a&gt; feature and link using &lt;code&gt;slides&lt;/code&gt; parameter in the front matter of the talk file&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Upload&lt;/strong&gt; an existing slide deck to &lt;code&gt;static/&lt;/code&gt; and link using &lt;code&gt;url_slides&lt;/code&gt; parameter in the front matter of the talk file&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Embed&lt;/strong&gt; your slides (e.g. Google Slides) or presentation video on this page using &lt;a href=&#34;https://sourcethemes.com/academic/docs/writing-markdown-latex/&#34;&gt;shortcodes&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Further talk details can easily be added to this page using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Simulation or enumeration with dose-finding designs?</title>
+      <link>https://www.kristianbrock.com/post/simulate-vs-enumerate-dose-finding/</link>
+      <pubDate>Thu, 23 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/simulate-vs-enumerate-dose-finding/</guid>
+      <description>
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://www.kristianbrock.com/rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;If operating performance of a dose-finding clinical trial design is sought, it is practically guaranteed that this will be by computer simulation.
+In a dose-finding simulation, a dose is initially selected and toxicity (and perhaps also efficacy) outcomes are sampled according to some assumed true event probabilities to generate data for some imaginary patients.
+The model is fit to the data and the subsequent dose recommendation is given to the next group of imaginary patients.
+This iterative and adaptive process continues to conduct a virtual trial.
+In this manner, many virtual trials are run to inform the trialists of the operating performance of the design.&lt;/p&gt;
+&lt;p&gt;However, simulating random virtual trials is not the only way to measure operating performance.
+&lt;a href=&#34;https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/&#34;&gt;Richard McElreath said&lt;/a&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If there’s a random way to do something, there’s usually a less random way that is both better and requires more thought.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In dose-finding trials, a less random method is to calculate each trial path using brute force.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;simple-example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Simple example&lt;/h2&gt;
+&lt;p&gt;I demonstrated dose paths &lt;span class=&#34;citation&#34;&gt;(Yap et al. 2017; Brock et al. 2017)&lt;/span&gt; in a &lt;a href=&#34;https://www.kristianbrock.com/post/dose-paths/&#34;&gt;recent post&lt;/a&gt; using the &lt;code&gt;escalation&lt;/code&gt; package.
+Let us walk through a simple example to see how dose-paths and simulation can be used to calculate operating characteristics for a dose-finding trial design.&lt;/p&gt;
+&lt;p&gt;We load the escalation package:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: magrittr&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For the sake of illustration, let us use:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a continual reassessment method (CRM) design&lt;/li&gt;
+&lt;li&gt;in a three-dose setting&lt;/li&gt;
+&lt;li&gt;to target a toxicity rate of 25%&lt;/li&gt;
+&lt;li&gt;with a dose-toxicity skeleton that anticipates the middle dose is the sought dose:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;target &amp;lt;- 0.25
+skeleton &amp;lt;- dfcrm::getprior(0.1, target = target, nu = 2, nlevel = 3)
+
+model &amp;lt;- get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;% 
+        stop_at_n(n = 6)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We told the model above to stop when the total sample size reached six patients.
+Obviously, real trials would generally use larger sample sizes, but six patients will be enough for our illustrative example.&lt;/p&gt;
+&lt;p&gt;Let us start the trial at the second dose and calculate all possible dose paths for two cohorts of three patients:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;paths &amp;lt;- model %&amp;gt;% get_dose_paths(cohort_sizes = rep(3, 2), next_dose = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Viewing the paths makes clear that the decision space is finite and tractable to exact calculation of probabilities:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;graph_paths(paths)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:720px;height:720px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#35B779FF\&#34;] \n  \&#34;2\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#31688EFF\&#34;, fillcolor = \&#34;#FDE725FF\&#34;] \n  \&#34;3\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#31688EFF\&#34;, fillcolor = \&#34;#FDE725FF\&#34;] \n  \&#34;4\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#35B779FF\&#34;] \n  \&#34;5\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#35B779FF\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;8\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;9\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;10\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#31688EFF\&#34;, fillcolor = \&#34;#FDE725FF\&#34;] \n  \&#34;11\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#35B779FF\&#34;] \n  \&#34;12\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;13\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;14\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#35B779FF\&#34;] \n  \&#34;15\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;16\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;17\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;18\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;19\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;20\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n  \&#34;21\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#31688EFF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;9\&#34; [label = \&#34;NNN\&#34;] \n\&#34;2\&#34;-&gt;\&#34;10\&#34; [label = \&#34;NNT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;11\&#34; [label = \&#34;NNT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;12\&#34; [label = \&#34;NNT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;13\&#34; [label = \&#34;NNT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;14\&#34; [label = \&#34;NTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;15\&#34; [label = \&#34;NTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;16\&#34; [label = \&#34;NTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;17\&#34; [label = \&#34;NTT\&#34;] \n\&#34;2\&#34;-&gt;\&#34;18\&#34; [label = \&#34;TTT\&#34;] \n\&#34;4\&#34;-&gt;\&#34;19\&#34; [label = \&#34;TTT\&#34;] \n\&#34;6\&#34;-&gt;\&#34;20\&#34; [label = \&#34;TTT\&#34;] \n\&#34;8\&#34;-&gt;\&#34;21\&#34; [label = \&#34;TTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Our first instinct might tell us that there are lots of terminal nodes that recommend dose 1 and relatively few that recommend dose 3.
+We might then infer that selecting dose 1 is likely.
+In fact, if the true toxicity probabilities at the three doses are (10%, 17%, 25%), we can calculate the exact operating performance:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;probs &amp;lt;- c(0.10, 0.17, 0.25)
+cdp &amp;lt;- paths %&amp;gt;% calculate_probabilities(true_prob_tox = probs)
+prob_recommend(cdp)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    NoDose         1         2         3 
+## 0.0000000 0.1128170 0.4047377 0.4824453&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;to learn that there is a 40.5% chance that the second dose will be recommended, and a 48.2% chance that the third dose will be recommended.&lt;/p&gt;
+&lt;p&gt;The object name &lt;em&gt;cdp&lt;/em&gt; stands for &lt;em&gt;crystallised dose paths&lt;/em&gt;, my name for paths that have associated exact probabilities.
+Simply printing the object to the console:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cdp&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number of nodes: 21 
+## Number of terminal nodes: 16 
+## 
+## Number of doses: 3 
+## 
+## Probability of recommendation:
+## NoDose      1      2      3 
+##  0.000  0.113  0.405  0.482 
+## 
+## Probability of continuance:
+## [1] 0
+## 
+## Probability of administration:
+##      1      2      3 
+## 0.0384 0.6757 0.2859 
+## 
+## Expected sample size:
+## [1] 6
+## 
+## Expected total toxicities:
+## [1] 1.141085&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;confirms the recommendation probabilities and many other statistics.&lt;/p&gt;
+&lt;p&gt;The more common way to estimate dose-finding design performance is via simulation.
+&lt;code&gt;escalation&lt;/code&gt; supports simulation too:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sims100 &amp;lt;- model %&amp;gt;% 
+  simulate_trials(num_sims = 100, true_prob_tox = probs, next_dose = 2)
+
+sims1000 &amp;lt;- model %&amp;gt;% 
+  simulate_trials(num_sims = 1000, true_prob_tox = probs, next_dose = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;These, too, will estimate the probability that each dose will be recommended when the trial is done:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;prob_recommend(sims100)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## NoDose      1      2      3 
+##   0.00   0.05   0.43   0.52&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;prob_recommend(sims1000)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## NoDose      1      2      3 
+##  0.000  0.099  0.419  0.482&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, the inferences from the simulations are subject to Monte Carlo error because we have used a finite number of samples to estimate an unknown probability.
+If we collate the inferences from the dose-paths and simulations:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tibble)
+library(dplyr)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;trial_inference &amp;lt;- function(x, n) {
+  dose_labs &amp;lt;- c(&amp;#39;NoDose&amp;#39;, dose_indices(x))
+  tibble(Dose = dose_labs, ProbRecommend = prob_recommend(x), N = n) %&amp;gt;% 
+    mutate(
+      ProbRecommendSE = sqrt(ProbRecommend * (1 - ProbRecommend) / N),
+      ProbRecommendL = ProbRecommend - 2 * ProbRecommendSE,
+      ProbRecommendU = ProbRecommend + 2 * ProbRecommendSE
+    )
+}
+
+inference &amp;lt;- bind_rows(
+  trial_inference(cdp, n = Inf) %&amp;gt;% mutate(Method = &amp;#39;Exact&amp;#39;),
+  trial_inference(sims100, n = 100) %&amp;gt;% mutate(Method = &amp;#39;Sims (N=100)&amp;#39;),
+  trial_inference(sims1000, n = 1000) %&amp;gt;% mutate(Method = &amp;#39;Sims (N=1000)&amp;#39;),
+) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we see the extent and effect of that estimation error:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+inference %&amp;gt;% 
+  ggplot(aes(x = Dose, y = ProbRecommend, col = Method)) + 
+  geom_point(position = position_dodge(width = 0.3)) + 
+  geom_errorbar(aes(ymin = ProbRecommendL, ymax = ProbRecommendU), 
+                width = 0.1, position = position_dodge(width = 0.3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/simulate-vs-enumerate-dose-finding/index_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As we might anticipate, the simulation method is hopelessly imprecise with &lt;span class=&#34;math inline&#34;&gt;\(N=100\)&lt;/span&gt; iterations.
+In contrast the simulations with &lt;span class=&#34;math inline&#34;&gt;\(N=1000\)&lt;/span&gt; iterations are fairly precise.&lt;/p&gt;
+&lt;p&gt;Each simulated trial required that the dose selection model be fit twice, once at the end of each of the two cohorts.
+A simulation study with 1000 iterations thus required 2000 model fits.
+We might justifiably conclude that &lt;em&gt;fairly precise&lt;/em&gt; is a comparatively bad return on 2000 model invocations when the exact inferences from the dose paths required precisely 21 model fits, one for each of the nodes in the graph above.&lt;/p&gt;
+&lt;p&gt;Dose paths are more precise than simulations because they are free from the Monte Carlo error that clouds inferences from simulations.
+In this toy scenario, the paths method was also vastly more efficient, requiring only a small fraction of the model fits.&lt;/p&gt;
+&lt;p&gt;However, this contrived example is unlikely to be representative of real trial scenarios, where we would expect much higher sample sizes.
+This invites the question, how far can the dose paths method be taken?
+When does it become more efficient to run simulations than attempting a brute force calculation?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;calculating-paths-at-scale&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Calculating paths at scale&lt;/h2&gt;
+&lt;p&gt;Contrasting the computational efficiency of dose paths and simulations requires calculating the number of model invocations expected by each.&lt;/p&gt;
+&lt;p&gt;For simulations, the arithmetic is simple.
+Investigating a dose-finding trial of &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; cohorts in a single scenario using a simulation study with &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; replicates requires &lt;span class=&#34;math inline&#34;&gt;\(MN\)&lt;/span&gt; model invocations.
+For example, a trial of &lt;span class=&#34;math inline&#34;&gt;\(n=30\)&lt;/span&gt; patients evaluated in 10 cohorts requires 10 model invocations, so 1000 simulated replicates requires &lt;span class=&#34;math inline&#34;&gt;\(10 \times 1000 = 10000\)&lt;/span&gt; model fits in total.&lt;/p&gt;
+&lt;p&gt;In a dose paths analysis, the model must be fit once for each node in the graph.
+The number of nodes in a dose paths analysis is slightly more complex to calculate (but only slightly).
+Let &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; be the number of distinct outcomes a single patient may experience.
+In a phase I trial using the CRM, each patient may experience toxicity (T) or no toxicity (N), so &lt;span class=&#34;math inline&#34;&gt;\(k= 2\)&lt;/span&gt;.
+The number of outcome combinations in a cohort of &lt;span class=&#34;math inline&#34;&gt;\(m\)&lt;/span&gt; patients is&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ \frac{(m + k - 1)!}{m! (k - 1)!} \]&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;For instance, a cohort of three patients has four possible outcomes: NNN, NNT, NTT, or TTT.
+The formula above gives &lt;span class=&#34;math inline&#34;&gt;\((3 + 2 - 1)! / 3! (2 - 1)! = 4\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;That is the number of outcomes of a single cohort.
+The number of nodes at depth &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; in a graph of dose paths is equal to the number of nodes at depth &lt;span class=&#34;math inline&#34;&gt;\(i-1\)&lt;/span&gt; multiplied by the number of cohort outcomes at depth &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;.
+There is always one node at depth 1 at the centre of the graph.
+For a cohort of three in a CRM trial, we saw above that there are four possible outcomes.
+Thus, at depth 2, there are 4 nodes and at depth 2 there are 16 nodes, etc.&lt;/p&gt;
+&lt;p&gt;Naturally, the cohort sizes may be irregular.
+In general, the number of nodes at depth &lt;span class=&#34;math inline&#34;&gt;\(I\)&lt;/span&gt; for cohort sizes &lt;span class=&#34;math inline&#34;&gt;\((m_1, ..., m_I)\)&lt;/span&gt; is&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ \prod_{i=1}^I \frac{(m_i + k - 1)!}{m_i! (k - 1)!} \]&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Fortunately, there is a function in &lt;code&gt;escalation&lt;/code&gt; that calculates the number of nodes in a dose paths analysis.
+Our simple example with &lt;span class=&#34;math inline&#34;&gt;\(n=6\)&lt;/span&gt; patients conducted in two cohorts of three has:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_dose_path_nodes(num_patient_outcomes = 2, cohort_sizes = c(3, 3))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  1  4 16&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;nodes at depths, 1, 2, and 3, respectively.
+The total number of model invocations is the total number of nodes, which is 21, as required.&lt;/p&gt;
+&lt;p&gt;We can use the function to calculate the number of nodes in an &lt;span class=&#34;math inline&#34;&gt;\(n=30\)&lt;/span&gt; trial with 10 cohorts of three patients:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n &amp;lt;- num_dose_path_nodes(num_patient_outcomes = 2, cohort_sizes = rep(3, 10))
+n&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1]       1       4      16      64     256    1024    4096   16384   65536
+## [10]  262144 1048576&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The number of nodes increases exponentially in graph depth.
+The total number of model fits is:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sum(n)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1398101&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;1.4m model fits is a substantial computational burden.&lt;/p&gt;
+&lt;p&gt;Clearly dose number of nodes has increased dramatically as the number of cohorts has increased.
+Let’s calculate the number of nodes contained in dose-paths of &lt;span class=&#34;math inline&#34;&gt;\(M\)&lt;/span&gt; cohorts of 3, for increasing values of M:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cohort_size &amp;lt;- 3
+num_cohorts &amp;lt;- c(2, 3, 4, 5, 6, 7, 8, 9, 10) %&amp;gt;% as.integer()
+
+library(purrr)
+num_model_fits &amp;lt;- map_int(
+  num_cohorts, 
+  ~ num_dose_path_nodes(num_patient_outcomes = 2, 
+                        cohort_sizes = rep(cohort_size, .x)) %&amp;gt;% sum()
+)
+
+num_model_fits&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]      21      85     341    1365    5461   21845   87381  349525 1398101&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;THese numbers are the total number of nodes.
+The final value confirms that roughly 1.4m nodes feature in a graph of paths for eight cohorts of 3 patients.
+Let’s view those numbers of model invocations alongside the equivalent for simulations with &lt;span class=&#34;math inline&#34;&gt;\(N=1000\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(10000\)&lt;/span&gt; replicates:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;bind_rows(
+  tibble(NumCohorts = num_cohorts,
+         NumModelFits = num_model_fits,
+         Method = &amp;#39;Paths&amp;#39;),
+  tibble(NumCohorts = num_cohorts,
+         NumModelFits = 1000 * num_cohorts,
+         Method = &amp;#39;Sims (N=1000)&amp;#39;),
+  tibble(NumCohorts = num_cohorts,
+         NumModelFits = 10000 * num_cohorts,
+         Method = &amp;#39;Sims (N=10000)&amp;#39;),
+) %&amp;gt;% 
+  ggplot(aes(x = NumCohorts, y = NumModelFits, col = Method)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_y_log10() + 
+  labs(y = &amp;#39;Number of model fits&amp;#39;, x = &amp;#39;Number of cohorts of 3 patients&amp;#39;,
+       title = &amp;#39;Computational burden of dose paths and simulation&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/simulate-vs-enumerate-dose-finding/index_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;-axis on the plot above is on the log-scale.
+We see that the number of model fits in the dose paths analysis increases exponentially in the number of cohorts, as expected.
+In contrast, the number of model fits required by simulations increases linearly in the number of cohorts, generally from a much higher base.
+The result is that the paths analysis is more computationally efficient than simulations:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;with &lt;span class=&#34;math inline&#34;&gt;\(N=1000\)&lt;/span&gt; iterations when there are fewer than 6 cohorts of 3;&lt;/li&gt;
+&lt;li&gt;with &lt;span class=&#34;math inline&#34;&gt;\(N=10000\)&lt;/span&gt; iterations when there are fewer than 8 cohorts of 3.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Perhaps we do not plan to use cohorts, intending instead to update the dose recommendation after each patient.
+We can calculate the computational burdens in this situation:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cohort_size &amp;lt;- 1
+num_cohorts &amp;lt;- seq(from = 1, to = 30, by = 1)
+
+num_model_fits &amp;lt;- map_int(
+  num_cohorts, 
+  ~ num_dose_path_nodes(num_patient_outcomes = 2, 
+                        cohort_sizes = rep(cohort_size, .x)) %&amp;gt;% sum()
+)
+
+bind_rows(
+  tibble(NumCohorts = num_cohorts,
+         NumModelFits = num_model_fits,
+         Method = &amp;#39;Paths&amp;#39;),
+  tibble(NumCohorts = num_cohorts,
+         NumModelFits = 1000 * num_cohorts,
+         Method = &amp;#39;Sims (N=1000)&amp;#39;),
+  tibble(NumCohorts = num_cohorts,
+         NumModelFits = 10000 * num_cohorts,
+         Method = &amp;#39;Sims (N=10000)&amp;#39;),
+) %&amp;gt;% 
+  ggplot(aes(x = NumCohorts, y = NumModelFits, col = Method)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_y_log10() + 
+  labs(y = &amp;#39;Number of model fits&amp;#39;, x = &amp;#39;Number of patients&amp;#39;,
+       title = &amp;#39;Computational burden of dose paths and simulation&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/simulate-vs-enumerate-dose-finding/index_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Again, we see that paths are much more efficient for low sample sizes, but sample sizes in excess of 12 - 16 patients favour simulation.&lt;/p&gt;
+&lt;p&gt;Assuming that dose-finding trials generally have sample sizes of 20-40 patients, that would seem to suggest that simulations clearly vanquish dose-paths for practical use.
+However, there is one last major consideration to understand.&lt;/p&gt;
+&lt;div id=&#34;dose-paths-can-be-recycled&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Dose paths can be recycled&lt;/h3&gt;
+&lt;p&gt;The computational burdens are calculated above for &lt;em&gt;a single batch of simulations&lt;/em&gt; corresponding to a &lt;em&gt;single set of assumed outcome probabilities&lt;/em&gt;.
+Generally, simulation studies to justify dose-finding designs use many scenarios.
+On the number of scenarios to investigate, &lt;span class=&#34;citation&#34;&gt;Wheeler et al. (2019)&lt;/span&gt; advocate that:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;the simulation study should include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;scenarios where each dose is in fact the MTD;&lt;/li&gt;
+&lt;li&gt;two extreme scenarios, in which the lowest dose is above the MTD and the highest dose is below the MTD;&lt;/li&gt;
+&lt;li&gt;and any others that clinicians believe are plausible.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;where MTD means the &lt;em&gt;maximum tolerable dose&lt;/em&gt; or the notional target dose.
+Thus, Wheeler &lt;em&gt;et al.&lt;/em&gt; advocate at least &lt;span class=&#34;math inline&#34;&gt;\(J + 2\)&lt;/span&gt; scenarios, where &lt;span class=&#34;math inline&#34;&gt;\(J\)&lt;/span&gt; is the number of doses under investigation.
+The total computational burden for a simulation study of &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt; scenarios is therefore bounded by &lt;span class=&#34;math inline&#34;&gt;\(NMS\)&lt;/span&gt;.
+I say &lt;em&gt;bounded by&lt;/em&gt; rather than &lt;em&gt;equal to&lt;/em&gt; because some trials may stop early, depending on design.&lt;/p&gt;
+&lt;p&gt;Simulations are arduous because in each scenario you start from scratch.
+In stark contrast, dose-paths are reusable.
+Calculating all dose paths is a relatively costly exercise.
+But once they have been calculated, &lt;em&gt;crystallising&lt;/em&gt; the dose-paths with true outcome probabilities to calculate exact operating performance in a scenario is a relatively cheap computation.
+The total computational burden under dose-paths will increase much slower than linearly in &lt;span class=&#34;math inline&#34;&gt;\(S\)&lt;/span&gt;.
+Put another way, the time required to produce inference on one scenario is of the same order of magnitude as producing inference on many.
+It pays to be thorough and with dose-paths, the incremental work to analyse an extra scenario is small.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The number of nodes in a graph of dose paths increases exponentially in the number of cohorts.
+For 10 cohorts of three patients, approximately 10 times as many model fits are required in dose paths compared to simulations with &lt;span class=&#34;math inline&#34;&gt;\(N = 10000\)&lt;/span&gt; replicates (recall that the &lt;span class=&#34;math inline&#34;&gt;\(y\)&lt;/span&gt;-axes above are logarithmic).
+That is, we expect simulations to be computationally cheaper here if fewer than 10 scenarios are investigated.
+When the models are evaluated after each patient, dose-paths using &lt;span class=&#34;math inline&#34;&gt;\(n=30\)&lt;/span&gt; patients require more than &lt;span class=&#34;math inline&#34;&gt;\(10^3 = 1000\)&lt;/span&gt; times the number of model fits.
+Simulations are clearly preferable here.&lt;/p&gt;
+&lt;p&gt;However, we know that dose-paths are more precise.
+Unlike the simulation method, inferences from dose paths are exact because they are free from Monte Carlo error.&lt;/p&gt;
+&lt;p&gt;When investigating the operating performance of a clinical trial design, researchers spend computer time to increase certainty.
+When deciding whether to perform inference via dose paths or simulation, I propose there are three situations:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;In trials with a small number of cohorts, dose-paths will be both faster and more precise and should naturally be the preferred method for inference.&lt;/li&gt;
+&lt;li&gt;In trials with a modest number of cohorts and many scenarios to analyse, dose-paths will have a similar total computational burden to simulations.
+In these situations, the extra precision of dose-paths will make them preferable.&lt;/li&gt;
+&lt;li&gt;Finally there will be trials with a high number of cohorts where dose-paths are simply infeasible to calculate. Here, simulations will be preferred.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;A way to investgate the value of the two methods in practice is, ironically, a simulation study.
+This would require plausible assumptions on the number of model fits that should be expected in a trial and how many scenarios would be used to evaluate designs.
+That feels like it needs a review of the literature but it will have to wait because today I am out of time.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-Brock2017a&#34;&gt;
+&lt;p&gt;Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 17 (1): 112. &lt;a href=&#34;https://doi.org/10.1186/s12874-017-0381-x&#34;&gt;https://doi.org/10.1186/s12874-017-0381-x&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-wheelerHowDesignDosefinding2019&#34;&gt;
+&lt;p&gt;Wheeler, Graham M., Adrian P. Mander, Alun Bedding, Kristian Brock, Victoria Cornelius, Andrew P. Grieve, Thomas Jaki, et al. 2019. “How to Design a Dose-Finding Study Using the Continual Reassessment Method.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 19 (1). &lt;a href=&#34;https://doi.org/10.1186/s12874-018-0638-z&#34;&gt;https://doi.org/10.1186/s12874-018-0638-z&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Yap2017&#34;&gt;
+&lt;p&gt;Yap, Christina, Lucinda J. Billingham, Ying Kuen Cheung, Charlie Craddock, and John O’Quigley. 2017. “Dose Transition Pathways: The Missing Link Between Complex Dose-Finding Designs and Simple Decision-Making.” &lt;em&gt;Clinical Cancer Research&lt;/em&gt; 23 (24): 7440–7. &lt;a href=&#34;https://doi.org/10.1158/1078-0432.CCR-17-0582&#34;&gt;https://doi.org/10.1158/1078-0432.CCR-17-0582&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
     </item>
     
@@ -560,7 +876,7 @@ Naturally, this suggests a Bryant &amp;amp; Day optimal design.
 However, published data in performance status 0 &amp;amp; 1 NSCLC patients showed that the PD-L1 tumour proportion score biomarker was strongly predictive of response.
 There was also evidence that first-line patients did better than subsequent-line patients.
 We expected each of these variables to remain predictive in the performance status 2 population and wanted to stratify the analysis by these variables.
-Unfortunately, Bryant &amp;amp; Day&amp;rsquo;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
+Unfortunately, Bryant &amp;amp; Day&#39;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
 &lt;p&gt;I happened to be working on a dose-finding trial at the time that used the EffTox design of Thall &amp;amp; Cook (2004) to appraise joint efficacy and toxicity rates at different doses of experimental agents.
 It struck me on a cycle home that the EffTox design could be adjusted with variables reflecting PD-L1 and line-of-therapy status in place of dose to study our co-primary outcomes whilst adjusting for our putative predictive factors.
 I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the trial outcomes.&lt;/p&gt;
@@ -893,7 +1209,7 @@ I would take the list and fill it out for each trial to ensure I had all the rig
 &lt;h3 id=&#34;1-doses-under-investigation&#34;&gt;1. Doses under investigation?&lt;/h3&gt;
 &lt;p&gt;Put simply, which doses are you investigating?
 And how many are there?
-Let&amp;rsquo;s refer to the number of doses as $n$.
+Let&#39;s refer to the number of doses as $n$.
 For the plain vanilla CRM, the doses should be fully orderable, meaning it should be possible to unambiguously state that $a &amp;gt; b$ or $a &amp;lt; b$ for each pair of doses $a, b$.
 Incidentally, this is also true of the 3+3.
 It is easy to inadvertently violate the &lt;em&gt;total orderability&lt;/em&gt; rule when you have combinations (e.g. is 10mg A + 10mb B a greater or lesser dose than 5mg A + 20mg B?) or when you are varying doses and frequencies (e.g. is 20mg of A each day a greater or lesser dose than 100mg of A once per week?).&lt;/p&gt;
@@ -1009,7 +1325,7 @@ Bayesian models are relatively abundant in early phase clinical trials where inf
 &lt;li&gt;the Contimual Reassessment Method (CMR) for toxicity-based dose-finding;&lt;/li&gt;
 &lt;li&gt;the time-to-event CRM for late-onset toxicity in dose-finding;&lt;/li&gt;
 &lt;li&gt;the EffTox for toxicity- and efficacy-based dose-finding;&lt;/li&gt;
-&lt;li&gt;Wason &amp;amp; Seaman&amp;rsquo;s Augmented Binary method for fusing continuous and binary outcomes in phase II;&lt;/li&gt;
+&lt;li&gt;Wason &amp;amp; Seaman&#39;s Augmented Binary method for fusing continuous and binary outcomes in phase II;&lt;/li&gt;
 &lt;li&gt;a hierarchical model of binary responses on related subgroups;&lt;/li&gt;
 &lt;li&gt;and more.&lt;/li&gt;
 &lt;/ul&gt;
@@ -1067,7 +1383,7 @@ I recall using Monte Carlo integration to resolve six-dimensional integrals to e
 In fact, there were probably many better ways.
 However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
 This manuscript is my first sole-author attempt at research.
-It was particularly pleasing to implement James Wason and Shaun Seaman&amp;rsquo;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
+It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
 &lt;code&gt;trial&lt;/code&gt; is on CRAN.&lt;/p&gt;
 </description>
     </item>
@@ -1152,7 +1468,6 @@ Three
 &lt;li&gt;Only the speaker can read these notes&lt;/li&gt;
 &lt;li&gt;Press &lt;code&gt;S&lt;/code&gt; key to view&lt;/li&gt;
 &lt;/ul&gt;
-
 &lt;/aside&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;themes&#34;&gt;Themes&lt;/h2&gt;
@@ -1186,7 +1501,7 @@ Three
 &lt;/code&gt;&lt;/pre&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;custom-css-example&#34;&gt;Custom CSS Example&lt;/h2&gt;
-&lt;p&gt;Let&amp;rsquo;s make headers navy colored.&lt;/p&gt;
+&lt;p&gt;Let&#39;s make headers navy colored.&lt;/p&gt;
 &lt;p&gt;Create &lt;code&gt;assets/css/reveal_custom.css&lt;/code&gt; with:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&#34;language-css&#34;&gt;.reveal section h1,
 .reveal section h2,
@@ -1208,7 +1523,7 @@ Three
       <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
-The topic of the day was the trials community&amp;rsquo;s over-reliance on rule-based dose-finding methods like 3+3.
+The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
 This tutorial paper was produced by a group of attendees to promote model-based methods.&lt;/p&gt;
 </description>
     </item>

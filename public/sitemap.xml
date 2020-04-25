@@ -18,13 +18,53 @@
   </url>
   
   <url>
+    <loc>https://www.kristianbrock.com/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/authors/admin/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.kristianbrock.com/authors/</loc>
-    <lastmod>2020-04-22T20:15:23+01:00</lastmod>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.kristianbrock.com/categories/</loc>
-    <lastmod>2020-04-22T20:15:23+01:00</lastmod>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/tags/dosefinding/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/tags/escalation/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/tags/r/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/categories/research/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/post/simulate-vs-enumerate-dose-finding/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/tags/</loc>
+    <lastmod>2020-04-25T17:06:05+01:00</lastmod>
   </url>
   
   <url>
@@ -34,26 +74,6 @@
   
   <url>
     <loc>https://www.kristianbrock.com/post/dose-paths/</loc>
-    <lastmod>2020-04-22T20:15:23+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/tags/dosefinding/</loc>
-    <lastmod>2020-04-22T20:15:23+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/tags/escalation/</loc>
-    <lastmod>2020-04-22T20:15:23+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/tags/r/</loc>
-    <lastmod>2020-04-22T20:15:23+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/tags/</loc>
     <lastmod>2020-04-22T20:15:23+01:00</lastmod>
   </url>
   
@@ -103,11 +123,6 @@
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/tags/trialr/</loc>
-    <lastmod>2020-04-06T11:30:03+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.kristianbrock.com/tags/trialresults/</loc>
     <lastmod>2020-04-06T11:30:03+01:00</lastmod>
   </url>
@@ -153,11 +168,6 @@
   </url>
   
   <url>
-    <loc>https://www.kristianbrock.com/categories/research/</loc>
-    <lastmod>2020-01-25T07:07:40+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.kristianbrock.com/post/first-post/first-post/</loc>
     <lastmod>2020-01-25T07:07:40+00:00</lastmod>
   </url>
@@ -199,6 +209,11 @@
   
   <url>
     <loc>https://www.kristianbrock.com/publication_types/3/</loc>
+    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.kristianbrock.com/tags/trialr/</loc>
     <lastmod>2020-01-09T21:02:00+00:00</lastmod>
   </url>
   
@@ -350,16 +365,6 @@
   <url>
     <loc>https://www.kristianbrock.com/authors/mirjana-sirovica/</loc>
     <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/authors/admin/</loc>
-    <lastmod>2020-01-09T21:02:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.kristianbrock.com/</loc>
-    <lastmod>2019-12-29T09:27:53+00:00</lastmod>
   </url>
   
   <url>
