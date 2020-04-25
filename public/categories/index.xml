@@ -2,47 +2,15 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories | Kristian Brock</title>
-    <link>/categories/</link>
-      <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/categories/</link>
+      <atom:link href="https://www.kristianbrock.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <description>Categories</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 22 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 21 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Categories</title>
-      <link>/categories/</link>
+      <link>https://www.kristianbrock.com/categories/</link>
     </image>
-    
-    <item>
-      <title>Code</title>
-      <link>/categories/code/</link>
-      <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/categories/code/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>TrialResults</title>
-      <link>/categories/trialresults/</link>
-      <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/categories/trialresults/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Teaching</title>
-      <link>/categories/teaching/</link>
-      <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/categories/teaching/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Research</title>
-      <link>/categories/research/</link>
-      <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/categories/research/</guid>
-      <description></description>
-    </item>
     
   </channel>
 </rss>

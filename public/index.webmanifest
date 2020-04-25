@@ -2,8 +2,8 @@
   "name": "Kristian Brock",
   "short_name": "Kristian Brock",
   "lang": "en-us",
-  "theme_color": "#EF525B",
-  "background_color": "#EF525B",
+  "theme_color": "#4caf50",
+  "background_color": "#4caf50",
   "icons": [{
     "src": "../img/icon-192.png",
     "sizes": "192x192",

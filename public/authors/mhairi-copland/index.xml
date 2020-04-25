@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mhairi Copland | Kristian Brock</title>
-    <link>/authors/mhairi-copland/</link>
-      <atom:link href="/authors/mhairi-copland/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/authors/mhairi-copland/</link>
+      <atom:link href="https://www.kristianbrock.com/authors/mhairi-copland/index.xml" rel="self" type="application/rss+xml" />
     <description>Mhairi Copland</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 20 Jul 2017 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Mhairi Copland</title>
-      <link>/authors/mhairi-copland/</link>
+      <link>https://www.kristianbrock.com/authors/mhairi-copland/</link>
     </image>
     
     <item>
       <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
-      <link>/publication/matchpoint-design/</link>
+      <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
       <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/matchpoint-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This was my first first-author publication and a chapter in my PhD thesis.
 Working with EffTox was great, but challenging at times.

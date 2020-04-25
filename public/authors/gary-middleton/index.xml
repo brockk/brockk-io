@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Gary Middleton | Kristian Brock</title>
-    <link>/authors/gary-middleton/</link>
-      <atom:link href="/authors/gary-middleton/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/authors/gary-middleton/</link>
+      <atom:link href="https://www.kristianbrock.com/authors/gary-middleton/index.xml" rel="self" type="application/rss+xml" />
     <description>Gary Middleton</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 22 Nov 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Gary Middleton</title>
-      <link>/authors/gary-middleton/</link>
+      <link>https://www.kristianbrock.com/authors/gary-middleton/</link>
     </image>
     
     <item>
       <title>A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates</title>
-      <link>/publication/peps2-design/</link>
+      <link>https://www.kristianbrock.com/publication/peps2-design/</link>
       <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/peps2-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/peps2-design/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;Getting this paper published was a big deal for me because it was the first design idea I had had that was completely my own.
 Well, so I thought.

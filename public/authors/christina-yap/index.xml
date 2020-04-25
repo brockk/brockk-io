@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Christina Yap | Kristian Brock</title>
-    <link>/authors/christina-yap/</link>
-      <atom:link href="/authors/christina-yap/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/authors/christina-yap/</link>
+      <atom:link href="https://www.kristianbrock.com/authors/christina-yap/index.xml" rel="self" type="application/rss+xml" />
     <description>Christina Yap</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 22 Nov 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Christina Yap</title>
-      <link>/authors/christina-yap/</link>
+      <link>https://www.kristianbrock.com/authors/christina-yap/</link>
     </image>
     
     <item>
       <title>A Phase II Clinical Trial Design for Associated Co-primary Efficacy and Toxicity Outcomes with Baseline Covariates</title>
-      <link>/publication/peps2-design/</link>
+      <link>https://www.kristianbrock.com/publication/peps2-design/</link>
       <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/peps2-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/peps2-design/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;Getting this paper published was a big deal for me because it was the first design idea I had had that was completely my own.
 Well, so I thought.
@@ -29,9 +29,9 @@ It was especially classy of Springer to give a complementary hard cover copy of 
     
     <item>
       <title>How to design a dose-finding study using the continual reassessment method</title>
-      <link>/publication/crm-tutorial/</link>
+      <link>https://www.kristianbrock.com/publication/crm-tutorial/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/crm-tutorial/</guid>
+      <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
 The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
@@ -41,9 +41,9 @@ This tutorial paper was produced by a group of attendees to promote model-based 
     
     <item>
       <title>Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</title>
-      <link>/publication/viola-results/</link>
+      <link>https://www.kristianbrock.com/publication/viola-results/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/viola-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/viola-results/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This paper is important to me because Viola was the first dose-finding trial that I worked on.
 It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
@@ -53,9 +53,9 @@ This was also one of my first published sets of trial results.&lt;/p&gt;
     
     <item>
       <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
-      <link>/publication/matchpoint-design/</link>
+      <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
       <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/matchpoint-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This was my first first-author publication and a chapter in my PhD thesis.
 Working with EffTox was great, but challenging at times.

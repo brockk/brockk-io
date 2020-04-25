@@ -2,65 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>escalation | Kristian Brock</title>
-    <link>/tags/escalation/</link>
-      <atom:link href="/tags/escalation/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/tags/escalation/</link>
+      <atom:link href="https://www.kristianbrock.com/tags/escalation/index.xml" rel="self" type="application/rss+xml" />
     <description>escalation</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 22 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 21 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>escalation</title>
-      <link>/tags/escalation/</link>
+      <link>https://www.kristianbrock.com/tags/escalation/</link>
     </image>
     
     <item>
-      <title>Simulation or enumeration with dose-finding designs?</title>
-      <link>/post/simulate-vs-enumerate-dose-finding/</link>
-      <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/post/simulate-vs-enumerate-dose-finding/</guid>
-      <description>
-
-
-&lt;p&gt;If operating performance of a dose-finding clinical trial design is sought, it is practically guaranteed that this will be by computer simulation.
-In a dose-finding simulation, a dose is selected and toxicity (and perhaps also efficacy) outcomes are sampled according to some assumed true event probabilities to reflect that this dose has been given to some imaginary patients.
-The model is fit to the new data and the subsequent dose recommendation is given to the next group of imaginary patients.
-This iterative and adaptive process continues to conduct a virtual trial.
-In this manner, many virtual trials are run to inform the trialists of the operating performance of the design.&lt;/p&gt;
-&lt;p&gt;However, simulating random virtual trials is not the only way to measure operating performance.
-&lt;a href=&#34;https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/&#34;&gt;Richard McElreath said&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;If there’s a random way to do something, there’s usually a less random way that is both better and requires more thought.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;In dose-finding trials, a less random method is to calculate each trial path using brute force.
-I demonstrated this topic &lt;span class=&#34;citation&#34;&gt;(Yap et al. 2017; Brock et al. 2017)&lt;/span&gt; in a recent post using the &lt;code&gt;escalation&lt;/code&gt; package.
-For illustration, let’s view the&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: magrittr&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This method has the benefit of providing exact operating characteristics, free from the Monte Carlo error that clouds inferences from simulations.
-As we will see below, the enumeration method is faster than simulation in some scenarios too.&lt;/p&gt;
-&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
-&lt;h2&gt;References&lt;/h2&gt;
-&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
-&lt;div id=&#34;ref-Brock2017a&#34;&gt;
-&lt;p&gt;Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 17 (1): 112. &lt;a href=&#34;https://doi.org/10.1186/s12874-017-0381-x&#34;&gt;https://doi.org/10.1186/s12874-017-0381-x&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;ref-Yap2017&#34;&gt;
-&lt;p&gt;Yap, Christina, Lucinda J. Billingham, Ying Kuen Cheung, Charlie Craddock, and John O’Quigley. 2017. “Dose Transition Pathways: The Missing Link Between Complex Dose-Finding Designs and Simple Decision-Making.” &lt;em&gt;Clinical Cancer Research&lt;/em&gt; 23 (24): 7440–7. &lt;a href=&#34;https://doi.org/10.1158/1078-0432.CCR-17-0582&#34;&gt;https://doi.org/10.1158/1078-0432.CCR-17-0582&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Dose-paths in the escalation package</title>
-      <link>/post/dose-paths/</link>
+      <link>https://www.kristianbrock.com/post/dose-paths/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/post/dose-paths/</guid>
+      <guid>https://www.kristianbrock.com/post/dose-paths/</guid>
       <description>
-&lt;script src=&#34;../../rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;../../rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;../../rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;../../rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://www.kristianbrock.com/rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
@@ -445,9 +406,9 @@ If true, that would likely be linked to provision of software that performs the 
     
     <item>
       <title>Introducing escalation</title>
-      <link>/post/introducing-escalation/</link>
+      <link>https://www.kristianbrock.com/post/introducing-escalation/</link>
       <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
-      <guid>/post/introducing-escalation/</guid>
+      <guid>https://www.kristianbrock.com/post/introducing-escalation/</guid>
       <description>
 
 

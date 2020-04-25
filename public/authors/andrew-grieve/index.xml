@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Andrew Grieve | Kristian Brock</title>
-    <link>/authors/andrew-grieve/</link>
-      <atom:link href="/authors/andrew-grieve/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/authors/andrew-grieve/</link>
+      <atom:link href="https://www.kristianbrock.com/authors/andrew-grieve/index.xml" rel="self" type="application/rss+xml" />
     <description>Andrew Grieve</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 18 Jan 2019 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Andrew Grieve</title>
-      <link>/authors/andrew-grieve/</link>
+      <link>https://www.kristianbrock.com/authors/andrew-grieve/</link>
     </image>
     
     <item>
       <title>How to design a dose-finding study using the continual reassessment method</title>
-      <link>/publication/crm-tutorial/</link>
+      <link>https://www.kristianbrock.com/publication/crm-tutorial/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/crm-tutorial/</guid>
+      <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
 The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.

@@ -2,65 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>DoseFinding | Kristian Brock</title>
-    <link>/tags/dosefinding/</link>
-      <atom:link href="/tags/dosefinding/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/tags/dosefinding/</link>
+      <atom:link href="https://www.kristianbrock.com/tags/dosefinding/index.xml" rel="self" type="application/rss+xml" />
     <description>DoseFinding</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 22 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 21 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>DoseFinding</title>
-      <link>/tags/dosefinding/</link>
+      <link>https://www.kristianbrock.com/tags/dosefinding/</link>
     </image>
     
     <item>
-      <title>Simulation or enumeration with dose-finding designs?</title>
-      <link>/post/simulate-vs-enumerate-dose-finding/</link>
-      <pubDate>Wed, 22 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/post/simulate-vs-enumerate-dose-finding/</guid>
-      <description>
-
-
-&lt;p&gt;If operating performance of a dose-finding clinical trial design is sought, it is practically guaranteed that this will be by computer simulation.
-In a dose-finding simulation, a dose is selected and toxicity (and perhaps also efficacy) outcomes are sampled according to some assumed true event probabilities to reflect that this dose has been given to some imaginary patients.
-The model is fit to the new data and the subsequent dose recommendation is given to the next group of imaginary patients.
-This iterative and adaptive process continues to conduct a virtual trial.
-In this manner, many virtual trials are run to inform the trialists of the operating performance of the design.&lt;/p&gt;
-&lt;p&gt;However, simulating random virtual trials is not the only way to measure operating performance.
-&lt;a href=&#34;https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/&#34;&gt;Richard McElreath said&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;If there’s a random way to do something, there’s usually a less random way that is both better and requires more thought.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;In dose-finding trials, a less random method is to calculate each trial path using brute force.
-I demonstrated this topic &lt;span class=&#34;citation&#34;&gt;(Yap et al. 2017; Brock et al. 2017)&lt;/span&gt; in a recent post using the &lt;code&gt;escalation&lt;/code&gt; package.
-For illustration, let’s view the&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: magrittr&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This method has the benefit of providing exact operating characteristics, free from the Monte Carlo error that clouds inferences from simulations.
-As we will see below, the enumeration method is faster than simulation in some scenarios too.&lt;/p&gt;
-&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
-&lt;h2&gt;References&lt;/h2&gt;
-&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
-&lt;div id=&#34;ref-Brock2017a&#34;&gt;
-&lt;p&gt;Brock, Kristian, Lucinda Billingham, Mhairi Copland, Shamyla Siddique, Mirjana Sirovica, and Christina Yap. 2017. “Implementing the EffTox Dose-Finding Design in the Matchpoint Trial.” &lt;em&gt;BMC Medical Research Methodology&lt;/em&gt; 17 (1): 112. &lt;a href=&#34;https://doi.org/10.1186/s12874-017-0381-x&#34;&gt;https://doi.org/10.1186/s12874-017-0381-x&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;ref-Yap2017&#34;&gt;
-&lt;p&gt;Yap, Christina, Lucinda J. Billingham, Ying Kuen Cheung, Charlie Craddock, and John O’Quigley. 2017. “Dose Transition Pathways: The Missing Link Between Complex Dose-Finding Designs and Simple Decision-Making.” &lt;em&gt;Clinical Cancer Research&lt;/em&gt; 23 (24): 7440–7. &lt;a href=&#34;https://doi.org/10.1158/1078-0432.CCR-17-0582&#34;&gt;https://doi.org/10.1158/1078-0432.CCR-17-0582&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Dose-paths in the escalation package</title>
-      <link>/post/dose-paths/</link>
+      <link>https://www.kristianbrock.com/post/dose-paths/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/post/dose-paths/</guid>
+      <guid>https://www.kristianbrock.com/post/dose-paths/</guid>
       <description>
-&lt;script src=&#34;../../rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;../../rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;../../rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;../../rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/viz/viz.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://www.kristianbrock.com/rmarkdown-libs/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://www.kristianbrock.com/rmarkdown-libs/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
@@ -445,9 +406,9 @@ If true, that would likely be linked to provision of software that performs the 
     
     <item>
       <title>The escalation package</title>
-      <link>/project/escalation/</link>
+      <link>https://www.kristianbrock.com/project/escalation/</link>
       <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/project/escalation/</guid>
+      <guid>https://www.kristianbrock.com/project/escalation/</guid>
       <description>&lt;p&gt;&lt;em&gt;escalation&lt;/em&gt; is an R package for dose-escalation clinical trials, providing a consistent, extensible, modular approach.&lt;/p&gt;
 &lt;p&gt;It largely uses existing R implementations of popular dose-finding designs, including the continual reassessment method (CRM) design from the &lt;code&gt;dfcrm&lt;/code&gt; package, the Bayesian optimal interval (BOIN) design from the &lt;code&gt;BOIN&lt;/code&gt; package, and the perennial 3+3.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;escalation&lt;/code&gt; bestows these model-fitting functions with a common interface.
@@ -472,9 +433,9 @@ See related blog posts or the package documentation site for many illustrative e
     
     <item>
       <title>CRM Simulation Checklist</title>
-      <link>/post/crm-simulations-checklist/</link>
+      <link>https://www.kristianbrock.com/post/crm-simulations-checklist/</link>
       <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/post/crm-simulations-checklist/</guid>
+      <guid>https://www.kristianbrock.com/post/crm-simulations-checklist/</guid>
       <description>&lt;p&gt;During 2019, I was working on simulations using CRM designs in several different trials.
 I found I would frequently get the designs mixed up:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -483,12 +444,12 @@ I found I would frequently get the designs mixed up:&lt;/p&gt;
 &lt;p&gt;Similarly, once or twice, I got to the stage where I wanted to run simulations only to discover we had not specified some important design aspect, like when the trial should stop.
 To bring all the pertinent information to the fore, I wrote a checklist.
 I would take the list and fill it out for each trial to ensure I had all the right information before I started simulating.&lt;/p&gt;
-&lt;p&gt;Download the checklist as &lt;a href=&#34;../../doc/CrmSimulationChecklist-1.0.pdf&#34;&gt;PDF&lt;/a&gt;, &lt;a href=&#34;../../doc/CrmSimulationChecklist-1.0.docx&#34;&gt;editable Word version&lt;/a&gt;, or &lt;a href=&#34;../../doc/CrmSimulationChecklist-Example-1.0.pdf&#34;&gt;completed example&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Download the checklist as &lt;a href=&#34;https://www.kristianbrock.com/doc/CrmSimulationChecklist-1.0.pdf&#34;&gt;PDF&lt;/a&gt;, &lt;a href=&#34;https://www.kristianbrock.com/doc/CrmSimulationChecklist-1.0.docx&#34;&gt;editable Word version&lt;/a&gt;, or &lt;a href=&#34;https://www.kristianbrock.com/doc/CrmSimulationChecklist-Example-1.0.pdf&#34;&gt;completed example&lt;/a&gt;.&lt;/p&gt;
 &lt;h1 id=&#34;checklist&#34;&gt;Checklist&lt;/h1&gt;
 &lt;h3 id=&#34;1-doses-under-investigation&#34;&gt;1. Doses under investigation?&lt;/h3&gt;
 &lt;p&gt;Put simply, which doses are you investigating?
 And how many are there?
-Let&#39;s refer to the number of doses as $n$.
+Let&amp;rsquo;s refer to the number of doses as $n$.
 For the plain vanilla CRM, the doses should be fully orderable, meaning it should be possible to unambiguously state that $a &amp;gt; b$ or $a &amp;lt; b$ for each pair of doses $a, b$.
 Incidentally, this is also true of the 3+3.
 It is easy to inadvertently violate the &lt;em&gt;total orderability&lt;/em&gt; rule when you have combinations (e.g. is 10mg A + 10mb B a greater or lesser dose than 5mg A + 20mg B?) or when you are varying doses and frequencies (e.g. is 20mg of A each day a greater or lesser dose than 100mg of A once per week?).&lt;/p&gt;
@@ -557,13 +518,13 @@ Obviously, if a patient does not experience DLT then their DLT time is infinite.
 &lt;h1 id=&#34;availability-of-software&#34;&gt;Availability of software&lt;/h1&gt;
 &lt;p&gt;Having made all these choices (and it is exhausting to even think of all these things), you then have to find or write code to make it happen.
 You may find you do not have the time or programming skill to write exactly what you want and opt for an off-the-shelf solution.
-Each of &lt;a href=&#34;https://cran.r-project.org/package=dfcrm&#34;&gt;dfcrm&lt;/a&gt;, &lt;a href=&#34;https://cran.r-project.org/package=bcrm&#34;&gt;bcrm&lt;/a&gt;, and &lt;a href=&#34;https://cran.r-project.org/package=crmPack&#34;&gt;crmPack&lt;/a&gt; offer methods for simulating CRM trials, and my very own &lt;a href=&#34;../../project/trialr/&#34;&gt;trialr&lt;/a&gt; will have CRM simulation methods soon.
+Each of &lt;a href=&#34;https://cran.r-project.org/package=dfcrm&#34;&gt;dfcrm&lt;/a&gt;, &lt;a href=&#34;https://cran.r-project.org/package=bcrm&#34;&gt;bcrm&lt;/a&gt;, and &lt;a href=&#34;https://cran.r-project.org/package=crmPack&#34;&gt;crmPack&lt;/a&gt; offer methods for simulating CRM trials, and my very own &lt;a href=&#34;https://www.kristianbrock.com/project/trialr/&#34;&gt;trialr&lt;/a&gt; will have CRM simulation methods soon.
 However, each differs in what they offer (that feels like a blog post for another day).
 You may discover that no off-the-shelf package does exactly what you want and find yourself tweaking your choices above in light of what is feasible.
 It is an iterative process.&lt;/p&gt;
 &lt;h3 id=&#34;read-more&#34;&gt;Read more&lt;/h3&gt;
 &lt;p&gt;Graham Wheeler and co-authors &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; wrote a tutorial for designing dose-finding trials using the CRM.
-You can read more about that article &lt;a href=&#34;../../publication/crm-tutorial/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+You can read more about that article &lt;a href=&#34;https://www.kristianbrock.com/publication/crm-tutorial/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;footnotes&#34;&gt;Footnotes&lt;/h3&gt;
 &lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
 &lt;hr&gt;
@@ -581,21 +542,21 @@ You can read more about that article &lt;a href=&#34;../../publication/crm-tutor
     
     <item>
       <title>How to design a dose-finding study using the continual reassessment method</title>
-      <link>/publication/crm-tutorial/</link>
+      <link>https://www.kristianbrock.com/publication/crm-tutorial/</link>
       <pubDate>Fri, 18 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/crm-tutorial/</guid>
+      <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
-The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
+The topic of the day was the trials community&amp;rsquo;s over-reliance on rule-based dose-finding methods like 3+3.
 This tutorial paper was produced by a group of attendees to promote model-based methods.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Combination Lenalidomide and Azacitidine - A Novel Salvage Therapy in Patients Who Relapse After Allogeneic Stem-Cell Transplantation for Acute Myeloid Leukemia</title>
-      <link>/publication/viola-results/</link>
+      <link>https://www.kristianbrock.com/publication/viola-results/</link>
       <pubDate>Thu, 17 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/viola-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/viola-results/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This paper is important to me because Viola was the first dose-finding trial that I worked on.
 It uses a CRM model to identify a dose of lenalidomide that is tolerable when given with azacitidine to AML and MDS patients.
@@ -605,9 +566,9 @@ This was also one of my first published sets of trial results.&lt;/p&gt;
     
     <item>
       <title>Implementing the EffTox dose-finding design in the Matchpoint trial</title>
-      <link>/publication/matchpoint-design/</link>
+      <link>https://www.kristianbrock.com/publication/matchpoint-design/</link>
       <pubDate>Thu, 20 Jul 2017 00:00:00 +0000</pubDate>
-      <guid>/publication/matchpoint-design/</guid>
+      <guid>https://www.kristianbrock.com/publication/matchpoint-design/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This was my first first-author publication and a chapter in my PhD thesis.
 Working with EffTox was great, but challenging at times.

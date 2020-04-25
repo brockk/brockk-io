@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>PhaseII | Kristian Brock</title>
-    <link>/tags/phaseii/</link>
-      <atom:link href="/tags/phaseii/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/tags/phaseii/</link>
+      <atom:link href="https://www.kristianbrock.com/tags/phaseii/index.xml" rel="self" type="application/rss+xml" />
     <description>PhaseII</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 06 Apr 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>PhaseII</title>
-      <link>/tags/phaseii/</link>
+      <link>https://www.kristianbrock.com/tags/phaseii/</link>
     </image>
     
     <item>
       <title>Pembrolizumab in patients with non-small-cell lung cancer of performance status 2 (PePS2) - a single arm, phase 2 trial</title>
-      <link>/publication/peps2-results/</link>
+      <link>https://www.kristianbrock.com/publication/peps2-results/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/publication/peps2-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/peps2-results/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I became involved in the PePS2 trial shortly after joining CRCTU in 2014.
 I developed a Bayesian statistical method for this trial that would analyse co-primary efficacy and toxicity outcomes whilst adjusting for baseline covariates as a substantial part of my PhD thesis.
@@ -26,9 +26,9 @@ This publication is important to me because PePS2 became the first trial where I
     
     <item>
       <title>PePS2 Results</title>
-      <link>/post/peps2-results/</link>
+      <link>https://www.kristianbrock.com/post/peps2-results/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/post/peps2-results/</guid>
+      <guid>https://www.kristianbrock.com/post/peps2-results/</guid>
       <description>
 
 
@@ -68,7 +68,7 @@ Pembrolizumab is a PD-L1 blockade drug so it was reasonably hypothesised that th
 The KEYNOTE-001 showed this to be precisely the case.&lt;/p&gt;
 &lt;p&gt;KEYNOTE-001 also showed that first-line patients (those patients who had received no previous anti-cancer therapy) achieved outcomes that appeared to be slightly different to patients receiving pembrolizumab as a subsequent-line therapy.&lt;/p&gt;
 &lt;p&gt;In PePS2, we sought to evaluate the effects of pembrolizumab on co-primary efficacy and toxicity outcomes whilst stratifying the analysis for these baseline covariates.
-I developed a statistical design for this purpose, described &lt;a href=&#34;../../publication/peps2-design/&#34;&gt;here&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock et al. 2019)&lt;/span&gt;.&lt;/p&gt;
+I developed a statistical design for this purpose, described &lt;a href=&#34;https://www.kristianbrock.com/publication/peps2-design/&#34;&gt;here&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock et al. 2019)&lt;/span&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;results&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Results&lt;/h2&gt;
@@ -77,7 +77,7 @@ I developed a statistical design for this purpose, described &lt;a href=&#34;../
 &lt;/div&gt;
 &lt;div id=&#34;more&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;More&lt;/h2&gt;
-&lt;p&gt;Information on the PePS2 project is collated on the &lt;a href=&#34;../../project/peps2/&#34;&gt;project page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Information on the PePS2 project is collated on the &lt;a href=&#34;https://www.kristianbrock.com/project/peps2/&#34;&gt;project page&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
 &lt;h2&gt;References&lt;/h2&gt;
@@ -105,9 +105,9 @@ I developed a statistical design for this purpose, described &lt;a href=&#34;../
     
     <item>
       <title>The PePS2 Trial</title>
-      <link>/project/peps2/</link>
+      <link>https://www.kristianbrock.com/project/peps2/</link>
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>/project/peps2/</guid>
+      <guid>https://www.kristianbrock.com/project/peps2/</guid>
       <description>&lt;h3 id=&#34;summary&#34;&gt;Summary&lt;/h3&gt;
 &lt;p&gt;PePS2 is a phase II trial of pembrolizumab in performance status 2 (PS2) non-small-cell lung cancer (NSCLC) patients.
 It is run by the &lt;a href=&#34;https://www.birmingham.ac.uk/research/activity/mds/trials/crctu/&#34;&gt;Cancer Research UK Clinical Trials Unit&lt;/a&gt;.&lt;/p&gt;
@@ -121,7 +121,7 @@ Naturally, this suggests a Bryant &amp;amp; Day optimal design.
 However, published data in performance status 0 &amp;amp; 1 NSCLC patients showed that the PD-L1 tumour proportion score biomarker was strongly predictive of response.
 There was also evidence that first-line patients did better than subsequent-line patients.
 We expected each of these variables to remain predictive in the performance status 2 population and wanted to stratify the analysis by these variables.
-Unfortunately, Bryant &amp;amp; Day&#39;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
+Unfortunately, Bryant &amp;amp; Day&amp;rsquo;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
 &lt;p&gt;I happened to be working on a dose-finding trial at the time that used the EffTox design of Thall &amp;amp; Cook (2004) to appraise joint efficacy and toxicity rates at different doses of experimental agents.
 It struck me on a cycle home that the EffTox design could be adjusted with variables reflecting PD-L1 and line-of-therapy status in place of dose to study our co-primary outcomes whilst adjusting for our putative predictive factors.
 I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the trial outcomes.&lt;/p&gt;
@@ -133,9 +133,9 @@ There are links below.&lt;/p&gt;
     
     <item>
       <title>Ibrutinib Plus Venetoclax in Relapsed/Refractory Chronic Lymphocytic Leukemia - The CLARITY Study</title>
-      <link>/publication/clarity-results/</link>
+      <link>https://www.kristianbrock.com/publication/clarity-results/</link>
       <pubDate>Thu, 11 Jul 2019 00:00:00 +0000</pubDate>
-      <guid>/publication/clarity-results/</guid>
+      <guid>https://www.kristianbrock.com/publication/clarity-results/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;This publication is important to me because Clarity was my first successful grant application.
 It is a simple trial with modest sample size but the results are absolutely amazing, with an iwCLL response rate of 89% and minimum disease negative status achieved in the peripheral blood of 53% of patients.&lt;/p&gt;

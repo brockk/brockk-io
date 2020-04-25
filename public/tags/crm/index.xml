@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>CRM | Kristian Brock</title>
-    <link>/tags/crm/</link>
-      <atom:link href="/tags/crm/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.kristianbrock.com/tags/crm/</link>
+      <atom:link href="https://www.kristianbrock.com/tags/crm/index.xml" rel="self" type="application/rss+xml" />
     <description>CRM</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>/img/icon-192.png</url>
+      <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>CRM</title>
-      <link>/tags/crm/</link>
+      <link>https://www.kristianbrock.com/tags/crm/</link>
     </image>
     
     <item>
       <title>CRM Simulation Checklist</title>
-      <link>/post/crm-simulations-checklist/</link>
+      <link>https://www.kristianbrock.com/post/crm-simulations-checklist/</link>
       <pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate>
-      <guid>/post/crm-simulations-checklist/</guid>
+      <guid>https://www.kristianbrock.com/post/crm-simulations-checklist/</guid>
       <description>&lt;p&gt;During 2019, I was working on simulations using CRM designs in several different trials.
 I found I would frequently get the designs mixed up:&lt;/p&gt;
 &lt;blockquote&gt;
@@ -25,12 +25,12 @@ I found I would frequently get the designs mixed up:&lt;/p&gt;
 &lt;p&gt;Similarly, once or twice, I got to the stage where I wanted to run simulations only to discover we had not specified some important design aspect, like when the trial should stop.
 To bring all the pertinent information to the fore, I wrote a checklist.
 I would take the list and fill it out for each trial to ensure I had all the right information before I started simulating.&lt;/p&gt;
-&lt;p&gt;Download the checklist as &lt;a href=&#34;../../doc/CrmSimulationChecklist-1.0.pdf&#34;&gt;PDF&lt;/a&gt;, &lt;a href=&#34;../../doc/CrmSimulationChecklist-1.0.docx&#34;&gt;editable Word version&lt;/a&gt;, or &lt;a href=&#34;../../doc/CrmSimulationChecklist-Example-1.0.pdf&#34;&gt;completed example&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Download the checklist as &lt;a href=&#34;https://www.kristianbrock.com/doc/CrmSimulationChecklist-1.0.pdf&#34;&gt;PDF&lt;/a&gt;, &lt;a href=&#34;https://www.kristianbrock.com/doc/CrmSimulationChecklist-1.0.docx&#34;&gt;editable Word version&lt;/a&gt;, or &lt;a href=&#34;https://www.kristianbrock.com/doc/CrmSimulationChecklist-Example-1.0.pdf&#34;&gt;completed example&lt;/a&gt;.&lt;/p&gt;
 &lt;h1 id=&#34;checklist&#34;&gt;Checklist&lt;/h1&gt;
 &lt;h3 id=&#34;1-doses-under-investigation&#34;&gt;1. Doses under investigation?&lt;/h3&gt;
 &lt;p&gt;Put simply, which doses are you investigating?
 And how many are there?
-Let&#39;s refer to the number of doses as $n$.
+Let&amp;rsquo;s refer to the number of doses as $n$.
 For the plain vanilla CRM, the doses should be fully orderable, meaning it should be possible to unambiguously state that $a &amp;gt; b$ or $a &amp;lt; b$ for each pair of doses $a, b$.
 Incidentally, this is also true of the 3+3.
 It is easy to inadvertently violate the &lt;em&gt;total orderability&lt;/em&gt; rule when you have combinations (e.g. is 10mg A + 10mb B a greater or lesser dose than 5mg A + 20mg B?) or when you are varying doses and frequencies (e.g. is 20mg of A each day a greater or lesser dose than 100mg of A once per week?).&lt;/p&gt;
@@ -99,13 +99,13 @@ Obviously, if a patient does not experience DLT then their DLT time is infinite.
 &lt;h1 id=&#34;availability-of-software&#34;&gt;Availability of software&lt;/h1&gt;
 &lt;p&gt;Having made all these choices (and it is exhausting to even think of all these things), you then have to find or write code to make it happen.
 You may find you do not have the time or programming skill to write exactly what you want and opt for an off-the-shelf solution.
-Each of &lt;a href=&#34;https://cran.r-project.org/package=dfcrm&#34;&gt;dfcrm&lt;/a&gt;, &lt;a href=&#34;https://cran.r-project.org/package=bcrm&#34;&gt;bcrm&lt;/a&gt;, and &lt;a href=&#34;https://cran.r-project.org/package=crmPack&#34;&gt;crmPack&lt;/a&gt; offer methods for simulating CRM trials, and my very own &lt;a href=&#34;../../project/trialr/&#34;&gt;trialr&lt;/a&gt; will have CRM simulation methods soon.
+Each of &lt;a href=&#34;https://cran.r-project.org/package=dfcrm&#34;&gt;dfcrm&lt;/a&gt;, &lt;a href=&#34;https://cran.r-project.org/package=bcrm&#34;&gt;bcrm&lt;/a&gt;, and &lt;a href=&#34;https://cran.r-project.org/package=crmPack&#34;&gt;crmPack&lt;/a&gt; offer methods for simulating CRM trials, and my very own &lt;a href=&#34;https://www.kristianbrock.com/project/trialr/&#34;&gt;trialr&lt;/a&gt; will have CRM simulation methods soon.
 However, each differs in what they offer (that feels like a blog post for another day).
 You may discover that no off-the-shelf package does exactly what you want and find yourself tweaking your choices above in light of what is feasible.
 It is an iterative process.&lt;/p&gt;
 &lt;h3 id=&#34;read-more&#34;&gt;Read more&lt;/h3&gt;
 &lt;p&gt;Graham Wheeler and co-authors &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; wrote a tutorial for designing dose-finding trials using the CRM.
-You can read more about that article &lt;a href=&#34;../../publication/crm-tutorial/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+You can read more about that article &lt;a href=&#34;https://www.kristianbrock.com/publication/crm-tutorial/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;footnotes&#34;&gt;Footnotes&lt;/h3&gt;
 &lt;section class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
 &lt;hr&gt;
