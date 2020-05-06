@@ -113,10 +113,10 @@ sims1000 &lt;- model %&gt;%
 <p>These, too, will estimate the probability that each dose will be recommended when the trial is done:</p>
 <pre class="r"><code>prob_recommend(sims100)</code></pre>
 <pre><code>## NoDose      1      2      3 
-##   0.00   0.05   0.43   0.52</code></pre>
+##   0.00   0.15   0.40   0.45</code></pre>
 <pre class="r"><code>prob_recommend(sims1000)</code></pre>
 <pre><code>## NoDose      1      2      3 
-##  0.000  0.099  0.419  0.482</code></pre>
+##  0.000  0.112  0.420  0.468</code></pre>
 <p>However, the inferences from the simulations are subject to Monte Carlo error because we have used a finite number of samples to estimate an unknown probability.
 If we collate the inferences from the dose-paths and simulations:</p>
 <pre class="r"><code>library(tibble)
