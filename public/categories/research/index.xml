@@ -5,12 +5,427 @@
     <link>https://www.kristianbrock.com/categories/research/</link>
       <atom:link href="https://www.kristianbrock.com/categories/research/index.xml" rel="self" type="application/rss+xml" />
     <description>Research</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 23 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 06 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Research</title>
       <link>https://www.kristianbrock.com/categories/research/</link>
     </image>
+    
+    <item>
+      <title>Dataset containing outcomes from dose-finding trials in cancer</title>
+      <link>https://www.kristianbrock.com/post/dose-finding-data/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/dose-finding-data/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Do we expect the incidence of dose-limiting toxicity to increase as dose increases in dose-escalation clinical trials?
+Categorically, yes.
+The toxicologists’ epithet &lt;em&gt;sola dosis facit venenum&lt;/em&gt; or &lt;em&gt;the dose makes the poison&lt;/em&gt; says that any substance can be dangerous if administered in great enough quantities.&lt;/p&gt;
+&lt;p&gt;What about efficacy?
+Do we expect efficacy to be greater at higher doses?
+Implicitly we must do whenever we use a method that seeks the &lt;em&gt;maximum tolerable dose&lt;/em&gt; (MTD).
+The two adjectives in that phrase are fundamental to understanding the most common approach in dose-escalation:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;we seek the &lt;em&gt;maximum&lt;/em&gt; dose, i.e. we expressly favour higher doses;&lt;/li&gt;
+&lt;li&gt;so long as the dose is &lt;em&gt;tolerable&lt;/em&gt;, i.e. it is associated with an acceptable toxicity probability.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;MTD-seeking methods are pervasive in the dose-finding literature.
+Rule-based methods like the 3+3 seek the MTD.
+&lt;span class=&#34;citation&#34;&gt;Rogatko et al. (2007)&lt;/span&gt; and &lt;span class=&#34;citation&#34;&gt;Chiuzan et al. (2017)&lt;/span&gt; showed that the 3+3 method was predominant in dose-finding trials between 1991 and 2014.
+Many model-based methods like the &lt;em&gt;continual reassessment method&lt;/em&gt; (CRM, &lt;span class=&#34;citation&#34;&gt;O’Quigley, Pepe, and Fisher (1990)&lt;/span&gt;) and &lt;em&gt;escalation with overdose control&lt;/em&gt; (EWOC, &lt;span class=&#34;citation&#34;&gt;Tighiouart and Rogatko (2010)&lt;/span&gt;) also seek the MTD.&lt;/p&gt;
+&lt;p&gt;These methods decide dose by considering only toxicity outcomes.
+The absence of efficacy from the decision reveals that there must be an assumption.
+Specifically, MTD-seeking methods assume efficacy increases monotonically in dose.
+Under this assuption, the MTD offers the best chance of efficacy for an acceptable risk of toxicity.&lt;/p&gt;
+&lt;p&gt;But this is all just theory.
+Science is a sceptical pursuit, and none are more sceptical than clinical trial statisticians.
+The shift in cancer away from cytotoxic drugs (like chemotherapy) to cytostatic drugs (like targeted therapies) over the last two decades has provided more reason to be sceptical.&lt;/p&gt;
+&lt;p&gt;So what evidence is there in recent clinical trials that the probability of toxicity increases in dose?
+And more importantly, what evidence is there that the probability of efficacy increases in dose?&lt;/p&gt;
+&lt;p&gt;Seeking to answer these questions motivated some researchers and I to gather data from many dose-finding clinical trials in cancer run between 2008 and 2014.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;methods&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Methods&lt;/h1&gt;
+&lt;p&gt;&lt;span class=&#34;citation&#34;&gt;Chiuzan et al. (2017)&lt;/span&gt; conducted a systematic review of the methods used in cancer dose-finding trials.
+Their findings mirrored those of &lt;span class=&#34;citation&#34;&gt;Rogatko et al. (2007)&lt;/span&gt; from the previous decade that the overwhelming majority of dose-finding trials (over 90%) use a rule-based design.
+The assumption that efficacy increases in dose is evidently pervasive, irrespective the shift in research to targeted therapies.
+I worked with Victoria Homer, Gurjinder Soul and Claire Potter of the University of Birmingham to extract dose-level outcomes from a large number of dose-finding trial publications to investigate the suitability of this assumption.&lt;/p&gt;
+&lt;p&gt;In their review, Chiuzan &lt;em&gt;et al.&lt;/em&gt; found 1,712 manuscripts published between 2008 and 2014.
+With the best will in the world, we would never be able to extract data from this many manuscripts.
+Chiuzan &lt;em&gt;et al.&lt;/em&gt; published in their paper a large table summarising the trials that used model-based methods, like CRM or EWOC, of which there were 92 examples.
+This number was feasible for data extraction.
+However, the subset of trials that use model-based methods may not be representative of the entire sample.
+With the cooperation of Shing Lee and Cody Chiuzan of Columbia University, we supplemented the list of 92 model-based papers with 30 randomly-selected manuscripts that used rule-based methods, to create a list of 122 manuscripts.&lt;/p&gt;
+&lt;div id=&#34;data-items&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data items&lt;/h2&gt;
+&lt;p&gt;Each of the 122 manuscripts presented the results of at least one dose-finding experiment in humans.
+Some papers reported the results of more than one experiment.&lt;/p&gt;
+&lt;p&gt;From each, we extracted:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;characteristic data, including:
+&lt;ul&gt;
+&lt;li&gt;type of cancer;&lt;/li&gt;
+&lt;li&gt;name and type of experimental therapy;&lt;/li&gt;
+&lt;li&gt;name and type of concommitant therapies;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;outcome data &lt;strong&gt;at each dose&lt;/strong&gt;, including:
+&lt;ul&gt;
+&lt;li&gt;dose level;&lt;/li&gt;
+&lt;li&gt;number of patients evaluated;&lt;/li&gt;
+&lt;li&gt;number of toxicity events recorded;&lt;/li&gt;
+&lt;li&gt;number of efficacy events recorded.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;dose-level-outcomes-vs-pooled-outcomes&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Dose-level outcomes vs pooled outcomes&lt;/h3&gt;
+&lt;p&gt;We expressly sought outcomes broken down by dose-level to investigate the suitability of the assumptions of monotonically increasing toxicity and efficacy.
+We did not collect outcomes that were reported by pooling all dose-levels because this would not help answer our research questions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;toxicity-outcomes&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Toxicity outcomes&lt;/h3&gt;
+&lt;p&gt;Dose-limiting toxicity (DLT) is the de-facto standard safety outcome in dose-finding trials.
+Manifestation of DLT involves the occurence of pre-specified adverse events (AEs) that are serious enough that they would motivate the clinician to not consider higher doses in the affected patient.
+The precise definition of DLT varies from trial to trial but should always be detailed in the trial protocol.
+The definition of DLT in a trial may reflect the clinical characteristics of the disease and the antipated adverse events from the entire treatment ensemble (i.e. arising from the experimental drug and concommitant drugs).
+Data on DLT was sought in every manuscript.&lt;/p&gt;
+&lt;p&gt;Where reported, we also collected other outcomes that reflected general drug safety, like &lt;em&gt;occurrence of grade 3-4 AE&lt;/em&gt; or &lt;em&gt;occurence of serious adverse event&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;efficacy-outcomes&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Efficacy outcomes&lt;/h3&gt;
+&lt;p&gt;The scientific question motivating this research concerns drug efficacy and how this changes as dose is increased.
+&lt;em&gt;Efficacy&lt;/em&gt; is only loosely defined in cancer.
+There is no single outcome that is unambiguously accepted as the variable best reflecting efficacy.&lt;/p&gt;
+&lt;p&gt;Applications for drug licencing are generally supported by phase III trials that use survival-type outcomes like overall survival (OS) and progression-free survival (PFS).
+In contrast, early phase trials, when they evaluate efficacy, tend to use surrogate outcomes that can be evaluated over the short-term like disease response.&lt;/p&gt;
+&lt;p&gt;Assessing disease response generally involves comparing the extent of disease (e.g. tumour size or number of leukaemic cells) at baseline and after treatment administration to characterise the patient’s response to treatment using one of several categories.&lt;/p&gt;
+&lt;p&gt;The most common response outcome categorisation used in cancer trials is RECIST response &lt;span class=&#34;citation&#34;&gt;(Eisenhauer et al. 2009)&lt;/span&gt;.
+This scheme involves measuring the diameters of target solid tumour lesions and categorising the response as one of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;complete response (CR), when all target lesions disappear completely;&lt;/li&gt;
+&lt;li&gt;partial response (PR), when lesions shrink in aggregate by a threshold amount, but remain measureable;&lt;/li&gt;
+&lt;li&gt;progressive disease (PD), when lesions grow in aggregate by a threshold amount;&lt;/li&gt;
+&lt;li&gt;stable disease (SD), when neither CR, PR nor PD occurs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These are the RECIST criteria for assessing solid tumours.
+Researchers have defined anlogues to these schemes in other cancers, including blood cancers where diseased cells reside in the blood rather than a discrete measurable tumour.
+An example of this is the Cheson criteria in acute myeloid leukaemia (AML).&lt;/p&gt;
+&lt;p&gt;Where reported, we recorded the incidence of these response categories by dose-level.&lt;/p&gt;
+&lt;p&gt;Furthermore, researchers commonly derive additional outcomes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;objective response (OR), when CR or PR is observed;&lt;/li&gt;
+&lt;li&gt;disease containment (DC), when CR, PR or SD occurs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We recorded these outcomes where reported, and imputed them where the components were available.
+This involved adjustments to the definition of OR and DC to suit the response scheme.
+For example, an objective response in AML included &lt;em&gt;complete response with incomplete marrow recovery&lt;/em&gt;, a response category signifiying relative treatment success that does not exist in RECIST.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;orderability-of-doses&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Orderability of doses&lt;/h3&gt;
+&lt;p&gt;Analysing how the probabilities of events change as dose increases requires that we are working with increasing doses.
+The general 3+3, CRM and EWOC methods require that the doses under investigation are &lt;em&gt;fully orderable&lt;/em&gt;.
+That is, we need to be able to unambiguously say that &lt;span class=&#34;math inline&#34;&gt;\(d_i &amp;lt; d_j\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(d_i &amp;gt; d_j\)&lt;/span&gt; for each &lt;span class=&#34;math inline&#34;&gt;\(d_i, d_j \in \mathcal{D} = \{ d_1, ..., d_n \}\)&lt;/span&gt; for &lt;span class=&#34;math inline&#34;&gt;\(i \neq j\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Despite this, we commonly encountered trials that used sets of doses that were not fully orderable.
+In these circumstances, we broke the doses up to form fully orderable subsets.&lt;/p&gt;
+&lt;p&gt;There are many possible subsets of a set so the way we formed these subsets was unavoidably subjective.
+We sought to maximise the size of the largest fully orderable subset.
+Furthermore, we avoided allocating a dose to several sets unless repetition was the only way to avoid having an orphan dose (i.e. a subset of size 1).&lt;/p&gt;
+&lt;p&gt;In summary, the data have been recorded in a way amenable to answering the research questions.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-extraction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data extraction&lt;/h2&gt;
+&lt;p&gt;Data were extracted from papers and recorded on a prior-written standardised form, with one form for each manuscript.
+The data were then recorded on sheets in an Excel file that was deposited in the University of Birmingham’s data repository.
+Details on accessing the data are given below.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;results&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Results&lt;/h1&gt;
+&lt;div id=&#34;data-presence&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data presence&lt;/h2&gt;
+&lt;p&gt;We can load the datasets by running:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/brockk/dosefindingdata/master/Load.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The script above hosted on GitHub:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;loads the &lt;code&gt;readxl&lt;/code&gt;, &lt;code&gt;httr&lt;/code&gt;, &lt;code&gt;dplyr&lt;/code&gt;, and &lt;code&gt;stringr&lt;/code&gt; packages;&lt;/li&gt;
+&lt;li&gt;downloads the raw data file from the data repository;&lt;/li&gt;
+&lt;li&gt;joins the raw datasets to create datasets useful for analysis.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We can check the number of manuscripts:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+
+manuscripts %&amp;gt;% nrow&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 122&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and the number of studies:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;studies %&amp;gt;% nrow&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 139&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There are more studies than manuscripts because some manuscripts report results from more than one dose-finding experiment.&lt;/p&gt;
+&lt;p&gt;Characteristic data was available for every manuscript.
+The clear majority of studies report toxicity outcomes by dose:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;studies %&amp;gt;% count(ToxByDose)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
+##   ToxByDose     n
+##   &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
+## 1 FALSE         6
+## 2 TRUE        133&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Substantially fewer report efficacy outcomes by dose:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;studies %&amp;gt;% count(EffByDose)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
+##   EffByDose     n
+##   &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
+## 1 FALSE        54
+## 2 TRUE         85&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The five outcomes reported most commonly are:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;binary_events %&amp;gt;% 
+  left_join(studies, by = &amp;#39;Study&amp;#39;) %&amp;gt;% 
+  left_join(outcomes, by = &amp;#39;OutcomeId&amp;#39;) %&amp;gt;% 
+  group_by(OutcomeClass, Outcome = OutcomeText) %&amp;gt;% 
+  summarise(
+    NumObs = n(), 
+    NumStudies = length(unique(Study))
+    ) %&amp;gt;% 
+  mutate(ObsPerStudy = NumObs / NumStudies) %&amp;gt;% 
+  arrange(-NumObs) %&amp;gt;% 
+  head(5) %&amp;gt;% 
+  knitr::kable(digits = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;OutcomeClass&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;Outcome&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;NumObs&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;NumStudies&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;ObsPerStudy&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Safety&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Patients with DLT&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;648&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;131&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Efficacy&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Patients with Objective Response by RECIST&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;273&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;54&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Efficacy&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Patients with Disease Control by RECIST&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;223&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;44&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Efficacy&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Patients with Best response SD by RECIST&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;222&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;44&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Efficacy&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Patients with Best response PD by RECIST&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;170&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;36&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.7&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;We see that DLT is reported in the great majority of studies.
+The most commonly-reported efficacy outcome is objective response by RECIST.
+As described above, this outcome is only relevant in solid tumour settings.&lt;/p&gt;
+&lt;p&gt;It was frustratingly common that toxicity would be reported by dose-level but efficacy would only be reported for all doses combined.
+Naturally this impinges our ability to answer the research question.&lt;/p&gt;
+&lt;p&gt;We found no papers reporting OS or PFS by dose-level.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;discussion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Discussion&lt;/h1&gt;
+&lt;p&gt;This post introduced a substantial dataset on outcomes from dose-finding clinical trials.
+It showed how to load the dataset and derive a few simple summary statistics on the number of studies and the frequency with which outcomes were reported.
+Actually doing something useful with the data will be the subject of further posts.
+For now, this post continues below with a full description of the data files.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;availability-of-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Availability of data&lt;/h1&gt;
+&lt;p&gt;The datasets are available to download from &lt;a href=&#34;https://edata.bham.ac.uk/337/&#34; class=&#34;uri&#34;&gt;https://edata.bham.ac.uk/337/&lt;/a&gt;.
+A full specification of the file format is give below.&lt;/p&gt;
+&lt;p&gt;If you use the data, please cite:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Kristian Brock, Victoria Homer, Gurjinder Soul, Claire Potter, Cody Chiuzan and Shing Lee “Dose-level toxicity and efficacy outcomes from dose-finding clinical trials in oncology”. 2019. doi: 10.25500/edata.bham.00000337&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;or use the following BibTex entry:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@misc{BrockDoseFindingData,
+    author = {Kristian Brock and Victoria Homer and Gurjinder Soul and Claire Potter and Cody Chiuzan and Shing Lee},
+    year = {2019},
+    title = {Dose-level toxicity and efficacy outcomes from dose-finding clinical trials in oncology},
+    doi = {10.25500/edata.bham.00000337},
+    howpublished= {\url{https://doi.org/10.25500/edata.bham.00000337}},
+    timestamp = {2019.05.05}
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;fast-loading-into-r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Fast loading into R&lt;/h2&gt;
+&lt;p&gt;As demonstrated above, the fastest way to get the data loaded into R is to run the command:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/brockk/dosefindingdata/master/Load.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, that runs code I have written on your machine so it requires that you trust me not to turn your computer into a bitcoin-mining drone in my distributed e-wealth empire.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;full-description-of-database-format&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Full description of database format&lt;/h1&gt;
+&lt;p&gt;The file is called &lt;code&gt;database.xlsx&lt;/code&gt; and it contains many tabs.
+The following sections describe in depth the format of the file.&lt;/p&gt;
+&lt;div id=&#34;manuscripts&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Manuscripts&lt;/h2&gt;
+&lt;p&gt;This tab details the manuscripts studied in this research.&lt;/p&gt;
+&lt;p&gt;Columns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Manuscript&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Primary key for the manuscript in this project.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Year&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: Year manuscript was published.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DOI&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Manuscript DOI.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Source&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: How the manuscript came to be in the database. Options are:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ChiuzanModelBased&lt;/code&gt;, listed in &lt;span class=&#34;citation&#34;&gt;Chiuzan et al. (2017)&lt;/span&gt; as a trial using a model-based dose-finding design.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ChiuzanRuleBased1&lt;/code&gt;, randomly selected from the unpublished list of trials using rule-based dose-finding designs assembled by &lt;span class=&#34;citation&#34;&gt;Chiuzan et al. (2017)&lt;/span&gt; during their review.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SupplementAppendix&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if manuscript has a supplement or appendix.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DataExtraction1&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Person who extracted the data.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DataExtraction2&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Person who extracted the data a second time or checked the first extraction.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AddToDB&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: TRUE if data has been added to the database.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Note&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Items noted during data extraction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;studies&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Studies&lt;/h2&gt;
+&lt;p&gt;In this database, a &lt;code&gt;Study&lt;/code&gt; is an abstract concept encapsulating:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a set of doses of some treatment or combination of treatments;&lt;/li&gt;
+&lt;li&gt;given to patients;&lt;/li&gt;
+&lt;li&gt;yielding outcome data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In a simple scenario, one manuscript would contain one Study.
+However, there can be multiple Studies in a manuscript.
+For example, if more than treatment or treatment combination is the subject of dose investigation in a single manuscript, they are seperate studies.&lt;/p&gt;
+&lt;p&gt;Columns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Manuscript&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Foreign key to Manuscripts, reflecting the manuscript that reported the data.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Study&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Primary key for the study in this project.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PatientGroup&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: brief description of the patient group.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PatientGroupDetailed&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: more detailed description of the patient group.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HaemNonhaem&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Options are:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Haematological&lt;/code&gt;, if the disease under study was haematological, like leukaemia or lymphoma.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NonHaematological&lt;/code&gt;, if the disease under study was solid tumour and therefore non-haematological, like lung cancer.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Mixed&lt;/code&gt;, if both disease types were studied.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Unknown&lt;/code&gt;, where not specified.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Treatment&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: brief description of all treatments given, whether dose-varying or not.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ContainsChemo&lt;/code&gt;, &lt;code&gt;bit&lt;/code&gt;: &lt;code&gt;1&lt;/code&gt; if the treatment contains any chemotherapy element, fixed-dose or dose-varying. A full decomposition of treatment types is not provided here (e.g. there is no ContainsInhibitor field) but standardised types of the dose-varying treatment(s) are given in the column DoseVaryingTreatmentType.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FixedDoseChemo&lt;/code&gt;, &lt;code&gt;bit&lt;/code&gt;: &lt;code&gt;1&lt;/code&gt; if the treatment contains a fixed-dose chemotherapy component; &lt;code&gt;0&lt;/code&gt; if there is no fixed-dose chemo element. Note if chemotherapy is included only as part of the investigative treatment and thus has its dose varied, this field will be &lt;code&gt;0&lt;/code&gt;. This field is provided to address the reasonable expectation that the presence of a standard chemotherapy backbone increases the expectation of toxicity. A special case is made here for chemo to allow an analysis to reflect the reasonably-expected population-level effect that chemotherapy is associated with greater toxicity (and perhaps also response).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DoseVaryingTreatment&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: the treatment(s) that have their dose varied. In the case of many treatments, items are separated by the + symbol. Any treatment identified in Treatment but not in DoseVaryingTreatment can be assumed to be constant across the doses under investigation.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DoseVaryingTreatmentType&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: type of the treatment(s) undergoing dose variation. Options are:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Cell therapy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Chemoprevention&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Chemotherapy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Cytokine&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;GeneTherapy&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Immunomodulatory drug&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Inhibitor&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Monoclonal Antibody&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Not disclosed&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Oncolytic virus&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Radiopharmaceutical&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Radiotherapy&lt;/code&gt;
+or combinations thereof.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DoseVaryingTreatmentTypeDetail&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: more detailed and precise description of the type of dose-varying treatment, provided where available.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MultiVarying&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if the dose of several treatments was varied.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MonotonicDoses&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if the doses investigated are monotonically increasing.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DoseUnits&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: the units of the doses.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;MTDorRP2D&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: the dose recommended as the MTD or RP2D.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ToxByDose&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if toxicity outcomes were reported by dose.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;EffByDose&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if efficacy outcomes were reported by dose.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AdverseEventLevelCounts&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if adverse events were tabulated by dose for specific events (e.g. Anaemia) in contrast to the broad level (e.g. Grade 3/4 AE).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;outcomes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Outcomes&lt;/h2&gt;
+&lt;p&gt;This tab details the outcome measures collected from the manuscripts.&lt;/p&gt;
+&lt;p&gt;Columns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;OutcomeId&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: Primary key for the outcome measure in this project.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;OutcomeText&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Description of the outcome measure.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;OutcomeClass&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Class of the outcome measure. Options are:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Safety&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Efficacy&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Include&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: This may be deprecated.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;HighIsGood&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if a high value is a good thing for patients. FALSE otherwise. E.g. high response rate is good and low toxicity rate is good.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PerPatientOutcome&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if the outcome measure is binary at the patient level, e.g. “Any AE” is binary at the patient-level because a patient either experiences any AE (in which case it is &lt;code&gt;TRUE&lt;/code&gt;) or they do not (in which case it is &lt;code&gt;FALSE&lt;/code&gt;). In contrast, “Total AEs” is not binary because a patient may experience many AEs.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Note&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Items noted during data extraction.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;binaryoutcomeevents&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;BinaryOutcomeEvents&lt;/h2&gt;
+&lt;p&gt;This tab contains the data extracted from manuscripts on binary outcome measures.&lt;/p&gt;
+&lt;p&gt;Columns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Study&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Foreign key to Studies tab.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Dose&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Description of dose as reported. In the main, this is just a number, and simple to interpret. In more complicated scenarios, it could contain information reflecting: the frequency that treatments were given; several doses reported together like “10mg - 25mg” (an irritating practice - please do not do this); or doses for several treatments. The bewildering variety in this field is what encouraged us to think about &lt;em&gt;dose-levels&lt;/em&gt; (rather than actual doses) in monontonically increasing series.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;OutcomeId&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: Foreign key to Outcomes tab.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;n&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: Number of patients. The denominator in a binary event rate.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Events&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: number of events.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Orphaned&lt;/code&gt;, &lt;code&gt;bool&lt;/code&gt;: &lt;code&gt;TRUE&lt;/code&gt; if the dose-level is orphaned and therefore has no unambiguous comparator.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;binaryoutcomeanalyisseries&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;BinaryOutcomeAnalyisSeries&lt;/h2&gt;
+&lt;p&gt;Doses investigated and reported in clinial trials are not always monotonically increasing, despite the fact that they should be under the most commonly-used experimental designs like 3+3 and CRM. Blithely analysing all of the doses as they are reported in publications would sometimes create scenarios where it is impossible to definitively say whether a dose is greater or less than some other (e.g. “5mg per day” vs “10mg every second day”; or “10mg of A + 5mg of B” vs “5mg of A + 10mg of B”).&lt;/p&gt;
+&lt;p&gt;An analysis-series is a set of doses from a particular study that are strictly monotonically increasing, evaluated with respect to a particular outcome measure. There are many ways to create such subsets. The analysis series presented here are merely those preferred by the author. They favour series with as many doses as possible (whilst still retaining unambiguous monotonic order) and as little repetition as possible. A small amount of repetition has been tolerated where necessary to avoid an “orphaned” dose-level, i.e. a dose-level with no comparator.&lt;/p&gt;
+&lt;p&gt;You are free to create our own analysis-series if you prefer.&lt;/p&gt;
+&lt;p&gt;Columns:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;NewSeries&lt;/code&gt;, &lt;code&gt;bit&lt;/code&gt;: This field exists to automate the generation of &lt;code&gt;AnalysisSeriesId&lt;/code&gt; and &lt;code&gt;Order&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AnalysisSeriesId&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: Primary key for the analysis series. Automatically generated by simple logic in Excel.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Order&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: The order of the dose in this analysis-series. Automatically generated by simple logic in Excel.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Study&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Foreign key to Studies tab.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Dose&lt;/code&gt;, &lt;code&gt;string&lt;/code&gt;: Description of dose as reported. In the main, this is just a number, and simple to interpret. In more complicated scenarios, it could contain information reflecting: the frequency that treatments were given; several doses reported together like “10mg - 25mg” (an irritating practice - please do not do this); or doses for several treatments. The bewildering variety in this field is what encouraged us to think about &lt;em&gt;dose-levels&lt;/em&gt; (rather than actual doses) in monontonically increasing series.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;OutcomeId&lt;/code&gt;, &lt;code&gt;int&lt;/code&gt;: Foreign key to Outcomes tab.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level1 unnumbered&#34;&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-Chiuzan2017&#34;&gt;
+&lt;p&gt;Chiuzan, Cody, Jonathan Shtaynberger, Gulam A. Manji, Jimmy K. Duong, Gary K. Schwartz, Anastasia Ivanova, and Shing M. Lee. 2017. “Dose-Finding Designs for Trials of Molecularly Targeted Agents and Immunotherapies.” &lt;em&gt;Journal of Biopharmaceutical Statistics&lt;/em&gt; 27 (3): 477–94. &lt;a href=&#34;https://doi.org/10.1080/10543406.2017.1289952&#34;&gt;https://doi.org/10.1080/10543406.2017.1289952&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Eisenhauer2009&#34;&gt;
+&lt;p&gt;Eisenhauer, E. A., P. Therasse, J. Bogaerts, L. H. Schwartz, D. Sargent, R. Ford, J. Dancey, et al. 2009. “New Response Evaluation Criteria in Solid Tumours: Revised RECIST Guideline (Version 1.1).” &lt;em&gt;European Journal of Cancer&lt;/em&gt; 45 (2): 228–47. &lt;a href=&#34;https://doi.org/10.1016/j.ejca.2008.10.026&#34;&gt;https://doi.org/10.1016/j.ejca.2008.10.026&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-OQuigley1990&#34;&gt;
+&lt;p&gt;O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” &lt;em&gt;Biometrics&lt;/em&gt; 46 (1): 33–48. &lt;a href=&#34;https://doi.org/10.2307/2531628&#34;&gt;https://doi.org/10.2307/2531628&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Rogatko2007&#34;&gt;
+&lt;p&gt;Rogatko, André, David Schoeneck, William Jonas, Mourad Tighiouart, Fadlo R. Khuri, and Alan Porter. 2007. “Translation of Innovative Designs into Phase I Trials.” &lt;em&gt;Journal of Clinical Oncology&lt;/em&gt; 25 (31): 4982–6. &lt;a href=&#34;https://doi.org/10.1200/JCO.2007.12.1012&#34;&gt;https://doi.org/10.1200/JCO.2007.12.1012&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Tighiouart2010&#34;&gt;
+&lt;p&gt;Tighiouart, Mourad, and André Rogatko. 2010. “Dose Finding with Escalation with Overdose Control (EWOC) in Cancer Clinical Trials.” &lt;em&gt;Statistical Science&lt;/em&gt; 25 (2): 217–26. &lt;a href=&#34;https://doi.org/10.1214/10-STS333&#34;&gt;https://doi.org/10.1214/10-STS333&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Simulation or enumeration with dose-finding designs?</title>

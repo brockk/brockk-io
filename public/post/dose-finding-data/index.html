@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.3">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Kristian Brock">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Descriptive data and dose-level outcomes from 122 manuscripts reporting results of dose-finding clinical trials in cancer.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/post/dose-finding-data/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#4caf50">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157979306-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           document.location = url;
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target);  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-157979306-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://www.kristianbrock.com/post/dose-finding-data/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@CatchTwentyToo">
+  <meta property="twitter:creator" content="@CatchTwentyToo">
+  
+  <meta property="og:site_name" content="Kristian Brock">
+  <meta property="og:url" content="https://www.kristianbrock.com/post/dose-finding-data/">
+  <meta property="og:title" content="Dataset containing outcomes from dose-finding trials in cancer | Kristian Brock">
+  <meta property="og:description" content="Descriptive data and dose-level outcomes from 122 manuscripts reporting results of dose-finding clinical trials in cancer."><meta property="og:image" content="https://www.kristianbrock.com/post/dose-finding-data/featured.jpg">
+  <meta property="twitter:image" content="https://www.kristianbrock.com/post/dose-finding-data/featured.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-05-06T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-05-06T07:48:56&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kristianbrock.com/post/dose-finding-data/"
+  },
+  "headline": "Dataset containing outcomes from dose-finding trials in cancer",
+  
+  "image": [
+    "https://www.kristianbrock.com/post/dose-finding-data/featured.jpg"
+  ],
+  
+  "datePublished": "2020-05-06T00:00:00Z",
+  "dateModified": "2020-05-06T07:48:56Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kristian Brock"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kristian Brock",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kristianbrock.com/img/icon-512.png"
+    }
+  },
+  "description": "Descriptive data and dose-level outcomes from 122 manuscripts reporting results of dose-finding clinical trials in cancer."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Dataset containing outcomes from dose-finding trials in cancer | Kristian Brock</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Teaching</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact Me</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1>Dataset containing outcomes from dose-finding trials in cancer</h1>
+
+  
+  <p class="page-subtitle">Descriptive data and dose-level outcomes from 122 manuscripts reporting results of dose-finding clinical trials in cancer.</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  
+  <span><a href="/authors/admin/">Kristian Brock</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    May 6, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    16 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/research/">Research</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 480px;">
+  <div style="position: relative">
+    <img src="/post/dose-finding-data/featured_hu27e7d5acae10b9419ac2648d5064ffcd_584165_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Photo by <a href="https://unsplash.com/photos/-fRAIQHKcc0">Markus Winkler on Unsplash</a></span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Do we expect the incidence of dose-limiting toxicity to increase as dose increases in dose-escalation clinical trials?
+Categorically, yes.
+The toxicologists’ epithet <em>sola dosis facit venenum</em> or <em>the dose makes the poison</em> says that any substance can be dangerous if administered in great enough quantities.</p>
+<p>What about efficacy?
+Do we expect efficacy to be greater at higher doses?
+Implicitly we must do whenever we use a method that seeks the <em>maximum tolerable dose</em> (MTD).
+The two adjectives in that phrase are fundamental to understanding the most common approach in dose-escalation:</p>
+<ul>
+<li>we seek the <em>maximum</em> dose, i.e. we expressly favour higher doses;</li>
+<li>so long as the dose is <em>tolerable</em>, i.e. it is associated with an acceptable toxicity probability.</li>
+</ul>
+<p>MTD-seeking methods are pervasive in the dose-finding literature.
+Rule-based methods like the 3+3 seek the MTD.
+<span class="citation">Rogatko et al. (2007)</span> and <span class="citation">Chiuzan et al. (2017)</span> showed that the 3+3 method was predominant in dose-finding trials between 1991 and 2014.
+Many model-based methods like the <em>continual reassessment method</em> (CRM, <span class="citation">O’Quigley, Pepe, and Fisher (1990)</span>) and <em>escalation with overdose control</em> (EWOC, <span class="citation">Tighiouart and Rogatko (2010)</span>) also seek the MTD.</p>
+<p>These methods decide dose by considering only toxicity outcomes.
+The absence of efficacy from the decision reveals that there must be an assumption.
+Specifically, MTD-seeking methods assume efficacy increases monotonically in dose.
+Under this assuption, the MTD offers the best chance of efficacy for an acceptable risk of toxicity.</p>
+<p>But this is all just theory.
+Science is a sceptical pursuit, and none are more sceptical than clinical trial statisticians.
+The shift in cancer away from cytotoxic drugs (like chemotherapy) to cytostatic drugs (like targeted therapies) over the last two decades has provided more reason to be sceptical.</p>
+<p>So what evidence is there in recent clinical trials that the probability of toxicity increases in dose?
+And more importantly, what evidence is there that the probability of efficacy increases in dose?</p>
+<p>Seeking to answer these questions motivated some researchers and I to gather data from many dose-finding clinical trials in cancer run between 2008 and 2014.</p>
+</div>
+<div id="methods" class="section level1">
+<h1>Methods</h1>
+<p><span class="citation">Chiuzan et al. (2017)</span> conducted a systematic review of the methods used in cancer dose-finding trials.
+Their findings mirrored those of <span class="citation">Rogatko et al. (2007)</span> from the previous decade that the overwhelming majority of dose-finding trials (over 90%) use a rule-based design.
+The assumption that efficacy increases in dose is evidently pervasive, irrespective the shift in research to targeted therapies.
+I worked with Victoria Homer, Gurjinder Soul and Claire Potter of the University of Birmingham to extract dose-level outcomes from a large number of dose-finding trial publications to investigate the suitability of this assumption.</p>
+<p>In their review, Chiuzan <em>et al.</em> found 1,712 manuscripts published between 2008 and 2014.
+With the best will in the world, we would never be able to extract data from this many manuscripts.
+Chiuzan <em>et al.</em> published in their paper a large table summarising the trials that used model-based methods, like CRM or EWOC, of which there were 92 examples.
+This number was feasible for data extraction.
+However, the subset of trials that use model-based methods may not be representative of the entire sample.
+With the cooperation of Shing Lee and Cody Chiuzan of Columbia University, we supplemented the list of 92 model-based papers with 30 randomly-selected manuscripts that used rule-based methods, to create a list of 122 manuscripts.</p>
+<div id="data-items" class="section level2">
+<h2>Data items</h2>
+<p>Each of the 122 manuscripts presented the results of at least one dose-finding experiment in humans.
+Some papers reported the results of more than one experiment.</p>
+<p>From each, we extracted:</p>
+<ul>
+<li>characteristic data, including:
+<ul>
+<li>type of cancer;</li>
+<li>name and type of experimental therapy;</li>
+<li>name and type of concommitant therapies;</li>
+</ul></li>
+<li>outcome data <strong>at each dose</strong>, including:
+<ul>
+<li>dose level;</li>
+<li>number of patients evaluated;</li>
+<li>number of toxicity events recorded;</li>
+<li>number of efficacy events recorded.</li>
+</ul></li>
+</ul>
+<div id="dose-level-outcomes-vs-pooled-outcomes" class="section level3">
+<h3>Dose-level outcomes vs pooled outcomes</h3>
+<p>We expressly sought outcomes broken down by dose-level to investigate the suitability of the assumptions of monotonically increasing toxicity and efficacy.
+We did not collect outcomes that were reported by pooling all dose-levels because this would not help answer our research questions.</p>
+</div>
+<div id="toxicity-outcomes" class="section level3">
+<h3>Toxicity outcomes</h3>
+<p>Dose-limiting toxicity (DLT) is the de-facto standard safety outcome in dose-finding trials.
+Manifestation of DLT involves the occurence of pre-specified adverse events (AEs) that are serious enough that they would motivate the clinician to not consider higher doses in the affected patient.
+The precise definition of DLT varies from trial to trial but should always be detailed in the trial protocol.
+The definition of DLT in a trial may reflect the clinical characteristics of the disease and the antipated adverse events from the entire treatment ensemble (i.e. arising from the experimental drug and concommitant drugs).
+Data on DLT was sought in every manuscript.</p>
+<p>Where reported, we also collected other outcomes that reflected general drug safety, like <em>occurrence of grade 3-4 AE</em> or <em>occurence of serious adverse event</em>.</p>
+</div>
+<div id="efficacy-outcomes" class="section level3">
+<h3>Efficacy outcomes</h3>
+<p>The scientific question motivating this research concerns drug efficacy and how this changes as dose is increased.
+<em>Efficacy</em> is only loosely defined in cancer.
+There is no single outcome that is unambiguously accepted as the variable best reflecting efficacy.</p>
+<p>Applications for drug licencing are generally supported by phase III trials that use survival-type outcomes like overall survival (OS) and progression-free survival (PFS).
+In contrast, early phase trials, when they evaluate efficacy, tend to use surrogate outcomes that can be evaluated over the short-term like disease response.</p>
+<p>Assessing disease response generally involves comparing the extent of disease (e.g. tumour size or number of leukaemic cells) at baseline and after treatment administration to characterise the patient’s response to treatment using one of several categories.</p>
+<p>The most common response outcome categorisation used in cancer trials is RECIST response <span class="citation">(Eisenhauer et al. 2009)</span>.
+This scheme involves measuring the diameters of target solid tumour lesions and categorising the response as one of:</p>
+<ul>
+<li>complete response (CR), when all target lesions disappear completely;</li>
+<li>partial response (PR), when lesions shrink in aggregate by a threshold amount, but remain measureable;</li>
+<li>progressive disease (PD), when lesions grow in aggregate by a threshold amount;</li>
+<li>stable disease (SD), when neither CR, PR nor PD occurs.</li>
+</ul>
+<p>These are the RECIST criteria for assessing solid tumours.
+Researchers have defined anlogues to these schemes in other cancers, including blood cancers where diseased cells reside in the blood rather than a discrete measurable tumour.
+An example of this is the Cheson criteria in acute myeloid leukaemia (AML).</p>
+<p>Where reported, we recorded the incidence of these response categories by dose-level.</p>
+<p>Furthermore, researchers commonly derive additional outcomes:</p>
+<ul>
+<li>objective response (OR), when CR or PR is observed;</li>
+<li>disease containment (DC), when CR, PR or SD occurs.</li>
+</ul>
+<p>We recorded these outcomes where reported, and imputed them where the components were available.
+This involved adjustments to the definition of OR and DC to suit the response scheme.
+For example, an objective response in AML included <em>complete response with incomplete marrow recovery</em>, a response category signifiying relative treatment success that does not exist in RECIST.</p>
+</div>
+<div id="orderability-of-doses" class="section level3">
+<h3>Orderability of doses</h3>
+<p>Analysing how the probabilities of events change as dose increases requires that we are working with increasing doses.
+The general 3+3, CRM and EWOC methods require that the doses under investigation are <em>fully orderable</em>.
+That is, we need to be able to unambiguously say that <span class="math inline">\(d_i &lt; d_j\)</span> or <span class="math inline">\(d_i &gt; d_j\)</span> for each <span class="math inline">\(d_i, d_j \in \mathcal{D} = \{ d_1, ..., d_n \}\)</span> for <span class="math inline">\(i \neq j\)</span>.</p>
+<p>Despite this, we commonly encountered trials that used sets of doses that were not fully orderable.
+In these circumstances, we broke the doses up to form fully orderable subsets.</p>
+<p>There are many possible subsets of a set so the way we formed these subsets was unavoidably subjective.
+We sought to maximise the size of the largest fully orderable subset.
+Furthermore, we avoided allocating a dose to several sets unless repetition was the only way to avoid having an orphan dose (i.e. a subset of size 1).</p>
+<p>In summary, the data have been recorded in a way amenable to answering the research questions.</p>
+</div>
+</div>
+<div id="data-extraction" class="section level2">
+<h2>Data extraction</h2>
+<p>Data were extracted from papers and recorded on a prior-written standardised form, with one form for each manuscript.
+The data were then recorded on sheets in an Excel file that was deposited in the University of Birmingham’s data repository.
+Details on accessing the data are given below.</p>
+</div>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<div id="data-presence" class="section level2">
+<h2>Data presence</h2>
+<p>We can load the datasets by running:</p>
+<pre class="r"><code>source(&#39;https://raw.githubusercontent.com/brockk/dosefindingdata/master/Load.R&#39;)</code></pre>
+<p>The script above hosted on GitHub:</p>
+<ul>
+<li>loads the <code>readxl</code>, <code>httr</code>, <code>dplyr</code>, and <code>stringr</code> packages;</li>
+<li>downloads the raw data file from the data repository;</li>
+<li>joins the raw datasets to create datasets useful for analysis.</li>
+</ul>
+<p>We can check the number of manuscripts:</p>
+<pre class="r"><code>library(dplyr)
+
+manuscripts %&gt;% nrow</code></pre>
+<pre><code>## [1] 122</code></pre>
+<p>and the number of studies:</p>
+<pre class="r"><code>studies %&gt;% nrow</code></pre>
+<pre><code>## [1] 139</code></pre>
+<p>There are more studies than manuscripts because some manuscripts report results from more than one dose-finding experiment.</p>
+<p>Characteristic data was available for every manuscript.
+The clear majority of studies report toxicity outcomes by dose:</p>
+<pre class="r"><code>studies %&gt;% count(ToxByDose)</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   ToxByDose     n
+##   &lt;lgl&gt;     &lt;int&gt;
+## 1 FALSE         6
+## 2 TRUE        133</code></pre>
+<p>Substantially fewer report efficacy outcomes by dose:</p>
+<pre class="r"><code>studies %&gt;% count(EffByDose)</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##   EffByDose     n
+##   &lt;lgl&gt;     &lt;int&gt;
+## 1 FALSE        54
+## 2 TRUE         85</code></pre>
+<p>The five outcomes reported most commonly are:</p>
+<pre class="r"><code>binary_events %&gt;% 
+  left_join(studies, by = &#39;Study&#39;) %&gt;% 
+  left_join(outcomes, by = &#39;OutcomeId&#39;) %&gt;% 
+  group_by(OutcomeClass, Outcome = OutcomeText) %&gt;% 
+  summarise(
+    NumObs = n(), 
+    NumStudies = length(unique(Study))
+    ) %&gt;% 
+  mutate(ObsPerStudy = NumObs / NumStudies) %&gt;% 
+  arrange(-NumObs) %&gt;% 
+  head(5) %&gt;% 
+  knitr::kable(digits = 1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">OutcomeClass</th>
+<th align="left">Outcome</th>
+<th align="right">NumObs</th>
+<th align="right">NumStudies</th>
+<th align="right">ObsPerStudy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Safety</td>
+<td align="left">Patients with DLT</td>
+<td align="right">648</td>
+<td align="right">131</td>
+<td align="right">4.9</td>
+</tr>
+<tr class="even">
+<td align="left">Efficacy</td>
+<td align="left">Patients with Objective Response by RECIST</td>
+<td align="right">273</td>
+<td align="right">54</td>
+<td align="right">5.1</td>
+</tr>
+<tr class="odd">
+<td align="left">Efficacy</td>
+<td align="left">Patients with Disease Control by RECIST</td>
+<td align="right">223</td>
+<td align="right">44</td>
+<td align="right">5.1</td>
+</tr>
+<tr class="even">
+<td align="left">Efficacy</td>
+<td align="left">Patients with Best response SD by RECIST</td>
+<td align="right">222</td>
+<td align="right">44</td>
+<td align="right">5.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Efficacy</td>
+<td align="left">Patients with Best response PD by RECIST</td>
+<td align="right">170</td>
+<td align="right">36</td>
+<td align="right">4.7</td>
+</tr>
+</tbody>
+</table>
+<p>We see that DLT is reported in the great majority of studies.
+The most commonly-reported efficacy outcome is objective response by RECIST.
+As described above, this outcome is only relevant in solid tumour settings.</p>
+<p>It was frustratingly common that toxicity would be reported by dose-level but efficacy would only be reported for all doses combined.
+Naturally this impinges our ability to answer the research question.</p>
+<p>We found no papers reporting OS or PFS by dose-level.</p>
+</div>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>This post introduced a substantial dataset on outcomes from dose-finding clinical trials.
+It showed how to load the dataset and derive a few simple summary statistics on the number of studies and the frequency with which outcomes were reported.
+Actually doing something useful with the data will be the subject of further posts.
+For now, this post continues below with a full description of the data files.</p>
+</div>
+<div id="availability-of-data" class="section level1">
+<h1>Availability of data</h1>
+<p>The datasets are available to download from <a href="https://edata.bham.ac.uk/337/" class="uri">https://edata.bham.ac.uk/337/</a>.
+A full specification of the file format is give below.</p>
+<p>If you use the data, please cite:</p>
+<blockquote>
+<p>Kristian Brock, Victoria Homer, Gurjinder Soul, Claire Potter, Cody Chiuzan and Shing Lee “Dose-level toxicity and efficacy outcomes from dose-finding clinical trials in oncology”. 2019. doi: 10.25500/edata.bham.00000337</p>
+</blockquote>
+<p>or use the following BibTex entry:</p>
+<pre><code>@misc{BrockDoseFindingData,
+    author = {Kristian Brock and Victoria Homer and Gurjinder Soul and Claire Potter and Cody Chiuzan and Shing Lee},
+    year = {2019},
+    title = {Dose-level toxicity and efficacy outcomes from dose-finding clinical trials in oncology},
+    doi = {10.25500/edata.bham.00000337},
+    howpublished= {\url{https://doi.org/10.25500/edata.bham.00000337}},
+    timestamp = {2019.05.05}
+}</code></pre>
+<div id="fast-loading-into-r" class="section level2">
+<h2>Fast loading into R</h2>
+<p>As demonstrated above, the fastest way to get the data loaded into R is to run the command:</p>
+<pre class="r"><code>source(&#39;https://raw.githubusercontent.com/brockk/dosefindingdata/master/Load.R&#39;)</code></pre>
+<p>However, that runs code I have written on your machine so it requires that you trust me not to turn your computer into a bitcoin-mining drone in my distributed e-wealth empire.</p>
+</div>
+</div>
+<div id="full-description-of-database-format" class="section level1">
+<h1>Full description of database format</h1>
+<p>The file is called <code>database.xlsx</code> and it contains many tabs.
+The following sections describe in depth the format of the file.</p>
+<div id="manuscripts" class="section level2">
+<h2>Manuscripts</h2>
+<p>This tab details the manuscripts studied in this research.</p>
+<p>Columns:</p>
+<ul>
+<li><code>Manuscript</code>, <code>string</code>: Primary key for the manuscript in this project.</li>
+<li><code>Year</code>, <code>int</code>: Year manuscript was published.</li>
+<li><code>DOI</code>, <code>string</code>: Manuscript DOI.</li>
+<li><code>Source</code>, <code>string</code>: How the manuscript came to be in the database. Options are:
+<ul>
+<li><code>ChiuzanModelBased</code>, listed in <span class="citation">Chiuzan et al. (2017)</span> as a trial using a model-based dose-finding design.</li>
+<li><code>ChiuzanRuleBased1</code>, randomly selected from the unpublished list of trials using rule-based dose-finding designs assembled by <span class="citation">Chiuzan et al. (2017)</span> during their review.</li>
+</ul></li>
+<li><code>SupplementAppendix</code>, <code>bool</code>: <code>TRUE</code> if manuscript has a supplement or appendix.</li>
+<li><code>DataExtraction1</code>, <code>string</code>: Person who extracted the data.</li>
+<li><code>DataExtraction2</code>, <code>string</code>: Person who extracted the data a second time or checked the first extraction.</li>
+<li><code>AddToDB</code>, <code>bool</code>: TRUE if data has been added to the database.</li>
+<li><code>Note</code>, <code>string</code>: Items noted during data extraction.</li>
+</ul>
+</div>
+<div id="studies" class="section level2">
+<h2>Studies</h2>
+<p>In this database, a <code>Study</code> is an abstract concept encapsulating:</p>
+<ul>
+<li>a set of doses of some treatment or combination of treatments;</li>
+<li>given to patients;</li>
+<li>yielding outcome data.</li>
+</ul>
+<p>In a simple scenario, one manuscript would contain one Study.
+However, there can be multiple Studies in a manuscript.
+For example, if more than treatment or treatment combination is the subject of dose investigation in a single manuscript, they are seperate studies.</p>
+<p>Columns:</p>
+<ul>
+<li><code>Manuscript</code>, <code>string</code>: Foreign key to Manuscripts, reflecting the manuscript that reported the data.</li>
+<li><code>Study</code>, <code>string</code>: Primary key for the study in this project.</li>
+<li><code>PatientGroup</code>, <code>string</code>: brief description of the patient group.</li>
+<li><code>PatientGroupDetailed</code>, <code>string</code>: more detailed description of the patient group.</li>
+<li><code>HaemNonhaem</code>, <code>string</code>: Options are:
+<ul>
+<li><code>Haematological</code>, if the disease under study was haematological, like leukaemia or lymphoma.</li>
+<li><code>NonHaematological</code>, if the disease under study was solid tumour and therefore non-haematological, like lung cancer.</li>
+<li><code>Mixed</code>, if both disease types were studied.</li>
+<li><code>Unknown</code>, where not specified.</li>
+</ul></li>
+<li><code>Treatment</code>, <code>string</code>: brief description of all treatments given, whether dose-varying or not.</li>
+<li><code>ContainsChemo</code>, <code>bit</code>: <code>1</code> if the treatment contains any chemotherapy element, fixed-dose or dose-varying. A full decomposition of treatment types is not provided here (e.g. there is no ContainsInhibitor field) but standardised types of the dose-varying treatment(s) are given in the column DoseVaryingTreatmentType.</li>
+<li><code>FixedDoseChemo</code>, <code>bit</code>: <code>1</code> if the treatment contains a fixed-dose chemotherapy component; <code>0</code> if there is no fixed-dose chemo element. Note if chemotherapy is included only as part of the investigative treatment and thus has its dose varied, this field will be <code>0</code>. This field is provided to address the reasonable expectation that the presence of a standard chemotherapy backbone increases the expectation of toxicity. A special case is made here for chemo to allow an analysis to reflect the reasonably-expected population-level effect that chemotherapy is associated with greater toxicity (and perhaps also response).</li>
+<li><code>DoseVaryingTreatment</code>, <code>string</code>: the treatment(s) that have their dose varied. In the case of many treatments, items are separated by the + symbol. Any treatment identified in Treatment but not in DoseVaryingTreatment can be assumed to be constant across the doses under investigation.</li>
+<li><code>DoseVaryingTreatmentType</code>, <code>string</code>: type of the treatment(s) undergoing dose variation. Options are:
+<ul>
+<li><code>Cell therapy</code></li>
+<li><code>Chemoprevention</code></li>
+<li><code>Chemotherapy</code></li>
+<li><code>Cytokine</code></li>
+<li><code>GeneTherapy</code></li>
+<li><code>Immunomodulatory drug</code></li>
+<li><code>Inhibitor</code></li>
+<li><code>Monoclonal Antibody</code></li>
+<li><code>Not disclosed</code></li>
+<li><code>Oncolytic virus</code></li>
+<li><code>Radiopharmaceutical</code></li>
+<li><code>Radiotherapy</code>
+or combinations thereof.</li>
+</ul></li>
+<li><code>DoseVaryingTreatmentTypeDetail</code>, <code>string</code>: more detailed and precise description of the type of dose-varying treatment, provided where available.</li>
+<li><code>MultiVarying</code>, <code>bool</code>: <code>TRUE</code> if the dose of several treatments was varied.</li>
+<li><code>MonotonicDoses</code>, <code>bool</code>: <code>TRUE</code> if the doses investigated are monotonically increasing.</li>
+<li><code>DoseUnits</code>, <code>string</code>: the units of the doses.</li>
+<li><code>MTDorRP2D</code>, <code>string</code>: the dose recommended as the MTD or RP2D.</li>
+<li><code>ToxByDose</code>, <code>bool</code>: <code>TRUE</code> if toxicity outcomes were reported by dose.</li>
+<li><code>EffByDose</code>, <code>bool</code>: <code>TRUE</code> if efficacy outcomes were reported by dose.</li>
+<li><code>AdverseEventLevelCounts</code>, <code>bool</code>: <code>TRUE</code> if adverse events were tabulated by dose for specific events (e.g. Anaemia) in contrast to the broad level (e.g. Grade 3/4 AE).</li>
+</ul>
+</div>
+<div id="outcomes" class="section level2">
+<h2>Outcomes</h2>
+<p>This tab details the outcome measures collected from the manuscripts.</p>
+<p>Columns:</p>
+<ul>
+<li><code>OutcomeId</code>, <code>int</code>: Primary key for the outcome measure in this project.</li>
+<li><code>OutcomeText</code>, <code>string</code>: Description of the outcome measure.</li>
+<li><code>OutcomeClass</code>, <code>string</code>: Class of the outcome measure. Options are:
+<ul>
+<li><code>Safety</code></li>
+<li><code>Efficacy</code></li>
+</ul></li>
+<li><code>Include</code>, <code>bool</code>: This may be deprecated.</li>
+<li><code>HighIsGood</code>, <code>bool</code>: <code>TRUE</code> if a high value is a good thing for patients. FALSE otherwise. E.g. high response rate is good and low toxicity rate is good.</li>
+<li><code>PerPatientOutcome</code>, <code>bool</code>: <code>TRUE</code> if the outcome measure is binary at the patient level, e.g. “Any AE” is binary at the patient-level because a patient either experiences any AE (in which case it is <code>TRUE</code>) or they do not (in which case it is <code>FALSE</code>). In contrast, “Total AEs” is not binary because a patient may experience many AEs.</li>
+<li><code>Note</code>, <code>string</code>: Items noted during data extraction.</li>
+</ul>
+</div>
+<div id="binaryoutcomeevents" class="section level2">
+<h2>BinaryOutcomeEvents</h2>
+<p>This tab contains the data extracted from manuscripts on binary outcome measures.</p>
+<p>Columns:</p>
+<ul>
+<li><code>Study</code>, <code>string</code>: Foreign key to Studies tab.</li>
+<li><code>Dose</code>, <code>string</code>: Description of dose as reported. In the main, this is just a number, and simple to interpret. In more complicated scenarios, it could contain information reflecting: the frequency that treatments were given; several doses reported together like “10mg - 25mg” (an irritating practice - please do not do this); or doses for several treatments. The bewildering variety in this field is what encouraged us to think about <em>dose-levels</em> (rather than actual doses) in monontonically increasing series.</li>
+<li><code>OutcomeId</code>, <code>int</code>: Foreign key to Outcomes tab.</li>
+<li><code>n</code>, <code>int</code>: Number of patients. The denominator in a binary event rate.</li>
+<li><code>Events</code>, <code>int</code>: number of events.</li>
+<li><code>Orphaned</code>, <code>bool</code>: <code>TRUE</code> if the dose-level is orphaned and therefore has no unambiguous comparator.</li>
+</ul>
+</div>
+<div id="binaryoutcomeanalyisseries" class="section level2">
+<h2>BinaryOutcomeAnalyisSeries</h2>
+<p>Doses investigated and reported in clinial trials are not always monotonically increasing, despite the fact that they should be under the most commonly-used experimental designs like 3+3 and CRM. Blithely analysing all of the doses as they are reported in publications would sometimes create scenarios where it is impossible to definitively say whether a dose is greater or less than some other (e.g. “5mg per day” vs “10mg every second day”; or “10mg of A + 5mg of B” vs “5mg of A + 10mg of B”).</p>
+<p>An analysis-series is a set of doses from a particular study that are strictly monotonically increasing, evaluated with respect to a particular outcome measure. There are many ways to create such subsets. The analysis series presented here are merely those preferred by the author. They favour series with as many doses as possible (whilst still retaining unambiguous monotonic order) and as little repetition as possible. A small amount of repetition has been tolerated where necessary to avoid an “orphaned” dose-level, i.e. a dose-level with no comparator.</p>
+<p>You are free to create our own analysis-series if you prefer.</p>
+<p>Columns:</p>
+<ul>
+<li><code>NewSeries</code>, <code>bit</code>: This field exists to automate the generation of <code>AnalysisSeriesId</code> and <code>Order</code>.</li>
+<li><code>AnalysisSeriesId</code>, <code>int</code>: Primary key for the analysis series. Automatically generated by simple logic in Excel.</li>
+<li><code>Order</code>, <code>int</code>: The order of the dose in this analysis-series. Automatically generated by simple logic in Excel.</li>
+<li><code>Study</code>, <code>string</code>: Foreign key to Studies tab.</li>
+<li><code>Dose</code>, <code>string</code>: Description of dose as reported. In the main, this is just a number, and simple to interpret. In more complicated scenarios, it could contain information reflecting: the frequency that treatments were given; several doses reported together like “10mg - 25mg” (an irritating practice - please do not do this); or doses for several treatments. The bewildering variety in this field is what encouraged us to think about <em>dose-levels</em> (rather than actual doses) in monontonically increasing series.</li>
+<li><code>OutcomeId</code>, <code>int</code>: Foreign key to Outcomes tab.</li>
+</ul>
+</div>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-Chiuzan2017">
+<p>Chiuzan, Cody, Jonathan Shtaynberger, Gulam A. Manji, Jimmy K. Duong, Gary K. Schwartz, Anastasia Ivanova, and Shing M. Lee. 2017. “Dose-Finding Designs for Trials of Molecularly Targeted Agents and Immunotherapies.” <em>Journal of Biopharmaceutical Statistics</em> 27 (3): 477–94. <a href="https://doi.org/10.1080/10543406.2017.1289952">https://doi.org/10.1080/10543406.2017.1289952</a>.</p>
+</div>
+<div id="ref-Eisenhauer2009">
+<p>Eisenhauer, E. A., P. Therasse, J. Bogaerts, L. H. Schwartz, D. Sargent, R. Ford, J. Dancey, et al. 2009. “New Response Evaluation Criteria in Solid Tumours: Revised RECIST Guideline (Version 1.1).” <em>European Journal of Cancer</em> 45 (2): 228–47. <a href="https://doi.org/10.1016/j.ejca.2008.10.026">https://doi.org/10.1016/j.ejca.2008.10.026</a>.</p>
+</div>
+<div id="ref-OQuigley1990">
+<p>O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” <em>Biometrics</em> 46 (1): 33–48. <a href="https://doi.org/10.2307/2531628">https://doi.org/10.2307/2531628</a>.</p>
+</div>
+<div id="ref-Rogatko2007">
+<p>Rogatko, André, David Schoeneck, William Jonas, Mourad Tighiouart, Fadlo R. Khuri, and Alan Porter. 2007. “Translation of Innovative Designs into Phase I Trials.” <em>Journal of Clinical Oncology</em> 25 (31): 4982–6. <a href="https://doi.org/10.1200/JCO.2007.12.1012">https://doi.org/10.1200/JCO.2007.12.1012</a>.</p>
+</div>
+<div id="ref-Tighiouart2010">
+<p>Tighiouart, Mourad, and André Rogatko. 2010. “Dose Finding with Escalation with Overdose Control (EWOC) in Cancer Clinical Trials.” <em>Statistical Science</em> 25 (2): 217–26. <a href="https://doi.org/10.1214/10-STS333">https://doi.org/10.1214/10-STS333</a>.</p>
+</div>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/dosefinding/">DoseFinding</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/post/dose-finding-data/&amp;text=Dataset%20containing%20outcomes%20from%20dose-finding%20trials%20in%20cancer" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/post/dose-finding-data/&amp;t=Dataset%20containing%20outcomes%20from%20dose-finding%20trials%20in%20cancer" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Dataset%20containing%20outcomes%20from%20dose-finding%20trials%20in%20cancer&amp;body=https://www.kristianbrock.com/post/dose-finding-data/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/post/dose-finding-data/&amp;title=Dataset%20containing%20outcomes%20from%20dose-finding%20trials%20in%20cancer" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Dataset%20containing%20outcomes%20from%20dose-finding%20trials%20in%20cancer%20https://www.kristianbrock.com/post/dose-finding-data/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/post/dose-finding-data/&amp;title=Dataset%20containing%20outcomes%20from%20dose-finding%20trials%20in%20cancer" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/ba2fdaa5d7c978ce64a39a93043d05ca?s=200')" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kristianbrock.com/">Kristian Brock</a></h5>
+      <h6 class="card-subtitle">Principal Biostatistician</h6>
+      <p class="card-text">I am an academic early phase clincial trial statistician.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/CatchTwentyToo" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.co.uk/citations?user=zoh03M4AAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/brockk/" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/simulate-vs-enumerate-dose-finding/">Simulation or enumeration with dose-finding designs?</a></li>
+      
+      <li><a href="/post/dose-paths/">Dose-paths in the escalation package</a></li>
+      
+      <li><a href="/project/escalation/">The escalation package</a></li>
+      
+      <li><a href="/post/crm-simulations-checklist/">CRM Simulation Checklist</a></li>
+      
+      <li><a href="/publication/crm-tutorial/">How to design a dose-finding study using the continual reassessment method</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.3/mermaid.min.js" integrity="" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.600a2e440c16093e23e26e90951c4d4b.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
