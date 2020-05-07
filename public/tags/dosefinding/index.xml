@@ -5,12 +5,28 @@
     <link>https://www.kristianbrock.com/tags/dosefinding/</link>
       <atom:link href="https://www.kristianbrock.com/tags/dosefinding/index.xml" rel="self" type="application/rss+xml" />
     <description>DoseFinding</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 06 May 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 07 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>DoseFinding</title>
       <link>https://www.kristianbrock.com/tags/dosefinding/</link>
     </image>
+    
+    <item>
+      <title>Outcomes in dose-finding trials</title>
+      <link>https://www.kristianbrock.com/project/dosefindingdata/</link>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/project/dosefindingdata/</guid>
+      <description>&lt;p&gt;Do we expect the incidence of dose-limiting toxicity to increase as dose increases in dose-escalation clinical trials?
+Categorically, yes.&lt;/p&gt;
+&lt;p&gt;Do we expect efficacy to be greater at higher doses?
+Implicitly yes - it is a reqirement of MTD-seeking methods like 3+3 and CRM.&lt;/p&gt;
+&lt;p&gt;But how well are each of these assumptions borne out by the data in real clinical trials?
+These questions motivated us to collect dose-level outcomes from recent dose-escalation clinical trials in cancer.&lt;/p&gt;
+&lt;p&gt;The dataset is introduced in &lt;a href=&#34;https://www.kristianbrock.com/post/dose-finding-data/&#34;&gt;this post&lt;/a&gt;.
+Analyses of the data will be conducted in future posts.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Dataset containing outcomes from dose-finding trials in cancer</title>
