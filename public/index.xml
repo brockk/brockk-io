@@ -33,7 +33,7 @@
     </item>
     
     <item>
-      <title>Outcomes in dose-finding trials</title>
+      <title>Real data on lots of dose-finding trials</title>
       <link>https://www.kristianbrock.com/project/dosefindingdata/</link>
       <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/project/dosefindingdata/</guid>
@@ -45,6 +45,196 @@ Implicitly yes - it is a reqirement of MTD-seeking methods like 3+3 and CRM.&lt;
 These questions motivated us to collect dose-level outcomes from recent dose-escalation clinical trials in cancer.&lt;/p&gt;
 &lt;p&gt;The dataset is introduced in &lt;a href=&#34;https://www.kristianbrock.com/post/dose-finding-data/&#34;&gt;this post&lt;/a&gt;.
 Analyses of the data will be conducted in future posts.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Sample sizes in phase I</title>
+      <link>https://www.kristianbrock.com/post/dose-finding-trial-sizes/</link>
+      <pubDate>Thu, 07 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/dose-finding-trial-sizes/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;I recently had reason to estimate the average size of a dose-escalation trial.
+Based on my own experience, my immediate answer was “about 30 patients”.
+However, using the data of &lt;span class=&#34;citation&#34;&gt;Brock et al. (2019)&lt;/span&gt; introduced in &lt;a href=&#34;post/dose-finding-data/&#34;&gt;this recent post&lt;/a&gt;, there is no reason to guess.
+The dataset contains dose-level outcomes from 122 phase I clinical trial manuscripts reporting results of 139 dose-escalation experiments in cancer between 2008 and 2014.&lt;/p&gt;
+&lt;p&gt;Perhaps surprisingly, we did not record the sample size of each trial.
+The focus of the research was not phase I trials per se, but the outcomes seen at individual doses in phase I trials.
+For that reason, we recorded the number of patients evaluable at each dose &lt;em&gt;for several outcomes&lt;/em&gt;, including toxicity and efficacy outcomes.
+As &lt;a href=&#34;post/dose-finding-data/&#34;&gt;this post explains&lt;/a&gt;, the outcome most commonly reported was incidence of dose-limiting toxicity (DLT), with about 95% of studies reporting dose-level DLT data.
+Thus, we can derive the number of patients in a dose-escalation study by summing the numbers of patients at each dose.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;empirical-sample-size-of-phase-i-trials&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Empirical sample size of phase I trials&lt;/h1&gt;
+&lt;p&gt;With those caveats out the way, let’s load the data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;source(&amp;#39;https://raw.githubusercontent.com/brockk/dosefindingdata/master/Load.R&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and some required packages:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+library(ggplot2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and then calculate the number of patients in each study:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable &amp;lt;- binary_events %&amp;gt;% 
+  filter(OutcomeId == 1) %&amp;gt;% # This is DLT
+  group_by(Study) %&amp;gt;% 
+  summarise(NumPatients = sum(n), NumDoses = n()) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can simply visualise those summarised data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  ggplot(aes(x = NumPatients)) + 
+  stat_count(aes(y = ..prop..), alpha = 0.5) + 
+  geom_density(col = &amp;#39;blue&amp;#39;, size = 1.3) + 
+  xlim(0, NA) + 
+  labs(x = &amp;#39;Total sample size&amp;#39;, y = &amp;#39;Proportion&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;to learn that the modal size is about &lt;span class=&#34;math inline&#34;&gt;\(n=20\)&lt;/span&gt;.
+The distribution has a pronounced positive skew with a small number of relatively large sample sizes seen.&lt;/p&gt;
+&lt;p&gt;Calculating summary statistics:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  pull(NumPatients) %&amp;gt;% 
+  summary()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    6.00   18.00   23.00   27.38   33.00   93.00&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we see that the median size is 23 patients with an inter-quartile range of (18, 33).
+My initial guess of about 30 was a bit toppy.&lt;/p&gt;
+&lt;div id=&#34;by-drug-type&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;By drug type&lt;/h2&gt;
+&lt;p&gt;The database also records various descriptive variables about the clinical scenarios.
+We can, for example, investigate sample size by the type of drug that is having its dose varied.&lt;/p&gt;
+&lt;p&gt;Let’s do that.
+First, let us check which treatment types are contained:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  left_join(studies, by = &amp;#39;Study&amp;#39;) %&amp;gt;%
+  count(DoseVaryingTreatmentType) %&amp;gt;% 
+  arrange(-n) %&amp;gt;% 
+  head(5) %&amp;gt;% knitr::kable(digits = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;DoseVaryingTreatmentType&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Chemotherapy&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;49&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Inhibitor&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;48&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Monoclonal Antibody&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Chemotherapy + inhibitor&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Immunomodulatory drug&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;We see that this period yielded trials mostly of chemotherapy and inhibitor drugs.
+It really only makes sense to summarise sample sizes for those two categories:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  left_join(studies, by = &amp;#39;Study&amp;#39;) %&amp;gt;%
+  filter(DoseVaryingTreatmentType %in% c(&amp;#39;Chemotherapy&amp;#39;, &amp;#39;Inhibitor&amp;#39;)) %&amp;gt;% 
+  ggplot(aes(x = NumPatients)) + 
+  stat_count(aes(y = ..prop..), alpha = 0.5) + 
+  geom_density(col = &amp;#39;blue&amp;#39;, size = 1.3) + 
+  xlim(0, NA) + 
+  facet_wrap(~ DoseVaryingTreatmentType, ncol = 1) + 
+  labs(x = &amp;#39;Total sample size&amp;#39;, y = &amp;#39;Proportion&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The distributions look fairly exchangeable, suggesting that phase I trials of inhibitors have tended to use similar sizes to those of chemotherapies.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;haematological-vs-non-haematological&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Haematological vs non-haematological&lt;/h2&gt;
+&lt;p&gt;We can instead contrast the sample sizes of trials in haematological and solid tumour (or non-haematological) diseases:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  left_join(studies, by = &amp;#39;Study&amp;#39;) %&amp;gt;%
+  filter(HaemNonhaem %in% c(&amp;#39;Haematological&amp;#39;, &amp;#39;NonHaematological&amp;#39;)) %&amp;gt;% 
+  ggplot(aes(x = NumPatients)) + 
+  stat_count(aes(y = ..prop..), alpha = 0.5) + 
+  geom_density(col = &amp;#39;blue&amp;#39;, size = 1.3) + 
+  xlim(0, NA) + 
+  facet_wrap(~ HaemNonhaem, ncol = 1) + 
+  labs(x = &amp;#39;Total sample size&amp;#39;, y = &amp;#39;Proportion&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Again, we see that the distributions are largely coincident.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-size-per-dose-investigated&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample-size per dose investigated&lt;/h2&gt;
+&lt;p&gt;We can plot sample size against the number of dose investigated to learn roughly how many patients are evaluated at each dose:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  ggplot(aes(x = NumDoses, y = NumPatients)) + 
+  geom_point() + 
+  geom_smooth(method = &amp;#39;loess&amp;#39;) + 
+  xlim(0, NA)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `geom_smooth()` using formula &amp;#39;y ~ x&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;In one particular study, each patient received a different dose.
+That is the outlier on the right of the plot above.
+If we exclude that point, we get a better look at the relationship:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  filter(NumDoses &amp;lt; 20) %&amp;gt;% 
+  ggplot(aes(x = NumDoses, y = NumPatients)) + 
+  geom_point() + 
+  geom_smooth(method = &amp;#39;loess&amp;#39;) + 
+  xlim(0, NA)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `geom_smooth()` using formula &amp;#39;y ~ x&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;For numbers of doses less than about 10, the aggregate sample size is broadly linear in the number of doses.
+How many patients per dose?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
+  filter(NumDoses &amp;lt; 20) %&amp;gt;% 
+  lm(NumPatients ~ NumDoses, data = .) %&amp;gt;% 
+  broom::tidy() %&amp;gt;% knitr::kable()&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9.020828&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.6361675&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.421948&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0008352&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;NumDoses&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.831117&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5030493&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7.615787&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;About 4, with (3, 5) being a good working uncertainty interval.
+That is not to say that phase I trials should be that size, of course!
+Merely a reflection of what was done, on average, between 2008 and 2014.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-BrockDoseFindingData&#34;&gt;
+&lt;p&gt;Brock, Kristian, Victoria Homer, Gurjinder Soul, Claire Potter, Cody Chiuzan, and Shing Lee. 2019. “Dose-Level Toxicity and Efficacy Outcomes from Dose-Finding Clinical Trials in Oncology.” &lt;a href=&#34;https://doi.org/10.25500/edata.bham.00000337&#34;&gt;https://doi.org/10.25500/edata.bham.00000337&lt;/a&gt;. &lt;a href=&#34;https://doi.org/10.25500/edata.bham.00000337&#34;&gt;https://doi.org/10.25500/edata.bham.00000337&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
     </item>
     
@@ -165,10 +355,10 @@ For example, an objective response in AML included &lt;em&gt;complete response w
 The general 3+3, CRM and EWOC methods require that the doses under investigation are &lt;em&gt;fully orderable&lt;/em&gt;.
 That is, we need to be able to unambiguously say that &lt;span class=&#34;math inline&#34;&gt;\(d_i &amp;lt; d_j\)&lt;/span&gt; or &lt;span class=&#34;math inline&#34;&gt;\(d_i &amp;gt; d_j\)&lt;/span&gt; for each &lt;span class=&#34;math inline&#34;&gt;\(d_i, d_j \in \mathcal{D} = \{ d_1, ..., d_n \}\)&lt;/span&gt; for &lt;span class=&#34;math inline&#34;&gt;\(i \neq j\)&lt;/span&gt;.&lt;/p&gt;
 &lt;p&gt;Despite this, we commonly encountered trials that used sets of doses that were not fully orderable.
-In these circumstances, we broke the doses up to form fully orderable subsets.&lt;/p&gt;
-&lt;p&gt;There are many possible subsets of a set so the way we formed these subsets was unavoidably subjective.
-We sought to maximise the size of the largest fully orderable subset.
-Furthermore, we avoided allocating a dose to several sets unless repetition was the only way to avoid having an orphan dose (i.e. a subset of size 1).&lt;/p&gt;
+When this happened, for the purposes of analysis, we broke the doses up to form fully orderable subsets that we called &lt;em&gt;analysis series&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;There are many possible subsets of a set so the way we formed these series was unavoidably subjective.
+We sought to maximise the size of the largest fully orderable series.
+Furthermore, we avoided allocating a dose to several series unless repetition was the only way to avoid having an orphan dose (i.e. a series of size 1).&lt;/p&gt;
 &lt;p&gt;In summary, the data have been recorded in a way amenable to answering the research questions.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;

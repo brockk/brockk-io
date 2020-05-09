@@ -138,11 +138,11 @@ The general 3+3, CRM and EWOC methods require that the doses under investigation
 That is, we need to be able to unambiguously say that $d_i < d_j$ or $d_i > d_j$ for each $d_i, d_j \in \mathcal{D} = \{ d_1, ..., d_n \}$ for $i \neq j$.
 
 Despite this, we commonly encountered trials that used sets of doses that were not fully orderable.
-In these circumstances, we broke the doses up to form fully orderable subsets.
+When this happened, for the purposes of analysis, we broke the doses up to form fully orderable subsets that we called _analysis series_.
 
-There are many possible subsets of a set so the way we formed these subsets was unavoidably subjective.
-We sought to maximise the size of the largest fully orderable subset.
-Furthermore, we avoided allocating a dose to several sets unless repetition was the only way to avoid having an orphan dose (i.e. a subset of size 1).
+There are many possible subsets of a set so the way we formed these series was unavoidably subjective.
+We sought to maximise the size of the largest fully orderable series.
+Furthermore, we avoided allocating a dose to several series unless repetition was the only way to avoid having an orphan dose (i.e. a series of size 1).
 
 In summary, the data have been recorded in a way amenable to answering the research questions.
 

@@ -1,0 +1,204 @@
+---
+title: "Sample sizes in phase I"
+subtitle: "Empirically, what sample size is used in dose-escalation trials?"
+summary: "Empirically, what sample size is used in dose-escalation trials?"
+authors: 
+  - admin
+categories:
+- Research
+tags:
+  - DoseFinding
+projects: 
+  - DoseFindingData
+date: '2020-05-07'
+lastmod: '2020-05-07T15:57:56Z'
+draft: false
+featured: no
+image:
+  caption: 'Photo by [Joshua Coleman on Unsplash](https://unsplash.com/photos/_yVRLC75Ma8)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>I recently had reason to estimate the average size of a dose-escalation trial.
+Based on my own experience, my immediate answer was “about 30 patients”.
+However, using the data of <span class="citation">Brock et al. (2019)</span> introduced in <a href="post/dose-finding-data/">this recent post</a>, there is no reason to guess.
+The dataset contains dose-level outcomes from 122 phase I clinical trial manuscripts reporting results of 139 dose-escalation experiments in cancer between 2008 and 2014.</p>
+<p>Perhaps surprisingly, we did not record the sample size of each trial.
+The focus of the research was not phase I trials per se, but the outcomes seen at individual doses in phase I trials.
+For that reason, we recorded the number of patients evaluable at each dose <em>for several outcomes</em>, including toxicity and efficacy outcomes.
+As <a href="post/dose-finding-data/">this post explains</a>, the outcome most commonly reported was incidence of dose-limiting toxicity (DLT), with about 95% of studies reporting dose-level DLT data.
+Thus, we can derive the number of patients in a dose-escalation study by summing the numbers of patients at each dose.</p>
+</div>
+<div id="empirical-sample-size-of-phase-i-trials" class="section level1">
+<h1>Empirical sample size of phase I trials</h1>
+<p>With those caveats out the way, let’s load the data:</p>
+<pre class="r"><code>source(&#39;https://raw.githubusercontent.com/brockk/dosefindingdata/master/Load.R&#39;)</code></pre>
+<p>and some required packages:</p>
+<pre class="r"><code>library(dplyr)
+library(ggplot2)</code></pre>
+<p>and then calculate the number of patients in each study:</p>
+<pre class="r"><code>dlt_evaluable &lt;- binary_events %&gt;% 
+  filter(OutcomeId == 1) %&gt;% # This is DLT
+  group_by(Study) %&gt;% 
+  summarise(NumPatients = sum(n), NumDoses = n()) </code></pre>
+<p>We can simply visualise those summarised data:</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  ggplot(aes(x = NumPatients)) + 
+  stat_count(aes(y = ..prop..), alpha = 0.5) + 
+  geom_density(col = &#39;blue&#39;, size = 1.3) + 
+  xlim(0, NA) + 
+  labs(x = &#39;Total sample size&#39;, y = &#39;Proportion&#39;)</code></pre>
+<p><img src="/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-4-1.png" width="720" /></p>
+<p>to learn that the modal size is about <span class="math inline">\(n=20\)</span>.
+The distribution has a pronounced positive skew with a small number of relatively large sample sizes seen.</p>
+<p>Calculating summary statistics:</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  pull(NumPatients) %&gt;% 
+  summary()</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    6.00   18.00   23.00   27.38   33.00   93.00</code></pre>
+<p>we see that the median size is 23 patients with an inter-quartile range of (18, 33).
+My initial guess of about 30 was a bit toppy.</p>
+<div id="by-drug-type" class="section level2">
+<h2>By drug type</h2>
+<p>The database also records various descriptive variables about the clinical scenarios.
+We can, for example, investigate sample size by the type of drug that is having its dose varied.</p>
+<p>Let’s do that.
+First, let us check which treatment types are contained:</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  left_join(studies, by = &#39;Study&#39;) %&gt;%
+  count(DoseVaryingTreatmentType) %&gt;% 
+  arrange(-n) %&gt;% 
+  head(5) %&gt;% knitr::kable(digits = 1)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">DoseVaryingTreatmentType</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Chemotherapy</td>
+<td align="right">49</td>
+</tr>
+<tr class="even">
+<td align="left">Inhibitor</td>
+<td align="right">48</td>
+</tr>
+<tr class="odd">
+<td align="left">Monoclonal Antibody</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">Chemotherapy + inhibitor</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Immunomodulatory drug</td>
+<td align="right">4</td>
+</tr>
+</tbody>
+</table>
+<p>We see that this period yielded trials mostly of chemotherapy and inhibitor drugs.
+It really only makes sense to summarise sample sizes for those two categories:</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  left_join(studies, by = &#39;Study&#39;) %&gt;%
+  filter(DoseVaryingTreatmentType %in% c(&#39;Chemotherapy&#39;, &#39;Inhibitor&#39;)) %&gt;% 
+  ggplot(aes(x = NumPatients)) + 
+  stat_count(aes(y = ..prop..), alpha = 0.5) + 
+  geom_density(col = &#39;blue&#39;, size = 1.3) + 
+  xlim(0, NA) + 
+  facet_wrap(~ DoseVaryingTreatmentType, ncol = 1) + 
+  labs(x = &#39;Total sample size&#39;, y = &#39;Proportion&#39;)</code></pre>
+<p><img src="/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-7-1.png" width="720" /></p>
+<p>The distributions look fairly exchangeable, suggesting that phase I trials of inhibitors have tended to use similar sizes to those of chemotherapies.</p>
+</div>
+<div id="haematological-vs-non-haematological" class="section level2">
+<h2>Haematological vs non-haematological</h2>
+<p>We can instead contrast the sample sizes of trials in haematological and solid tumour (or non-haematological) diseases:</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  left_join(studies, by = &#39;Study&#39;) %&gt;%
+  filter(HaemNonhaem %in% c(&#39;Haematological&#39;, &#39;NonHaematological&#39;)) %&gt;% 
+  ggplot(aes(x = NumPatients)) + 
+  stat_count(aes(y = ..prop..), alpha = 0.5) + 
+  geom_density(col = &#39;blue&#39;, size = 1.3) + 
+  xlim(0, NA) + 
+  facet_wrap(~ HaemNonhaem, ncol = 1) + 
+  labs(x = &#39;Total sample size&#39;, y = &#39;Proportion&#39;)</code></pre>
+<p><img src="/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-8-1.png" width="720" /></p>
+<p>Again, we see that the distributions are largely coincident.</p>
+</div>
+<div id="sample-size-per-dose-investigated" class="section level2">
+<h2>Sample-size per dose investigated</h2>
+<p>We can plot sample size against the number of dose investigated to learn roughly how many patients are evaluated at each dose:</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  ggplot(aes(x = NumDoses, y = NumPatients)) + 
+  geom_point() + 
+  geom_smooth(method = &#39;loess&#39;) + 
+  xlim(0, NA)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-9-1.png" width="720" /></p>
+<p>In one particular study, each patient received a different dose.
+That is the outlier on the right of the plot above.
+If we exclude that point, we get a better look at the relationship:</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  filter(NumDoses &lt; 20) %&gt;% 
+  ggplot(aes(x = NumDoses, y = NumPatients)) + 
+  geom_point() + 
+  geom_smooth(method = &#39;loess&#39;) + 
+  xlim(0, NA)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="/post/dose-finding-trial-sizes/index_files/figure-html/unnamed-chunk-10-1.png" width="720" /></p>
+<p>For numbers of doses less than about 10, the aggregate sample size is broadly linear in the number of doses.
+How many patients per dose?</p>
+<pre class="r"><code>dlt_evaluable %&gt;% 
+  filter(NumDoses &lt; 20) %&gt;% 
+  lm(NumPatients ~ NumDoses, data = .) %&gt;% 
+  broom::tidy() %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">9.020828</td>
+<td align="right">2.6361675</td>
+<td align="right">3.421948</td>
+<td align="right">0.0008352</td>
+</tr>
+<tr class="even">
+<td align="left">NumDoses</td>
+<td align="right">3.831117</td>
+<td align="right">0.5030493</td>
+<td align="right">7.615787</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+<p>About 4, with (3, 5) being a good working uncertainty interval.
+That is not to say that phase I trials should be that size, of course!
+Merely a reflection of what was done, on average, between 2008 and 2014.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-BrockDoseFindingData">
+<p>Brock, Kristian, Victoria Homer, Gurjinder Soul, Claire Potter, Cody Chiuzan, and Shing Lee. 2019. “Dose-Level Toxicity and Efficacy Outcomes from Dose-Finding Clinical Trials in Oncology.” <a href="https://doi.org/10.25500/edata.bham.00000337">https://doi.org/10.25500/edata.bham.00000337</a>. <a href="https://doi.org/10.25500/edata.bham.00000337">https://doi.org/10.25500/edata.bham.00000337</a>.</p>
+</div>
+</div>
+</div>
+</div>

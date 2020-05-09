@@ -9,10 +9,10 @@ links:
   icon_pack: fab
   name: Follow
   url: https://twitter.com/CatchTwentyToo
-summary: _escalation_ is an R package for dose-escalation clinical trials, providing a consistent, extensible, modular approach.
+summary: We collected efficacy and toxicity outcomes from 122 published dose-finding trials. This project introduces the data and our insights.
 tags:
 - DoseFinding
-title: Outcomes in dose-finding trials
+title: Real data on lots of dose-finding trials
 url_code: "https://github.com/brockk/dosefindingdata"
 url_data: "https://edata.bham.ac.uk/337/"
 url_pdf: ""
