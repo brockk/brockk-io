@@ -5,12 +5,374 @@
     <link>https://www.kristianbrock.com/categories/research/</link>
       <atom:link href="https://www.kristianbrock.com/categories/research/index.xml" rel="self" type="application/rss+xml" />
     <description>Research</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 07 May 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 13 May 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Research</title>
       <link>https://www.kristianbrock.com/categories/research/</link>
     </image>
+    
+    <item>
+      <title>Fitting the Emax Model in R</title>
+      <link>https://www.kristianbrock.com/post/emax-intro/</link>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/emax-intro/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Let’s say we have some outcomes observed at different doses or exposures of some intervention.
+Those data might look like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+library(dplyr)
+
+df &amp;lt;- tibble(
+  Exposure = c(10, 25, 50, 75, 100, 150, 300, 400),
+  Response = c(0.03, 0.04, 0.15, 0.12, 0.25, 0.43, 0.54, 0.47)
+)
+
+df %&amp;gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/emax-intro/index_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Exposure-response relationships are incredibly common in medical research.
+They do not just arise in phase I trials.&lt;/p&gt;
+&lt;p&gt;The response variable could be interpreted as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the average level of target inhibition;&lt;/li&gt;
+&lt;li&gt;the average concentration in serum;&lt;/li&gt;
+&lt;li&gt;the percentage of subjects in a sample experiencing an event.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Likewise, the exposure variable could be interpreted as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the prevalence of some characteristic in a population;&lt;/li&gt;
+&lt;li&gt;time spent in a certain state;&lt;/li&gt;
+&lt;li&gt;the quantity of molecule popped into a patient’s mouth.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So how would we analyse data like this?
+An ordinary linear model looks a bit of a stretch because the response variable appears to stop increasing at high exposures.
+A generalised linear model (GLM) might be a fruitful approach.&lt;/p&gt;
+&lt;p&gt;Here is a logit model fit to the data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(broom)
+
+df %&amp;gt;% 
+  glm(data = ., formula = Response ~ Exposure, family = binomial(&amp;#39;logit&amp;#39;)) %&amp;gt;% 
+  augment() %&amp;gt;% 
+  mutate(Response = gtools::inv.logit(.fitted)) %&amp;gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_line() + 
+  geom_point(data = df)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/emax-intro/index_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;and here is a probit model:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;% 
+  glm(data = ., formula = Response ~ Exposure, family = binomial(&amp;#39;probit&amp;#39;)) %&amp;gt;% 
+  augment() %&amp;gt;% 
+  mutate(Response = gtools::inv.logit(.fitted)) %&amp;gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_line() + 
+  geom_point(data = df)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/emax-intro/index_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;These fits are awful.
+Both of these GLM approaches suffer from the same simple problem; they assume that the event probability tends to 1 as the linear predictor tends to infinity.
+Put another way, there is no way for the response curve to asymptote to some value other than 1.0.
+This bakes into the analysis that an event probability of 1.0 is not only possible, but guaranteed, given high enough exposure.
+In many situations, this assumption is inappropriate.&lt;/p&gt;
+&lt;p&gt;So what might we do instead?&lt;/p&gt;
+&lt;div id=&#34;the-emax-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Emax Model&lt;/h2&gt;
+&lt;p&gt;Emax is a non-linear model for estimating dose-response curves.&lt;/p&gt;
+&lt;p&gt;The general model form is:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N \times {ED}_{50}^N}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_i\)&lt;/span&gt; is the response for experimental unit &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt; is the exposure (or dose) of experimental unit &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(E_0\)&lt;/span&gt; is the expected response when exposure is zero, or the zero-dose effect, or the &lt;em&gt;basal effect&lt;/em&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(E_{max}\)&lt;/span&gt; is the maximum effect attributable to exposure;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(ED_{50}\)&lt;/span&gt; is the exposure that produces half of &lt;span class=&#34;math inline&#34;&gt;\(E_{max}\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(N &amp;gt; 0\)&lt;/span&gt; is the slope factor, determining the steepness of the dose-response curve.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;citation&#34;&gt;Macdougall (2006)&lt;/span&gt; gives a fantastic introduction to the method, providing excellent interpretation of the parameters and summaries of the main model extensions.
+We have borrowed here their notation and elementary explanation of model terms.&lt;/p&gt;
+&lt;p&gt;The model variant above is called the &lt;em&gt;sigmoidal&lt;/em&gt; Emax model.
+The variant with &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; fixed to take the value 1 is called the &lt;em&gt;hyperbolic&lt;/em&gt; model.&lt;/p&gt;
+&lt;p&gt;Fitting this model to some data means estimating values for the free parameters, &lt;span class=&#34;math inline&#34;&gt;\(E_0, E_{max}, ED_{50}\)&lt;/span&gt;, and possibly &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt;, conditional on the observed &lt;span class=&#34;math inline&#34;&gt;\(R_i\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(D_i\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Fortunately, there are packages in R that will fit this model.
+We introduce maximum likelihood and Bayesian approaches below.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;maximum-likelihood-methods&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Maximum likelihood methods&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;citation&#34;&gt;Bornkamp (2019)&lt;/span&gt; provides a function in the &lt;code&gt;DoseFinding&lt;/code&gt; package for fitting both the hyperbolic and sigmoidal model variants.&lt;/p&gt;
+&lt;p&gt;We demonstrate first the hyperbolic approach, fitting it to our manufactured dataset:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(DoseFinding)
+
+emax0 &amp;lt;- fitMod(Exposure, Response, data = df,  model = &amp;quot;emax&amp;quot;)
+plot(emax0)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/emax-intro/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;By default, the package uses &lt;code&gt;lattice&lt;/code&gt;-type graphics.
+We see that the model fit is much better than the GLM approaches above.
+To see the estimated parameters, we run:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(emax0)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Dose Response Model
+## 
+## Model: emax 
+## Fit-type: normal 
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.08579 -0.03974  0.00223  0.02980  0.08854 
+## 
+## Coefficients with approx. stand. error:
+##      Estimate Std. Error
+## e0     -0.052      0.079
+## eMax    0.827      0.172
+## ed50  162.962    117.031
+## 
+## Residual standard error: 0.0698 
+## Degrees of freedom: 5&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We now fit the sigmoidal model.
+This simply involves calling the same function with a different &lt;code&gt;model&lt;/code&gt; parameter:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emax1 &amp;lt;- fitMod(Exposure, Response, data = df,  model = &amp;quot;sigEmax&amp;quot;)
+plot(emax1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/emax-intro/index_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It is clear that the extra parameter dramatically improves the model fit.
+Glimpsing the parameter values:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(emax1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Dose Response Model
+## 
+## Model: sigEmax 
+## Fit-type: normal 
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.0721 -0.0154  0.0120  0.0251  0.0389 
+## 
+## Coefficients with approx. stand. error:
+##      Estimate Std. Error
+## e0     0.0594     0.0324
+## eMax   0.4515     0.0535
+## ed50 107.0215    11.5670
+## h      4.1370     1.6398
+## 
+## Residual standard error: 0.0497 
+## Degrees of freedom: 4&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we learn that the &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; parameter (which they call &lt;code&gt;h&lt;/code&gt; to keep us on our toes) is not particularly consistent with the value 1.
+The extra degree of freedom has roughly halved the estimated value of &lt;span class=&#34;math inline&#34;&gt;\(E_{max}\)&lt;/span&gt; and more than halved the associated standard error.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;bayesian-methods&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Bayesian methods&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;rstanemax&lt;/code&gt; package by &lt;span class=&#34;citation&#34;&gt;Yoshida (2019)&lt;/span&gt; implements a Bayesian version of Emax, offloading MCMC sampling to the miracle software Stan &lt;span class=&#34;citation&#34;&gt;(Carpenter et al. 2016)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Fitting the sigmoidal model is as simple as running code like:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rstanemax)
+
+stan1 &amp;lt;- stan_emax(Response ~ Exposure, data = df, gamma.fix = NULL, 
+                   seed = 12345, cores = 4, control = list(adapt_delta = 0.95))
+stan1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Inference for Stan model: emax.
+## 4 chains, each with iter=2000; warmup=1000; thin=1; 
+## post-warmup draws per chain=1000, total post-warmup draws=4000.
+## 
+##         mean se_mean    sd  2.5%    25%    50%    75%  97.5% n_eff Rhat
+## emax    0.51    0.00  0.12  0.35   0.44   0.48   0.55   0.86   681    1
+## e0      0.04    0.00  0.04 -0.05   0.02   0.05   0.07   0.12  1409    1
+## ec50  122.33    1.76 45.01 81.81 100.91 110.81 124.89 257.70   651    1
+## gamma   3.66    0.06  2.03  0.96   2.18   3.32   4.74   8.67  1220    1
+## sigma   0.07    0.00  0.03  0.03   0.05   0.06   0.08   0.14   923    1
+## 
+## Samples were drawn using NUTS(diag_e) at Wed May 13 19:15:55 2020.
+## For each parameter, n_eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor on split chains (at 
+## convergence, Rhat=1).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;span class=&#34;math inline&#34;&gt;\(N\)&lt;/span&gt; parameter in this package is referred to as &lt;code&gt;gamma&lt;/code&gt; (still with me?) and the &lt;code&gt;gamma.fix = NULL&lt;/code&gt; argument causes the variable to be estimated from the data.
+The argument name suggests you can provide your own fixed value - I have not investigated.
+To fit the hyperbolic version, you just omit the &lt;code&gt;gamma.fix&lt;/code&gt; argument.&lt;/p&gt;
+&lt;p&gt;We see that there is a little bit of difference in each of the estimated variables but nothing to get alarmed about.&lt;/p&gt;
+&lt;p&gt;The package also provides a nice way of fetching predicted values:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;samp &amp;lt;- rstanemax::posterior_predict(
+  stan1, returnType = &amp;quot;tibble&amp;quot;, 
+  newdata = tibble(exposure = seq(0, 400, length.out = 100)))
+
+samp %&amp;gt;% head(10) %&amp;gt;% knitr::kable()&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;right&#34;&gt;mcmcid&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;exposure&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;emax&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;e0&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;ec50&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;gamma&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;sigma&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;respHat&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;response&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.000000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07183650&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.2860366&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4.040404&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07187133&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3240279&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8.080808&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07206919&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2041787&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.121212&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07254184&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0818142&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16.161616&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07338111&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0172850&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;20.202020&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07466294&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1978203&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;24.242424&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07644671&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2342920&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;28.282828&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.07877353&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0095302&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;32.323232&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.08166463&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0747148&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;36.363636&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1712489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0718365&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;89.70576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.741876&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1903292&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.08512041&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0137214&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This facilitates my favourite method of visualising Bayesian model inferences: overplotting dots and lines.&lt;/p&gt;
+&lt;p&gt;E.g. how does the expected curve look?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;samp %&amp;gt;% head(100 * 150) %&amp;gt;% 
+  rename(Exposure = exposure, Response = respHat) %&amp;gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point(data = df) +
+  geom_line(aes(group = mcmcid), alpha = 0.1, col = &amp;#39;purple&amp;#39;) + 
+  ylim(0, NA)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/emax-intro/index_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Each of the 150 purple lines above is a candidate for the mean exposure-response curve (or dose-response curve, if you prefer), hence the column name &lt;code&gt;respHat&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The subject-level predictions (i.e. the predictions with added noise) are also available in the &lt;code&gt;samp&lt;/code&gt; object via the &lt;code&gt;response&lt;/code&gt; column.
+For instance, if you wanted to infer on the distribution of responses for a single unit (patient, dog, country, whatever) with given exposure, this is the distribution you would be using:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;samp %&amp;gt;% head(100 * 100) %&amp;gt;% 
+  rename(Exposure = exposure, Response = response) %&amp;gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point(alpha = 0.1) +
+  ylim(0, NA)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/emax-intro/index_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;In the plot above, responses are predicted at each of one hundred evenly-spaced exposures.
+At each exposure, there are 100 points shown - i.e. each vertical tower contains exactly 100 points.
+Thus, each dot represents a percentile.&lt;/p&gt;
+&lt;p&gt;That is a bloody nice plot, isn’t it?
+Time to sign off.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;next-steps&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Next steps&lt;/h1&gt;
+&lt;p&gt;In a forthcoming post I will fit the Emax model to outcomes in the dataset of phase I outcomes of &lt;span class=&#34;citation&#34;&gt;Brock et al. (2019)&lt;/span&gt; introduced in &lt;a href=&#34;post/dose-finding-data/&#34;&gt;this post&lt;/a&gt;.
+Til then.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level1 unnumbered&#34;&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-DoseFinding&#34;&gt;
+&lt;p&gt;Bornkamp, Bjoern. 2019. &lt;em&gt;DoseFinding: Planning and Analyzing Dose Finding Experiments&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=DoseFinding&#34;&gt;https://CRAN.R-project.org/package=DoseFinding&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-BrockDoseFindingData&#34;&gt;
+&lt;p&gt;Brock, Kristian, Victoria Homer, Gurjinder Soul, Claire Potter, Cody Chiuzan, and Shing Lee. 2019. “Dose-Level Toxicity and Efficacy Outcomes from Dose-Finding Clinical Trials in Oncology.” &lt;a href=&#34;https://doi.org/10.25500/edata.bham.00000337&#34;&gt;https://doi.org/10.25500/edata.bham.00000337&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Carpenter2016&#34;&gt;
+&lt;p&gt;Carpenter, Bob, Andrew Gelman, Matt Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus A. Brubaker, Peter Li, and Allen Riddell. 2016. “Stan: A Probabilistic Programming Language.” &lt;em&gt;Journal of Statistical Software&lt;/em&gt; 76 (Ii): 1–32.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-macdougallAnalysisDoseResponse2006a&#34;&gt;
+&lt;p&gt;Macdougall, James. 2006. “Analysis of Dose–Response Studies—Emax Model.” In &lt;em&gt;Dose Finding in Drug Development&lt;/em&gt;, edited by Naitee Ting, 127–45. New York, NY: Springer New York. &lt;a href=&#34;https://doi.org/10.1007/0-387-33706-7_9&#34;&gt;https://doi.org/10.1007/0-387-33706-7_9&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-rstanemax&#34;&gt;
+&lt;p&gt;Yoshida, Kenta. 2019. &lt;em&gt;Rstanemax: Emax Model Analysis with ’Stan’&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=rstanemax&#34;&gt;https://CRAN.R-project.org/package=rstanemax&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Sample sizes in phase I</title>
@@ -44,6 +406,7 @@ library(ggplot2)&lt;/code&gt;&lt;/pre&gt;
   filter(OutcomeId == 1) %&amp;gt;% # This is DLT
   group_by(Study) %&amp;gt;% 
   summarise(NumPatients = sum(n), NumDoses = n()) &lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can simply visualise those summarised data:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
   ggplot(aes(x = NumPatients)) + 
@@ -359,14 +722,14 @@ The clear majority of studies report toxicity outcomes by dose:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;studies %&amp;gt;% count(ToxByDose)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
 ##   ToxByDose     n
-##   &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
+## * &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
 ## 1 FALSE         6
 ## 2 TRUE        133&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Substantially fewer report efficacy outcomes by dose:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;studies %&amp;gt;% count(EffByDose)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
 ##   EffByDose     n
-##   &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
+## * &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
 ## 1 FALSE        54
 ## 2 TRUE         85&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The five outcomes reported most commonly are:&lt;/p&gt;
@@ -382,6 +745,7 @@ The clear majority of studies report toxicity outcomes by dose:&lt;/p&gt;
   arrange(-NumObs) %&amp;gt;% 
   head(5) %&amp;gt;% 
   knitr::kable(digits = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## `summarise()` regrouping by &amp;#39;OutcomeClass&amp;#39; (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -686,6 +1050,10 @@ Simply printing the object to the console:&lt;/p&gt;
 ## Number of terminal nodes: 16 
 ## 
 ## Number of doses: 3 
+## 
+## True probability of toxicity:
+##    1    2    3 
+## 0.10 0.17 0.25 
 ## 
 ## Probability of recommendation:
 ## NoDose      1      2      3 

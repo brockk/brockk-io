@@ -172,14 +172,14 @@ The clear majority of studies report toxicity outcomes by dose:</p>
 <pre class="r"><code>studies %&gt;% count(ToxByDose)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   ToxByDose     n
-##   &lt;lgl&gt;     &lt;int&gt;
+## * &lt;lgl&gt;     &lt;int&gt;
 ## 1 FALSE         6
 ## 2 TRUE        133</code></pre>
 <p>Substantially fewer report efficacy outcomes by dose:</p>
 <pre class="r"><code>studies %&gt;% count(EffByDose)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   EffByDose     n
-##   &lt;lgl&gt;     &lt;int&gt;
+## * &lt;lgl&gt;     &lt;int&gt;
 ## 1 FALSE        54
 ## 2 TRUE         85</code></pre>
 <p>The five outcomes reported most commonly are:</p>
@@ -195,6 +195,7 @@ The clear majority of studies report toxicity outcomes by dose:</p>
   arrange(-NumObs) %&gt;% 
   head(5) %&gt;% 
   knitr::kable(digits = 1)</code></pre>
+<pre><code>## `summarise()` regrouping by &#39;OutcomeClass&#39; (override with `.groups` argument)</code></pre>
 <table>
 <thead>
 <tr class="header">

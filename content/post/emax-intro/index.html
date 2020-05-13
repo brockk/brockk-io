@@ -1,0 +1,377 @@
+---
+title: "Fitting the Emax Model in R"
+subtitle: "Emax is an awesome, flexible non-linear model for estimating dose-response curves. Come learn how to fit it in R."
+summary: "Emax is an awesome, flexible non-linear model for estimating dose-response curves. Come learn how to fit it in R."
+authors: 
+  - admin
+categories:
+  - Research
+tags:
+  - DoseFinding
+  - R
+projects: 
+  - DoseFindingData
+date: '2020-05-13'
+lastmod: '2020-05-13T13:10:00Z'
+draft: false
+featured: no
+image:
+  caption: 'Photo by [adrian on Unsplash](https://unsplash.com/photos/FlwhX4vtzt0)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Let’s say we have some outcomes observed at different doses or exposures of some intervention.
+Those data might look like this:</p>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)
+
+df &lt;- tibble(
+  Exposure = c(10, 25, 50, 75, 100, 150, 300, 400),
+  Response = c(0.03, 0.04, 0.15, 0.12, 0.25, 0.43, 0.54, 0.47)
+)
+
+df %&gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point()</code></pre>
+<p><img src="/post/emax-intro/index_files/figure-html/unnamed-chunk-1-1.png" width="720" /></p>
+<p>Exposure-response relationships are incredibly common in medical research.
+They do not just arise in phase I trials.</p>
+<p>The response variable could be interpreted as:</p>
+<ul>
+<li>the average level of target inhibition;</li>
+<li>the average concentration in serum;</li>
+<li>the percentage of subjects in a sample experiencing an event.</li>
+</ul>
+<p>Likewise, the exposure variable could be interpreted as:</p>
+<ul>
+<li>the prevalence of some characteristic in a population;</li>
+<li>time spent in a certain state;</li>
+<li>the quantity of molecule popped into a patient’s mouth.</li>
+</ul>
+<p>So how would we analyse data like this?
+An ordinary linear model looks a bit of a stretch because the response variable appears to stop increasing at high exposures.
+A generalised linear model (GLM) might be a fruitful approach.</p>
+<p>Here is a logit model fit to the data:</p>
+<pre class="r"><code>library(broom)
+
+df %&gt;% 
+  glm(data = ., formula = Response ~ Exposure, family = binomial(&#39;logit&#39;)) %&gt;% 
+  augment() %&gt;% 
+  mutate(Response = gtools::inv.logit(.fitted)) %&gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_line() + 
+  geom_point(data = df)</code></pre>
+<p><img src="/post/emax-intro/index_files/figure-html/unnamed-chunk-2-1.png" width="720" /></p>
+<p>and here is a probit model:</p>
+<pre class="r"><code>df %&gt;% 
+  glm(data = ., formula = Response ~ Exposure, family = binomial(&#39;probit&#39;)) %&gt;% 
+  augment() %&gt;% 
+  mutate(Response = gtools::inv.logit(.fitted)) %&gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_line() + 
+  geom_point(data = df)</code></pre>
+<p><img src="/post/emax-intro/index_files/figure-html/unnamed-chunk-3-1.png" width="720" /></p>
+<p>These fits are awful.
+Both of these GLM approaches suffer from the same simple problem; they assume that the event probability tends to 1 as the linear predictor tends to infinity.
+Put another way, there is no way for the response curve to asymptote to some value other than 1.0.
+This bakes into the analysis that an event probability of 1.0 is not only possible, but guaranteed, given high enough exposure.
+In many situations, this assumption is inappropriate.</p>
+<p>So what might we do instead?</p>
+<div id="the-emax-model" class="section level2">
+<h2>The Emax Model</h2>
+<p>Emax is a non-linear model for estimating dose-response curves.</p>
+<p>The general model form is:</p>
+<p><span class="math display">\[ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N \times {ED}_{50}^N}\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(R_i\)</span> is the response for experimental unit <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(D_i\)</span> is the exposure (or dose) of experimental unit <span class="math inline">\(i\)</span>;</li>
+<li><span class="math inline">\(E_0\)</span> is the expected response when exposure is zero, or the zero-dose effect, or the <em>basal effect</em>;</li>
+<li><span class="math inline">\(E_{max}\)</span> is the maximum effect attributable to exposure;</li>
+<li><span class="math inline">\(ED_{50}\)</span> is the exposure that produces half of <span class="math inline">\(E_{max}\)</span>;</li>
+<li><span class="math inline">\(N &gt; 0\)</span> is the slope factor, determining the steepness of the dose-response curve.</li>
+</ul>
+<p><span class="citation">Macdougall (2006)</span> gives a fantastic introduction to the method, providing excellent interpretation of the parameters and summaries of the main model extensions.
+We have borrowed here their notation and elementary explanation of model terms.</p>
+<p>The model variant above is called the <em>sigmoidal</em> Emax model.
+The variant with <span class="math inline">\(N\)</span> fixed to take the value 1 is called the <em>hyperbolic</em> model.</p>
+<p>Fitting this model to some data means estimating values for the free parameters, <span class="math inline">\(E_0, E_{max}, ED_{50}\)</span>, and possibly <span class="math inline">\(N\)</span>, conditional on the observed <span class="math inline">\(R_i\)</span> and <span class="math inline">\(D_i\)</span>.</p>
+<p>Fortunately, there are packages in R that will fit this model.
+We introduce maximum likelihood and Bayesian approaches below.</p>
+</div>
+<div id="maximum-likelihood-methods" class="section level2">
+<h2>Maximum likelihood methods</h2>
+<p><span class="citation">Bornkamp (2019)</span> provides a function in the <code>DoseFinding</code> package for fitting both the hyperbolic and sigmoidal model variants.</p>
+<p>We demonstrate first the hyperbolic approach, fitting it to our manufactured dataset:</p>
+<pre class="r"><code>library(DoseFinding)
+
+emax0 &lt;- fitMod(Exposure, Response, data = df,  model = &quot;emax&quot;)
+plot(emax0)</code></pre>
+<p><img src="/post/emax-intro/index_files/figure-html/unnamed-chunk-4-1.png" width="720" /></p>
+<p>By default, the package uses <code>lattice</code>-type graphics.
+We see that the model fit is much better than the GLM approaches above.
+To see the estimated parameters, we run:</p>
+<pre class="r"><code>summary(emax0)</code></pre>
+<pre><code>## Dose Response Model
+## 
+## Model: emax 
+## Fit-type: normal 
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.08579 -0.03974  0.00223  0.02980  0.08854 
+## 
+## Coefficients with approx. stand. error:
+##      Estimate Std. Error
+## e0     -0.052      0.079
+## eMax    0.827      0.172
+## ed50  162.962    117.031
+## 
+## Residual standard error: 0.0698 
+## Degrees of freedom: 5</code></pre>
+<p>We now fit the sigmoidal model.
+This simply involves calling the same function with a different <code>model</code> parameter:</p>
+<pre class="r"><code>emax1 &lt;- fitMod(Exposure, Response, data = df,  model = &quot;sigEmax&quot;)
+plot(emax1)</code></pre>
+<p><img src="/post/emax-intro/index_files/figure-html/unnamed-chunk-6-1.png" width="720" /></p>
+<p>It is clear that the extra parameter dramatically improves the model fit.
+Glimpsing the parameter values:</p>
+<pre class="r"><code>summary(emax1)</code></pre>
+<pre><code>## Dose Response Model
+## 
+## Model: sigEmax 
+## Fit-type: normal 
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.0721 -0.0154  0.0120  0.0251  0.0389 
+## 
+## Coefficients with approx. stand. error:
+##      Estimate Std. Error
+## e0     0.0594     0.0324
+## eMax   0.4515     0.0535
+## ed50 107.0215    11.5670
+## h      4.1370     1.6398
+## 
+## Residual standard error: 0.0497 
+## Degrees of freedom: 4</code></pre>
+<p>we learn that the <span class="math inline">\(N\)</span> parameter (which they call <code>h</code> to keep us on our toes) is not particularly consistent with the value 1.
+The extra degree of freedom has roughly halved the estimated value of <span class="math inline">\(E_{max}\)</span> and more than halved the associated standard error.</p>
+</div>
+<div id="bayesian-methods" class="section level2">
+<h2>Bayesian methods</h2>
+<p>The <code>rstanemax</code> package by <span class="citation">Yoshida (2019)</span> implements a Bayesian version of Emax, offloading MCMC sampling to the miracle software Stan <span class="citation">(Carpenter et al. 2016)</span>.</p>
+<p>Fitting the sigmoidal model is as simple as running code like:</p>
+<pre class="r"><code>library(rstanemax)
+
+stan1 &lt;- stan_emax(Response ~ Exposure, data = df, gamma.fix = NULL, 
+                   seed = 12345, cores = 4, control = list(adapt_delta = 0.95))
+stan1</code></pre>
+<pre><code>## Inference for Stan model: emax.
+## 4 chains, each with iter=2000; warmup=1000; thin=1; 
+## post-warmup draws per chain=1000, total post-warmup draws=4000.
+## 
+##         mean se_mean    sd  2.5%    25%    50%    75%  97.5% n_eff Rhat
+## emax    0.51    0.00  0.12  0.35   0.44   0.48   0.55   0.86   681    1
+## e0      0.04    0.00  0.04 -0.05   0.02   0.05   0.07   0.12  1409    1
+## ec50  122.33    1.76 45.01 81.81 100.91 110.81 124.89 257.70   651    1
+## gamma   3.66    0.06  2.03  0.96   2.18   3.32   4.74   8.67  1220    1
+## sigma   0.07    0.00  0.03  0.03   0.05   0.06   0.08   0.14   923    1
+## 
+## Samples were drawn using NUTS(diag_e) at Wed May 13 19:15:55 2020.
+## For each parameter, n_eff is a crude measure of effective sample size,
+## and Rhat is the potential scale reduction factor on split chains (at 
+## convergence, Rhat=1).</code></pre>
+<p>The <span class="math inline">\(N\)</span> parameter in this package is referred to as <code>gamma</code> (still with me?) and the <code>gamma.fix = NULL</code> argument causes the variable to be estimated from the data.
+The argument name suggests you can provide your own fixed value - I have not investigated.
+To fit the hyperbolic version, you just omit the <code>gamma.fix</code> argument.</p>
+<p>We see that there is a little bit of difference in each of the estimated variables but nothing to get alarmed about.</p>
+<p>The package also provides a nice way of fetching predicted values:</p>
+<pre class="r"><code>samp &lt;- rstanemax::posterior_predict(
+  stan1, returnType = &quot;tibble&quot;, 
+  newdata = tibble(exposure = seq(0, 400, length.out = 100)))
+
+samp %&gt;% head(10) %&gt;% knitr::kable()</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="right">mcmcid</th>
+<th align="right">exposure</th>
+<th align="right">emax</th>
+<th align="right">e0</th>
+<th align="right">ec50</th>
+<th align="right">gamma</th>
+<th align="right">sigma</th>
+<th align="right">respHat</th>
+<th align="right">response</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">100</td>
+<td align="right">0.000000</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07183650</td>
+<td align="right">-0.2860366</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">4.040404</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07187133</td>
+<td align="right">0.3240279</td>
+</tr>
+<tr class="odd">
+<td align="right">100</td>
+<td align="right">8.080808</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07206919</td>
+<td align="right">0.2041787</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">12.121212</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07254184</td>
+<td align="right">0.0818142</td>
+</tr>
+<tr class="odd">
+<td align="right">100</td>
+<td align="right">16.161616</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07338111</td>
+<td align="right">-0.0172850</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">20.202020</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07466294</td>
+<td align="right">0.1978203</td>
+</tr>
+<tr class="odd">
+<td align="right">100</td>
+<td align="right">24.242424</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07644671</td>
+<td align="right">0.2342920</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">28.282828</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.07877353</td>
+<td align="right">0.0095302</td>
+</tr>
+<tr class="odd">
+<td align="right">100</td>
+<td align="right">32.323232</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.08166463</td>
+<td align="right">-0.0747148</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">36.363636</td>
+<td align="right">0.1712489</td>
+<td align="right">0.0718365</td>
+<td align="right">89.70576</td>
+<td align="right">2.741876</td>
+<td align="right">0.1903292</td>
+<td align="right">0.08512041</td>
+<td align="right">-0.0137214</td>
+</tr>
+</tbody>
+</table>
+<p>This facilitates my favourite method of visualising Bayesian model inferences: overplotting dots and lines.</p>
+<p>E.g. how does the expected curve look?</p>
+<pre class="r"><code>samp %&gt;% head(100 * 150) %&gt;% 
+  rename(Exposure = exposure, Response = respHat) %&gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point(data = df) +
+  geom_line(aes(group = mcmcid), alpha = 0.1, col = &#39;purple&#39;) + 
+  ylim(0, NA)</code></pre>
+<p><img src="/post/emax-intro/index_files/figure-html/unnamed-chunk-10-1.png" width="720" /></p>
+<p>Each of the 150 purple lines above is a candidate for the mean exposure-response curve (or dose-response curve, if you prefer), hence the column name <code>respHat</code>.</p>
+<p>The subject-level predictions (i.e. the predictions with added noise) are also available in the <code>samp</code> object via the <code>response</code> column.
+For instance, if you wanted to infer on the distribution of responses for a single unit (patient, dog, country, whatever) with given exposure, this is the distribution you would be using:</p>
+<pre class="r"><code>samp %&gt;% head(100 * 100) %&gt;% 
+  rename(Exposure = exposure, Response = response) %&gt;% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point(alpha = 0.1) +
+  ylim(0, NA)</code></pre>
+<p><img src="/post/emax-intro/index_files/figure-html/unnamed-chunk-11-1.png" width="720" /></p>
+<p>In the plot above, responses are predicted at each of one hundred evenly-spaced exposures.
+At each exposure, there are 100 points shown - i.e. each vertical tower contains exactly 100 points.
+Thus, each dot represents a percentile.</p>
+<p>That is a bloody nice plot, isn’t it?
+Time to sign off.</p>
+</div>
+</div>
+<div id="next-steps" class="section level1">
+<h1>Next steps</h1>
+<p>In a forthcoming post I will fit the Emax model to outcomes in the dataset of phase I outcomes of <span class="citation">Brock et al. (2019)</span> introduced in <a href="post/dose-finding-data/">this post</a>.
+Til then.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-DoseFinding">
+<p>Bornkamp, Bjoern. 2019. <em>DoseFinding: Planning and Analyzing Dose Finding Experiments</em>. <a href="https://CRAN.R-project.org/package=DoseFinding">https://CRAN.R-project.org/package=DoseFinding</a>.</p>
+</div>
+<div id="ref-BrockDoseFindingData">
+<p>Brock, Kristian, Victoria Homer, Gurjinder Soul, Claire Potter, Cody Chiuzan, and Shing Lee. 2019. “Dose-Level Toxicity and Efficacy Outcomes from Dose-Finding Clinical Trials in Oncology.” <a href="https://doi.org/10.25500/edata.bham.00000337">https://doi.org/10.25500/edata.bham.00000337</a>.</p>
+</div>
+<div id="ref-Carpenter2016">
+<p>Carpenter, Bob, Andrew Gelman, Matt Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus A. Brubaker, Peter Li, and Allen Riddell. 2016. “Stan: A Probabilistic Programming Language.” <em>Journal of Statistical Software</em> 76 (Ii): 1–32.</p>
+</div>
+<div id="ref-macdougallAnalysisDoseResponse2006a">
+<p>Macdougall, James. 2006. “Analysis of Dose–Response Studies—Emax Model.” In <em>Dose Finding in Drug Development</em>, edited by Naitee Ting, 127–45. New York, NY: Springer New York. <a href="https://doi.org/10.1007/0-387-33706-7_9">https://doi.org/10.1007/0-387-33706-7_9</a>.</p>
+</div>
+<div id="ref-rstanemax">
+<p>Yoshida, Kenta. 2019. <em>Rstanemax: Emax Model Analysis with ’Stan’</em>. <a href="https://CRAN.R-project.org/package=rstanemax">https://CRAN.R-project.org/package=rstanemax</a>.</p>
+</div>
+</div>
+</div>

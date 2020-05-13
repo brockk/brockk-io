@@ -47,6 +47,7 @@ library(ggplot2)</code></pre>
   filter(OutcomeId == 1) %&gt;% # This is DLT
   group_by(Study) %&gt;% 
   summarise(NumPatients = sum(n), NumDoses = n()) </code></pre>
+<pre><code>## `summarise()` ungrouping (override with `.groups` argument)</code></pre>
 <p>We can simply visualise those summarised data:</p>
 <pre class="r"><code>dlt_evaluable %&gt;% 
   ggplot(aes(x = NumPatients)) + 

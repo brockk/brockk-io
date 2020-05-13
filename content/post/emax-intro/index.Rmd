@@ -1,0 +1,235 @@
+---
+title: "Fitting the Emax Model in R"
+subtitle: "Emax is an awesome, flexible non-linear model for estimating dose-response curves. Come learn how to fit it in R."
+summary: "Emax is an awesome, flexible non-linear model for estimating dose-response curves. Come learn how to fit it in R."
+authors: 
+  - admin
+categories:
+  - Research
+tags:
+  - DoseFinding
+  - R
+projects: 
+  - DoseFindingData
+date: '2020-05-13'
+lastmod: '2020-05-13T13:10:00Z'
+draft: false
+featured: no
+image:
+  caption: 'Photo by [adrian on Unsplash](https://unsplash.com/photos/FlwhX4vtzt0)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(fig.width = 7.5)
+knitr::opts_chunk$set(fig.height = 5)
+```
+
+
+# Introduction
+Let's say we have some outcomes observed at different doses or exposures of some intervention.
+Those data might look like this:
+
+```{r, warning=FALSE, message=FALSE}
+library(ggplot2)
+library(dplyr)
+
+df <- tibble(
+  Exposure = c(10, 25, 50, 75, 100, 150, 300, 400),
+  Response = c(0.03, 0.04, 0.15, 0.12, 0.25, 0.43, 0.54, 0.47)
+)
+
+df %>% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point()
+```
+
+Exposure-response relationships are incredibly common in medical research.
+They do not just arise in phase I trials.
+
+The response variable could be interpreted as:
+
+* the average level of target inhibition;
+* the average concentration in serum;
+* the percentage of subjects in a sample experiencing an event.
+
+Likewise, the exposure variable could be interpreted as:
+
+* the prevalence of some characteristic in a population;
+* time spent in a certain state;
+* the quantity of molecule popped into a patient's mouth.
+
+So how would we analyse data like this?
+An ordinary linear model looks a bit of a stretch because the response variable appears to stop increasing at high exposures.
+A generalised linear model (GLM) might be a fruitful approach.
+
+Here is a logit model fit to the data:
+```{r, warning=FALSE, message=FALSE, fig.width=7.5, fig.height=5}
+library(broom)
+
+df %>% 
+  glm(data = ., formula = Response ~ Exposure, family = binomial('logit')) %>% 
+  augment() %>% 
+  mutate(Response = gtools::inv.logit(.fitted)) %>% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_line() + 
+  geom_point(data = df)
+```
+
+and here is a probit model:
+
+```{r, warning=FALSE, message=FALSE, fig.width=7.5, fig.height=5}
+df %>% 
+  glm(data = ., formula = Response ~ Exposure, family = binomial('probit')) %>% 
+  augment() %>% 
+  mutate(Response = gtools::inv.logit(.fitted)) %>% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_line() + 
+  geom_point(data = df)
+```
+
+These fits are awful. 
+Both of these GLM approaches suffer from the same simple problem; they assume that the event probability tends to 1 as the linear predictor tends to infinity.
+Put another way, there is no way for the response curve to asymptote to some value other than 1.0.
+This bakes into the analysis that an event probability of 1.0 is not only possible, but guaranteed, given high enough exposure.
+In many situations, this assumption is inappropriate.
+
+So what might we do instead?
+
+## The Emax Model
+
+Emax is a non-linear model for estimating dose-response curves.
+
+The general model form is:
+
+$$ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N \times {ED}_{50}^N}$$
+
+where:
+
+* $R_i$ is the response for experimental unit $i$;
+* $D_i$ is the exposure (or dose) of experimental unit $i$;
+* $E_0$ is the expected response when exposure is zero, or the zero-dose effect, or the _basal effect_;
+* $E_{max}$ is the maximum effect attributable to exposure;
+* $ED_{50}$ is the exposure that produces half of $E_{max}$;
+* $N > 0$ is the slope factor, determining the steepness of the dose-response curve.
+
+@macdougallAnalysisDoseResponse2006a gives a fantastic introduction to the method, providing excellent interpretation of the parameters and summaries of the main model extensions.
+We have borrowed here their notation and elementary explanation of model terms.
+
+The model variant above is called the _sigmoidal_ Emax model.
+The variant with $N$ fixed to take the value 1 is called the _hyperbolic_ model.
+
+Fitting this model to some data means estimating values for the free parameters, $E_0, E_{max}, ED_{50}$, and possibly $N$, conditional on the observed $R_i$ and $D_i$.
+
+Fortunately, there are packages in R that will fit this model.
+We introduce maximum likelihood and Bayesian approaches below.
+
+## Maximum likelihood methods
+
+@DoseFinding provides a function in the `DoseFinding` package for fitting both the hyperbolic and sigmoidal model variants.
+
+We demonstrate first the hyperbolic approach, fitting it to our manufactured dataset:
+```{r, message=FALSE}
+library(DoseFinding)
+
+emax0 <- fitMod(Exposure, Response, data = df,  model = "emax")
+plot(emax0)
+```
+
+By default, the package uses `lattice`-type graphics.
+We see that the model fit is much better than the GLM approaches above.
+To see the estimated parameters, we run:
+
+```{r}
+summary(emax0)
+```
+
+We now fit the sigmoidal model.
+This simply involves calling the same function with a different `model` parameter:
+
+```{r, message=FALSE}
+emax1 <- fitMod(Exposure, Response, data = df,  model = "sigEmax")
+plot(emax1)
+```
+
+It is clear that the extra parameter dramatically improves the model fit.
+Glimpsing the parameter values:
+
+```{r}
+summary(emax1)
+```
+
+we learn that the $N$ parameter (which they call `h` to keep us on our toes) is not particularly consistent with the value 1.
+The extra degree of freedom has roughly halved the estimated value of $E_{max}$ and more than halved the associated standard error.
+
+## Bayesian methods
+The `rstanemax` package by @rstanemax implements a Bayesian version of Emax, offloading MCMC sampling to the miracle software Stan [@Carpenter2016].
+
+Fitting the sigmoidal model is as simple as running code like:
+
+```{r, cache = TRUE, message=FALSE}
+library(rstanemax)
+
+stan1 <- stan_emax(Response ~ Exposure, data = df, gamma.fix = NULL, 
+                   seed = 12345, cores = 4, control = list(adapt_delta = 0.95))
+stan1
+```
+
+The $N$ parameter in this package is referred to as `gamma` (still with me?) and the `gamma.fix = NULL` argument causes the variable to be estimated from the data.
+The argument name suggests you can provide your own fixed value - I have not investigated.
+To fit the hyperbolic version, you just omit the `gamma.fix` argument.
+
+We see that there is a little bit of difference in each of the estimated variables but nothing to get alarmed about.
+
+The package also provides a nice way of fetching predicted values:
+```{r}
+samp <- rstanemax::posterior_predict(
+  stan1, returnType = "tibble", 
+  newdata = tibble(exposure = seq(0, 400, length.out = 100)))
+
+samp %>% head(10) %>% knitr::kable()
+```
+
+This facilitates my favourite method of visualising Bayesian model inferences: overplotting dots and lines.
+
+E.g. how does the expected curve look?
+
+```{r, warning=FALSE}
+samp %>% head(100 * 150) %>% 
+  rename(Exposure = exposure, Response = respHat) %>% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point(data = df) +
+  geom_line(aes(group = mcmcid), alpha = 0.1, col = 'purple') + 
+  ylim(0, NA)
+```
+
+Each of the 150 purple lines above is a candidate for the mean exposure-response curve (or dose-response curve, if you prefer), hence the column name `respHat`.
+
+The subject-level predictions (i.e. the predictions with added noise) are also available in the `samp` object via the `response` column.
+For instance, if you wanted to infer on the distribution of responses for a single unit (patient, dog, country, whatever) with given exposure, this is the distribution you would be using: 
+
+```{r, fig.height = 7.5, fig.width = 7.5, warning=FALSE}
+samp %>% head(100 * 100) %>% 
+  rename(Exposure = exposure, Response = response) %>% 
+  ggplot(aes(x = Exposure, y = Response)) + 
+  geom_point(alpha = 0.1) +
+  ylim(0, NA)
+```
+
+In the plot above, responses are predicted at each of one hundred evenly-spaced exposures.
+At each exposure, there are 100 points shown - i.e. each vertical tower contains exactly 100 points.
+Thus, each dot represents a percentile.
+
+That is a bloody nice plot, isn't it?
+Time to sign off.
+
+# Next steps
+In a forthcoming post I will fit the Emax model to outcomes in the dataset of phase I outcomes of @BrockDoseFindingData introduced in [this post](post/dose-finding-data/).
+Til then.
+
+# References
+
