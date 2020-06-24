@@ -83,7 +83,7 @@ In many situations, this assumption is inappropriate.&lt;/p&gt;
 &lt;h2&gt;The Emax Model&lt;/h2&gt;
 &lt;p&gt;Emax is a non-linear model for estimating dose-response curves.&lt;/p&gt;
 &lt;p&gt;The general model form is:&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N \times {ED}_{50}^N}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N + {ED}_{50}^N}\]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;where:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_i\)&lt;/span&gt; is the response for experimental unit &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;;&lt;/li&gt;

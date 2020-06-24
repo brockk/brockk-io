@@ -270,7 +270,7 @@
     
       <meta property="article:published_time" content="2020-05-07T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-05-09T07:13:32&#43;01:00">
+    <meta property="article:modified_time" content="2020-05-13T19:57:32&#43;01:00">
   
 
   
@@ -305,7 +305,7 @@
   ],
   
   "datePublished": "2020-05-07T00:00:00Z",
-  "dateModified": "2020-05-09T07:13:32+01:00",
+  "dateModified": "2020-05-13T19:57:32+01:00",
   
   "author": {
     "@type": "Person",
@@ -667,7 +667,7 @@
           Last updated on
       
     
-    May 9, 2020
+    May 13, 2020
   </span>
   
 
@@ -789,7 +789,6 @@ library(ggplot2)</code></pre>
   filter(OutcomeId == 1) %&gt;% # This is DLT
   group_by(Study) %&gt;% 
   summarise(NumPatients = sum(n), NumDoses = n()) </code></pre>
-<pre><code>## `summarise()` ungrouping (override with `.groups` argument)</code></pre>
 <p>We can simply visualise those summarised data:</p>
 <pre class="r"><code>dlt_evaluable %&gt;% 
   ggplot(aes(x = NumPatients)) + 

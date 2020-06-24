@@ -106,7 +106,7 @@ Emax is a non-linear model for estimating dose-response curves.
 
 The general model form is:
 
-$$ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N \times {ED}_{50}^N}$$
+$$ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N + {ED}_{50}^N}$$
 
 where:
 

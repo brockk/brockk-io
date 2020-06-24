@@ -103,7 +103,7 @@ In many situations, this assumption is inappropriate.&lt;/p&gt;
 &lt;h2&gt;The Emax Model&lt;/h2&gt;
 &lt;p&gt;Emax is a non-linear model for estimating dose-response curves.&lt;/p&gt;
 &lt;p&gt;The general model form is:&lt;/p&gt;
-&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N \times {ED}_{50}^N}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ R_i = E_o + \frac{D_i^N \times E_{max}}{D_i^N + {ED}_{50}^N}\]&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;where:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(R_i\)&lt;/span&gt; is the response for experimental unit &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;;&lt;/li&gt;
@@ -442,7 +442,6 @@ library(ggplot2)&lt;/code&gt;&lt;/pre&gt;
   filter(OutcomeId == 1) %&amp;gt;% # This is DLT
   group_by(Study) %&amp;gt;% 
   summarise(NumPatients = sum(n), NumDoses = n()) &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## `summarise()` ungrouping (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can simply visualise those summarised data:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dlt_evaluable %&amp;gt;% 
   ggplot(aes(x = NumPatients)) + 
@@ -758,14 +757,14 @@ The clear majority of studies report toxicity outcomes by dose:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;studies %&amp;gt;% count(ToxByDose)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
 ##   ToxByDose     n
-## * &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
+##   &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
 ## 1 FALSE         6
 ## 2 TRUE        133&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Substantially fewer report efficacy outcomes by dose:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;studies %&amp;gt;% count(EffByDose)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 2 x 2
 ##   EffByDose     n
-## * &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
+##   &amp;lt;lgl&amp;gt;     &amp;lt;int&amp;gt;
 ## 1 FALSE        54
 ## 2 TRUE         85&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The five outcomes reported most commonly are:&lt;/p&gt;
@@ -781,7 +780,6 @@ The clear majority of studies report toxicity outcomes by dose:&lt;/p&gt;
   arrange(-NumObs) %&amp;gt;% 
   head(5) %&amp;gt;% 
   knitr::kable(digits = 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## `summarise()` regrouping by &amp;#39;OutcomeClass&amp;#39; (override with `.groups` argument)&lt;/code&gt;&lt;/pre&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
