@@ -33,6 +33,128 @@
     </item>
     
     <item>
+      <title>Fetching BibTeX citations using rcrossref</title>
+      <link>https://www.kristianbrock.com/post/using-rcrossref/</link>
+      <pubDate>Sun, 26 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/using-rcrossref/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I was drafting a review recently where I wanted to cite 122 papers (the subjects of the review) in one reference.
+Ordinarily, I use the citation managers &lt;a href=&#34;https://www.zotero.org/&#34;&gt;Zotero&lt;/a&gt; and &lt;a href=&#34;https://www.mendeley.com/&#34;&gt;Mendeley&lt;/a&gt;.
+I could have imported all 122 PDFs into Zotero and then output the citations in a BibTeX file.
+However, that felt like too much manual work so I searched for a more automated way.&lt;/p&gt;
+&lt;p&gt;I had a list of 122 DOIs and I wanted the BibTeX entry for each.
+My suspicion was that there would be an R package to automate this task.
+That is how I stumbled across the &lt;code&gt;rcrossref&lt;/code&gt; package by &lt;span class=&#34;citation&#34;&gt;Chamberlain et al. (2020)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;demonstration-of-rcrossref&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Demonstration of &lt;code&gt;rcrossref&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;rcrossref&lt;/code&gt; is on CRAN so you can install it in the usual way:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;#39;rcrossref&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let me immodestly demonstrate the package by fetching a BibTeX entry for one of my own papers (my first, in fact).
+You simply call the &lt;code&gt;cr_cn&lt;/code&gt; function with the DOI you seek:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(rcrossref)
+
+doi &amp;lt;- &amp;#39;10.1186/s12874-017-0381-x&amp;#39;
+refs &amp;lt;- cr_cn(dois = doi, format = &amp;quot;bibtex&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The citation can be returned in one of many formats.
+As stated, I want BibTeX.&lt;/p&gt;
+&lt;p&gt;Let’s see the result:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;writeLines(refs)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## @article{Brock_2017,
+##  doi = {10.1186/s12874-017-0381-x},
+##  url = {https://doi.org/10.1186%2Fs12874-017-0381-x},
+##  year = 2017,
+##  month = {jul},
+##  publisher = {Springer Science and Business Media {LLC}},
+##  volume = {17},
+##  number = {1},
+##  author = {Kristian Brock and Lucinda Billingham and Mhairi Copland and Shamyla Siddique and Mirjana Sirovica and Christina Yap},
+##  title = {Implementing the {EffTox} dose-finding design in the Matchpoint trial},
+##  journal = {{BMC} Medical Research Methodology}
+## }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Perfect.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-bulk-solution&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The bulk solution&lt;/h2&gt;
+&lt;p&gt;Having fetched one example successfully, I imagined a viable solution would be to write a &lt;code&gt;for&lt;/code&gt;-loop.
+However, the solution I used was even simpler than that.
+You can send in a vector of DOIs via the &lt;code&gt;dois&lt;/code&gt; parameter.
+Let me add another of my pivotal world-changing research papers to illustrate the point:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;doi &amp;lt;- c(
+  &amp;#39;10.1186/s12874-017-0381-x&amp;#39;,
+  &amp;#39;10.1016/S2213-2600(20)30033-3&amp;#39;
+)
+
+refs &amp;lt;- cr_cn(dois = doi, format = &amp;quot;bibtex&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;refs&lt;/code&gt; object is now a &lt;code&gt;list&lt;/code&gt; of two BibTeX entries.
+Writing those references to a text stream is slightly more awkward than before:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;writeLines(unlist(lapply(refs, paste, collapse=&amp;quot; &amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## @article{Brock_2017,
+##  doi = {10.1186/s12874-017-0381-x},
+##  url = {https://doi.org/10.1186%2Fs12874-017-0381-x},
+##  year = 2017,
+##  month = {jul},
+##  publisher = {Springer Science and Business Media {LLC}},
+##  volume = {17},
+##  number = {1},
+##  author = {Kristian Brock and Lucinda Billingham and Mhairi Copland and Shamyla Siddique and Mirjana Sirovica and Christina Yap},
+##  title = {Implementing the {EffTox} dose-finding design in the Matchpoint trial},
+##  journal = {{BMC} Medical Research Methodology}
+## }
+## @article{Middleton_2020,
+##  doi = {10.1016/s2213-2600(20)30033-3},
+##  url = {https://doi.org/10.1016%2Fs2213-2600%2820%2930033-3},
+##  year = 2020,
+##  month = {mar},
+##  publisher = {Elsevier {BV}},
+##  author = {Gary Middleton and Kristian Brock and Joshua Savage and Rhys Mant and Yvonne Summers and John Connibear and Riyaz Shah and Christian Ottensmeier and Paul Shaw and Siow-Ming Lee and Sanjay Popat and Colin Barrie and Gloria Barone and Lucinda Billingham},
+##  title = {Pembrolizumab in patients with non-small-cell lung cancer of performance status 2 ({PePS}2): a single arm, phase 2 trial},
+##  journal = {The Lancet Respiratory Medicine}
+## }&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Having mastered that, however, writing the BibTeX entries to a file was a piece of cake:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;myfile = file(&amp;#39;~/bibliography.bib&amp;#39;)
+writeLines(unlist(lapply(refs, paste, collapse=&amp;quot; &amp;quot;)), con = myfile)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Job done?
+Not quite.&lt;/p&gt;
+&lt;p&gt;There was, in fact, one more challenge to overcome.
+To cite the papers in &lt;span class=&#34;math inline&#34;&gt;\(\LaTeX\)&lt;/span&gt;, I would need the 122 citation keys, i.e. the identifying labels that come after the &lt;code&gt;@article{&lt;/code&gt;.
+We can see that CrossRef, the service that converts the DOI into a BibTeX citation, labels papers using the pattern &lt;code&gt;author_yyyy&lt;/code&gt;.
+I extracted the citation keys using a bit of &lt;a href=&#34;https://en.wikipedia.org/wiki/Regular_expression&#34;&gt;RegEx&lt;/a&gt; and the &lt;code&gt;stringr&lt;/code&gt; and &lt;code&gt;purrr&lt;/code&gt; packages:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)
+library(stringr)
+
+cite_keys &amp;lt;- refs %&amp;gt;% 
+  map_chr(~ str_extract(.x, pattern = &amp;#39;\\@article\\{[A-Za-z_]*[0-9]+&amp;#39;)) %&amp;gt;% 
+  map_chr(~ str_extract(.x, pattern = &amp;#39;[A-Za-z_]*[0-9]+&amp;#39;))
+
+cite_keys&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Brock_2017&amp;quot;     &amp;quot;Middleton_2020&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I am not great at RegEx so I imagine there is a better way of doing that, but my method worked.
+Importantly, the above will work with double-barreled names like &lt;code&gt;name1_name2_yyyy&lt;/code&gt;.
+Finally, I pasted the contents of &lt;code&gt;cite_keys&lt;/code&gt; into my tex file.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;end-product&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;End product&lt;/h2&gt;
+&lt;p&gt;This is the end result:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;result.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;One hundred and twenty-two consecutive references compacted into one reference, as required.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-rcrossref&#34;&gt;
+&lt;p&gt;Chamberlain, Scott, Hao Zhu, Najko Jahn, Carl Boettiger, and Karthik Ram. 2020. &lt;em&gt;Rcrossref: Client for Various ’Crossref’ ’Apis’&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=rcrossref&#34;&gt;https://CRAN.R-project.org/package=rcrossref&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Fitting the Emax Model in R</title>
       <link>https://www.kristianbrock.com/post/emax-intro/</link>
       <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>

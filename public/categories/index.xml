@@ -5,7 +5,7 @@
     <link>https://www.kristianbrock.com/categories/</link>
       <atom:link href="https://www.kristianbrock.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <description>Categories</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 13 May 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 26 Jul 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Categories</title>
@@ -13,18 +13,18 @@
     </image>
     
     <item>
-      <title>Research</title>
-      <link>https://www.kristianbrock.com/categories/research/</link>
-      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/categories/research/</guid>
+      <title>Code</title>
+      <link>https://www.kristianbrock.com/categories/code/</link>
+      <pubDate>Sun, 26 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/categories/code/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Code</title>
-      <link>https://www.kristianbrock.com/categories/code/</link>
-      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
-      <guid>https://www.kristianbrock.com/categories/code/</guid>
+      <title>Research</title>
+      <link>https://www.kristianbrock.com/categories/research/</link>
+      <pubDate>Wed, 13 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/categories/research/</guid>
       <description></description>
     </item>
     

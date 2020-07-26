@@ -22,6 +22,7 @@ interests:
 - Stan
 name: Kristian Brock
 organizations:
+- name: UCB
 - name: University of Birmingham
   url: ""
 role: Principal Biostatistician
@@ -44,6 +45,7 @@ user_groups:
 - Visitors
 ---
 
-I am a clinical trial statistician specialising in early phase trial methodology. 
-I have experience in cancer and non-cancer trials. I have authored several methodology papers. 
-I lead a MSc module on early phase trials and am currently supervising a PhD on trial methodology.
+I am a biostatistician specialising in Bayesian and early-phase trial methodology at UCB. 
+I have experience in cancer and non-cancer clinical trials. 
+I have authored several methodology papers and conducted the analysis for several trial results publications. 
+By honourary association, I lead a MSc module on early phase trials at the University of Birmingham and supervise PhDs on trial methodology.

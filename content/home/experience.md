@@ -54,7 +54,7 @@ date_format = "Jan 2006"
   company_url = ""
   location = "Birmingham, UK"
   date_start = "2018-11-30"
-  date_end = ""
+  date_end = "2020-06-30"
   description = """Another promotion at the Cancer Research UK Clinical Trials Unit. The Principal Biostatistician role places an emphasis on leading a programme of research and continuing to win grant funding for new trials. I continued to supervise trials launched in the Senior Biostatistician role, whilst adding a major trial in idiopathic intracranial hypertension. I designed and delivered a 40-hour programme of technical training for new Biostatisticians, and wrote an MSc module on early phase trials.
 
   Highlights
@@ -64,5 +64,15 @@ date_format = "Jan 2006"
   - Won 1 grant (correct at 2019-12-27) for £1.7m.
   - Published further publications as first-author and co-author.
   """
+
+
+[[experience]]
+  title = "Principal Biostatistician"
+  company = "UCB"
+  company_url = ""
+  location = "Slough, UK"
+  date_start = "2020-07-01"
+  date_end = ""
+  description = """I joined UCB as a statistical methodologist in their Centre for Excellence in Statistical Innovation."""
 
 +++
