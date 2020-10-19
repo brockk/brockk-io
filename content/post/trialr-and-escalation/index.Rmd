@@ -1,0 +1,78 @@
+---
+title: "trialr and escalation"
+subtitle: "The `trialr` package, the `escalation` package, how they work together, and how they will grow."
+summary: "The `trialr` package, the `escalation` package, how they work together, and how they will grow."
+authors: 
+  - admin
+categories:
+- Code
+tags:
+  - escalation
+  - trialr
+  - R
+  - DoseFinding
+projects: []
+date: '2020-10-19'
+lastmod: '2020-10-19T17:26:32Z'
+draft: false
+featured: no
+image:
+  caption: 'Photo by [Pascal Swier on Unsplash](https://unsplash.com/photos/7de474KZIbs)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+## Summary
+This post sets out how two of my R packages, [`trialr`](https://CRAN.R-project.org/package=trialr) and [`escalation`](https://CRAN.R-project.org/package=escalation), will work together and grow in the future.
+
+## Background
+[`trialr`](https://CRAN.R-project.org/package=trialr) [@trialr; @Brock2019]  is a package I wrote to fit complex Bayesian clinical trial models using [Stan](https://mc-stan.org/).
+Because I generally work on early phase trials, and because early phase trials are generally predisposed to Bayesian methods, the package ended up containing quite a few dose-finding methods like CRM [@OQuigley1990] and EffTox [@Thall2004].
+I initially added code to this package that would aid practical implementation of these methods, like conducting simulation studies and calculating future dose-paths.
+
+Later I introduced the [`escalation`](https://CRAN.R-project.org/package=escalation) [@escalation] package, containing a more general range of dose-finding methods (i.e. not just those that require MCMC methods for model-fitting).
+The beauty of `escalation` is that formalises the interface for dose-finding designs.
+For instance, all methods recommend a dose through the `recommended_dose()` function and distinguish between the need to stop or continue via the `continue()` function.
+This standard interface allows the elements of designs to become modules that can be arbitrarily combined.
+
+For example, `escalation` allows you to start with a CRM model, add behaviour to stop when a certain sample size is reached, but ensure that the recommended dose is evaluated in at least $n$ patients before stopping is permitted, all the while monitoring for excess toxicity at the lowest dose.
+Because all of the modules obey the same interface, they can be combined in arbitrary ways to tailor the behaviour of designs.
+The module that stops a trial when a target sample size is reached works whether it is preceded by a CRM design or BOIN design, for instance.
+
+## Do we need both?
+By the time `escalation` was released, there was quite a bit of overlap between `trialr` and `escalation`. 
+So do we need both? 
+Yes, and I will explain why!
+Is `trialr` now redundant?
+Not at all, but it will become more focused.
+
+`escalation` went far further than `trialr` in making dose-finding designs hot-swappable and customisable.
+It makes sense that inferential tools like running simulations are offered in `escalation` so that comparing designs is easy.
+
+`trialr` still has its place, however.
+It takes care of fitting models to data using MCMC via Stan.
+This is a reliable way of fitting complex (e.g. non-linear, multi-parameter) models when other methods struggle.
+Henceforth, `trialr` will focus only on Stan-based MCMC model-fitting.
+
+`escalation` will now use `trialr` alongside dose-finding packages from other authors like `dfcrm` [@dfcrm] and `BOIN` [@BOIN] to support the broadest possible array of dose-escalation methods.
+
+
+## How might this look in future?
+One of my near term goals is to add dose-response models to `trialr` like Emax.
+Dose-response modelling is a topic close to dose-finding trials but quite distinct from it.
+When I add the Emax model, the Stan implementation will go in `trialr`.
+If the Emax model stands to be useful as a dose-selection tool, then it can be added to support the usual methods in the `escalation` package.
+
+
+## The situation now
+I recently updated both packages on CRAN:
+
+* `trialr` is now at v0.1.5 at https://CRAN.R-project.org/package=trialr
+* `escalation` is now at v0.1.4 at https://CRAN.R-project.org/package=escalation
+
+`escalation` now depends on `trialr` to deliver Stan-MCMC implementations of CRM, EffTox, and the phase I method of @Neuenschwander2008.
+
+
+## References
+

@@ -5,12 +5,100 @@
     <link>https://www.kristianbrock.com/tags/trialr/</link>
       <atom:link href="https://www.kristianbrock.com/tags/trialr/index.xml" rel="self" type="application/rss+xml" />
     <description>trialr</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 29 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 19 Oct 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>trialr</title>
       <link>https://www.kristianbrock.com/tags/trialr/</link>
     </image>
+    
+    <item>
+      <title>trialr and escalation</title>
+      <link>https://www.kristianbrock.com/post/trialr-and-escalation/</link>
+      <pubDate>Mon, 19 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/trialr-and-escalation/</guid>
+      <description>
+
+
+&lt;div id=&#34;summary&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Summary&lt;/h2&gt;
+&lt;p&gt;This post sets out how two of my R packages, &lt;a href=&#34;https://CRAN.R-project.org/package=trialr&#34;&gt;&lt;code&gt;trialr&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://CRAN.R-project.org/package=escalation&#34;&gt;&lt;code&gt;escalation&lt;/code&gt;&lt;/a&gt;, will work together and grow in the future.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;background&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://CRAN.R-project.org/package=trialr&#34;&gt;&lt;code&gt;trialr&lt;/code&gt;&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock 2020b; Brock 2019)&lt;/span&gt; is a package I wrote to fit complex Bayesian clinical trial models using &lt;a href=&#34;https://mc-stan.org/&#34;&gt;Stan&lt;/a&gt;.
+Because I generally work on early phase trials, and because early phase trials are generally predisposed to Bayesian methods, the package ended up containing quite a few dose-finding methods like CRM &lt;span class=&#34;citation&#34;&gt;(O’Quigley, Pepe, and Fisher 1990)&lt;/span&gt; and EffTox &lt;span class=&#34;citation&#34;&gt;(Thall and Cook 2004)&lt;/span&gt;.
+I initially added code to this package that would aid practical implementation of these methods, like conducting simulation studies and calculating future dose-paths.&lt;/p&gt;
+&lt;p&gt;Later I introduced the &lt;a href=&#34;https://CRAN.R-project.org/package=escalation&#34;&gt;&lt;code&gt;escalation&lt;/code&gt;&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock 2020a)&lt;/span&gt; package, containing a more general range of dose-finding methods (i.e. not just those that require MCMC methods for model-fitting).
+The beauty of &lt;code&gt;escalation&lt;/code&gt; is that formalises the interface for dose-finding designs.
+For instance, all methods recommend a dose through the &lt;code&gt;recommended_dose()&lt;/code&gt; function and distinguish between the need to stop or continue via the &lt;code&gt;continue()&lt;/code&gt; function.
+This standard interface allows the elements of designs to become modules that can be arbitrarily combined.&lt;/p&gt;
+&lt;p&gt;For example, &lt;code&gt;escalation&lt;/code&gt; allows you to start with a CRM model, add behaviour to stop when a certain sample size is reached, but ensure that the recommended dose is evaluated in at least &lt;span class=&#34;math inline&#34;&gt;\(n\)&lt;/span&gt; patients before stopping is permitted, all the while monitoring for excess toxicity at the lowest dose.
+Because all of the modules obey the same interface, they can be combined in arbitrary ways to tailor the behaviour of designs.
+The module that stops a trial when a target sample size is reached works whether it is preceded by a CRM design or BOIN design, for instance.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;do-we-need-both&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Do we need both?&lt;/h2&gt;
+&lt;p&gt;By the time &lt;code&gt;escalation&lt;/code&gt; was released, there was quite a bit of overlap between &lt;code&gt;trialr&lt;/code&gt; and &lt;code&gt;escalation&lt;/code&gt;.
+So do we need both?
+Yes, and I will explain why!
+Is &lt;code&gt;trialr&lt;/code&gt; now redundant?
+Not at all, but it will become more focused.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;escalation&lt;/code&gt; went far further than &lt;code&gt;trialr&lt;/code&gt; in making dose-finding designs hot-swappable and customisable.
+It makes sense that inferential tools like running simulations are offered in &lt;code&gt;escalation&lt;/code&gt; so that comparing designs is easy.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;trialr&lt;/code&gt; still has its place, however.
+It takes care of fitting models to data using MCMC via Stan.
+This is a reliable way of fitting complex (e.g. non-linear, multi-parameter) models when other methods struggle.
+Henceforth, &lt;code&gt;trialr&lt;/code&gt; will focus only on Stan-based MCMC model-fitting.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;escalation&lt;/code&gt; will now use &lt;code&gt;trialr&lt;/code&gt; alongside dose-finding packages from other authors like &lt;code&gt;dfcrm&lt;/code&gt; &lt;span class=&#34;citation&#34;&gt;(Cheung 2013)&lt;/span&gt; and &lt;code&gt;BOIN&lt;/code&gt; &lt;span class=&#34;citation&#34;&gt;(Yuan and Liu 2018)&lt;/span&gt; to support the broadest possible array of dose-escalation methods.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-might-this-look-in-future&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How might this look in future?&lt;/h2&gt;
+&lt;p&gt;One of my near term goals is to add dose-response models to &lt;code&gt;trialr&lt;/code&gt; like Emax.
+Dose-response modelling is a topic close to dose-finding trials but quite distinct from it.
+When I add the Emax model, the Stan implementation will go in &lt;code&gt;trialr&lt;/code&gt;.
+If the Emax model stands to be useful as a dose-selection tool, then it can be added to support the usual methods in the &lt;code&gt;escalation&lt;/code&gt; package.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-situation-now&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The situation now&lt;/h2&gt;
+&lt;p&gt;I recently updated both packages on CRAN:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;trialr&lt;/code&gt; is now at v0.1.5 at &lt;a href=&#34;https://CRAN.R-project.org/package=trialr&#34; class=&#34;uri&#34;&gt;https://CRAN.R-project.org/package=trialr&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;escalation&lt;/code&gt; is now at v0.1.4 at &lt;a href=&#34;https://CRAN.R-project.org/package=escalation&#34; class=&#34;uri&#34;&gt;https://CRAN.R-project.org/package=escalation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;escalation&lt;/code&gt; now depends on &lt;code&gt;trialr&lt;/code&gt; to deliver Stan-MCMC implementations of CRM, EffTox, and the phase I method of &lt;span class=&#34;citation&#34;&gt;Neuenschwander, Branson, and Gsponer (2008)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-Brock2019&#34;&gt;
+&lt;p&gt;Brock, Kristian. 2019. “trialr: Bayesian Clinical Trial Designs in R and Stan.” &lt;em&gt;arXiv E-Prints&lt;/em&gt;, June, arXiv:1907.00161.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-escalation&#34;&gt;
+&lt;p&gt;Brock, Kristian. 2020a. &lt;em&gt;Escalation: Modular Approach to Dose Finding Clinical Trials&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=escalation&#34;&gt;https://CRAN.R-project.org/package=escalation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-trialr&#34;&gt;
+&lt;p&gt;———. 2020b. &lt;em&gt;Trialr: Clinical Trial Designs in ’Rstan’&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=trialr&#34;&gt;https://CRAN.R-project.org/package=trialr&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-dfcrm&#34;&gt;
+&lt;p&gt;Cheung, Ken. 2013. &lt;em&gt;Dfcrm: Dose-Finding by the Continual Reassessment Method&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=dfcrm&#34;&gt;https://CRAN.R-project.org/package=dfcrm&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Neuenschwander2008&#34;&gt;
+&lt;p&gt;Neuenschwander, Beat, Michael Branson, and Thomas Gsponer. 2008. “Critical aspects of the Bayesian approach to phase I cancer trials.” &lt;em&gt;Statistics in Medicine&lt;/em&gt; 27: 2420–39. &lt;a href=&#34;https://doi.org/10.1002/sim.3230&#34;&gt;https://doi.org/10.1002/sim.3230&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-OQuigley1990&#34;&gt;
+&lt;p&gt;O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” &lt;em&gt;Biometrics&lt;/em&gt; 46 (1): 33–48. &lt;a href=&#34;https://doi.org/10.2307/2531628&#34;&gt;https://doi.org/10.2307/2531628&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Thall2004&#34;&gt;
+&lt;p&gt;Thall, PF, and JD Cook. 2004. “Dose-Finding Based on Efficacy-Toxicity Trade-Offs.” &lt;em&gt;Biometrics&lt;/em&gt; 60 (3): 684–93.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-BOIN&#34;&gt;
+&lt;p&gt;Yuan, Ying, and Suyu Liu. 2018. &lt;em&gt;BOIN: Bayesian Optimal Interval (Boin) Design for Single-Agent and Drug- Combination Phase I Clinical Trials&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=BOIN&#34;&gt;https://CRAN.R-project.org/package=BOIN&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>trialr - Bayesian Clinical Trial Designs in R and Stan</title>

@@ -28,10 +28,10 @@
   
     
   
-  <meta name="description" content="Fetching lots of BibTeX citations is simple using `rcrossref`">
+  <meta name="description" content="The `trialr` package, the `escalation` package, how they work together, and how they will grow.">
 
   
-  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/post/using-rcrossref/">
+  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/post/trialr-and-escalation/">
 
   
 
@@ -247,7 +247,7 @@
   <link rel="icon" type="image/png" href="/img/icon-32.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://www.kristianbrock.com/post/using-rcrossref/">
+  <link rel="canonical" href="https://www.kristianbrock.com/post/trialr-and-escalation/">
 
   
   
@@ -262,15 +262,15 @@
   <meta property="twitter:creator" content="@CatchTwentyToo">
   
   <meta property="og:site_name" content="Kristian Brock">
-  <meta property="og:url" content="https://www.kristianbrock.com/post/using-rcrossref/">
-  <meta property="og:title" content="Fetching BibTeX citations using rcrossref | Kristian Brock">
-  <meta property="og:description" content="Fetching lots of BibTeX citations is simple using `rcrossref`"><meta property="og:image" content="https://www.kristianbrock.com/post/using-rcrossref/featured.jpg">
-  <meta property="twitter:image" content="https://www.kristianbrock.com/post/using-rcrossref/featured.jpg"><meta property="og:locale" content="en-us">
+  <meta property="og:url" content="https://www.kristianbrock.com/post/trialr-and-escalation/">
+  <meta property="og:title" content="trialr and escalation | Kristian Brock">
+  <meta property="og:description" content="The `trialr` package, the `escalation` package, how they work together, and how they will grow."><meta property="og:image" content="https://www.kristianbrock.com/post/trialr-and-escalation/featured.jpg">
+  <meta property="twitter:image" content="https://www.kristianbrock.com/post/trialr-and-escalation/featured.jpg"><meta property="og:locale" content="en-us">
   
     
-      <meta property="article:published_time" content="2020-07-26T00:00:00&#43;00:00">
+      <meta property="article:published_time" content="2020-10-19T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2020-07-26T15:29:13&#43;01:00">
+    <meta property="article:modified_time" content="2020-10-19T17:26:32&#43;00:00">
   
 
   
@@ -296,16 +296,16 @@
   "@type": "BlogPosting",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://www.kristianbrock.com/post/using-rcrossref/"
+    "@id": "https://www.kristianbrock.com/post/trialr-and-escalation/"
   },
-  "headline": "Fetching BibTeX citations using rcrossref",
+  "headline": "trialr and escalation",
   
   "image": [
-    "https://www.kristianbrock.com/post/using-rcrossref/featured.jpg"
+    "https://www.kristianbrock.com/post/trialr-and-escalation/featured.jpg"
   ],
   
-  "datePublished": "2020-07-26T00:00:00Z",
-  "dateModified": "2020-07-26T15:29:13+01:00",
+  "datePublished": "2020-10-19T00:00:00Z",
+  "dateModified": "2020-10-19T17:26:32Z",
   
   "author": {
     "@type": "Person",
@@ -320,7 +320,7 @@
       "url": "https://www.kristianbrock.com/img/icon-512.png"
     }
   },
-  "description": "Fetching lots of BibTeX citations is simple using `rcrossref`"
+  "description": "The `trialr` package, the `escalation` package, how they work together, and how they will grow."
 }
 </script>
 
@@ -338,7 +338,7 @@
 
 
 
-  <title>Fetching BibTeX citations using rcrossref | Kristian Brock</title>
+  <title>trialr and escalation | Kristian Brock</title>
 
 </head>
 
@@ -627,15 +627,13 @@
 
   
   
-    
-  
 
 
 <div class="article-container pt-3">
-  <h1>Fetching BibTeX citations using rcrossref</h1>
+  <h1>trialr and escalation</h1>
 
   
-  <p class="page-subtitle">Fetching lots of BibTeX citations is simple using <code>rcrossref</code></p>
+  <p class="page-subtitle">The <code>trialr</code> package, the <code>escalation</code> package, how they work together, and how they will grow.</p>
   
 
   
@@ -667,7 +665,7 @@
           Last updated on
       
     
-    Jul 26, 2020
+    Oct 19, 2020
   </span>
   
 
@@ -711,10 +709,10 @@
 </div>
 
 
-<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 479px;">
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 640px; max-height: 427px;">
   <div style="position: relative">
-    <img src="/post/using-rcrossref/featured_hu82b01fde2c889dca058d98aa17ce851c_363479_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
-    <span class="article-header-caption">Photo by <a href="https://unsplash.com/photos/Q9y3LRuuxmg">Maksym Kaharlytskyi on Unsplash</a></span>
+    <img src="/post/trialr-and-escalation/featured.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Photo by <a href="https://unsplash.com/photos/7de474KZIbs">Pascal Swier on Unsplash</a></span>
   </div>
 </div>
 
@@ -726,114 +724,80 @@
       
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p>I was drafting a review recently where I wanted to cite 122 papers (the subjects of the review) in one reference.
-Ordinarily, I use the citation managers <a href="https://www.zotero.org/">Zotero</a> and <a href="https://www.mendeley.com/">Mendeley</a>.
-I could have imported all 122 PDFs into Zotero and then output the citations in a BibTeX file.
-However, that felt like too much manual work so I searched for a more automated way.</p>
-<p>I had a list of 122 DOIs and I wanted the BibTeX entry for each.
-My suspicion was that there would be an R package to automate this task.
-That is how I stumbled across the <code>rcrossref</code> package by <span class="citation">Chamberlain et al. (2020)</span>.</p>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>This post sets out how two of my R packages, <a href="https://CRAN.R-project.org/package=trialr"><code>trialr</code></a> and <a href="https://CRAN.R-project.org/package=escalation"><code>escalation</code></a>, will work together and grow in the future.</p>
 </div>
-<div id="demonstration-of-rcrossref" class="section level2">
-<h2>Demonstration of <code>rcrossref</code></h2>
-<p><code>rcrossref</code> is on CRAN so you can install it in the usual way:</p>
-<pre class="r"><code>install.packages(&#39;rcrossref&#39;)</code></pre>
-<p>Let me immodestly demonstrate the package by fetching a BibTeX entry for one of my own papers (my first, in fact).
-You simply call the <code>cr_cn</code> function with the DOI you seek:</p>
-<pre class="r"><code>library(rcrossref)
-
-doi &lt;- &#39;10.1186/s12874-017-0381-x&#39;
-refs &lt;- cr_cn(dois = doi, format = &quot;bibtex&quot;)</code></pre>
-<p>The citation can be returned in one of many formats.
-As stated, I want BibTeX.</p>
-<p>Let’s see the result:</p>
-<pre class="r"><code>writeLines(refs)</code></pre>
-<pre><code>## @article{Brock_2017,
-##  doi = {10.1186/s12874-017-0381-x},
-##  url = {https://doi.org/10.1186%2Fs12874-017-0381-x},
-##  year = 2017,
-##  month = {jul},
-##  publisher = {Springer Science and Business Media {LLC}},
-##  volume = {17},
-##  number = {1},
-##  author = {Kristian Brock and Lucinda Billingham and Mhairi Copland and Shamyla Siddique and Mirjana Sirovica and Christina Yap},
-##  title = {Implementing the {EffTox} dose-finding design in the Matchpoint trial},
-##  journal = {{BMC} Medical Research Methodology}
-## }</code></pre>
-<p>Perfect.</p>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p><a href="https://CRAN.R-project.org/package=trialr"><code>trialr</code></a> <span class="citation">(Brock 2020b; Brock 2019)</span> is a package I wrote to fit complex Bayesian clinical trial models using <a href="https://mc-stan.org/">Stan</a>.
+Because I generally work on early phase trials, and because early phase trials are generally predisposed to Bayesian methods, the package ended up containing quite a few dose-finding methods like CRM <span class="citation">(O’Quigley, Pepe, and Fisher 1990)</span> and EffTox <span class="citation">(Thall and Cook 2004)</span>.
+I initially added code to this package that would aid practical implementation of these methods, like conducting simulation studies and calculating future dose-paths.</p>
+<p>Later I introduced the <a href="https://CRAN.R-project.org/package=escalation"><code>escalation</code></a> <span class="citation">(Brock 2020a)</span> package, containing a more general range of dose-finding methods (i.e. not just those that require MCMC methods for model-fitting).
+The beauty of <code>escalation</code> is that formalises the interface for dose-finding designs.
+For instance, all methods recommend a dose through the <code>recommended_dose()</code> function and distinguish between the need to stop or continue via the <code>continue()</code> function.
+This standard interface allows the elements of designs to become modules that can be arbitrarily combined.</p>
+<p>For example, <code>escalation</code> allows you to start with a CRM model, add behaviour to stop when a certain sample size is reached, but ensure that the recommended dose is evaluated in at least <span class="math inline">\(n\)</span> patients before stopping is permitted, all the while monitoring for excess toxicity at the lowest dose.
+Because all of the modules obey the same interface, they can be combined in arbitrary ways to tailor the behaviour of designs.
+The module that stops a trial when a target sample size is reached works whether it is preceded by a CRM design or BOIN design, for instance.</p>
 </div>
-<div id="the-bulk-solution" class="section level2">
-<h2>The bulk solution</h2>
-<p>Having fetched one example successfully, I imagined a viable solution would be to write a <code>for</code>-loop.
-However, the solution I used was even simpler than that.
-You can send in a vector of DOIs via the <code>dois</code> parameter.
-Let me add another of my pivotal world-changing research papers to illustrate the point:</p>
-<pre class="r"><code>doi &lt;- c(
-  &#39;10.1186/s12874-017-0381-x&#39;,
-  &#39;10.1016/S2213-2600(20)30033-3&#39;
-)
-
-refs &lt;- cr_cn(dois = doi, format = &quot;bibtex&quot;)</code></pre>
-<p>The <code>refs</code> object is now a <code>list</code> of two BibTeX entries.
-Writing those references to a text stream is slightly more awkward than before:</p>
-<pre class="r"><code>writeLines(unlist(lapply(refs, paste, collapse=&quot; &quot;)))</code></pre>
-<pre><code>## @article{Brock_2017,
-##  doi = {10.1186/s12874-017-0381-x},
-##  url = {https://doi.org/10.1186%2Fs12874-017-0381-x},
-##  year = 2017,
-##  month = {jul},
-##  publisher = {Springer Science and Business Media {LLC}},
-##  volume = {17},
-##  number = {1},
-##  author = {Kristian Brock and Lucinda Billingham and Mhairi Copland and Shamyla Siddique and Mirjana Sirovica and Christina Yap},
-##  title = {Implementing the {EffTox} dose-finding design in the Matchpoint trial},
-##  journal = {{BMC} Medical Research Methodology}
-## }
-## @article{Middleton_2020,
-##  doi = {10.1016/s2213-2600(20)30033-3},
-##  url = {https://doi.org/10.1016%2Fs2213-2600%2820%2930033-3},
-##  year = 2020,
-##  month = {mar},
-##  publisher = {Elsevier {BV}},
-##  author = {Gary Middleton and Kristian Brock and Joshua Savage and Rhys Mant and Yvonne Summers and John Connibear and Riyaz Shah and Christian Ottensmeier and Paul Shaw and Siow-Ming Lee and Sanjay Popat and Colin Barrie and Gloria Barone and Lucinda Billingham},
-##  title = {Pembrolizumab in patients with non-small-cell lung cancer of performance status 2 ({PePS}2): a single arm, phase 2 trial},
-##  journal = {The Lancet Respiratory Medicine}
-## }</code></pre>
-<p>Having mastered that, however, writing the BibTeX entries to a file was a piece of cake:</p>
-<pre class="r"><code>myfile = file(&#39;~/bibliography.bib&#39;)
-writeLines(unlist(lapply(refs, paste, collapse=&quot; &quot;)), con = myfile)</code></pre>
-<p>Job done?
-Not quite.</p>
-<p>There was, in fact, one more challenge to overcome.
-To cite the papers in <span class="math inline">\(\LaTeX\)</span>, I would need the 122 citation keys, i.e. the identifying labels that come after the <code>@article{</code>.
-We can see that CrossRef, the service that converts the DOI into a BibTeX citation, labels papers using the pattern <code>author_yyyy</code>.
-I extracted the citation keys using a bit of <a href="https://en.wikipedia.org/wiki/Regular_expression">RegEx</a> and the <code>stringr</code> and <code>purrr</code> packages:</p>
-<pre class="r"><code>library(purrr)
-library(stringr)
-
-cite_keys &lt;- refs %&gt;% 
-  map_chr(~ str_extract(.x, pattern = &#39;\\@article\\{[A-Za-z_]*[0-9]+&#39;)) %&gt;% 
-  map_chr(~ str_extract(.x, pattern = &#39;[A-Za-z_]*[0-9]+&#39;))
-
-cite_keys</code></pre>
-<pre><code>## [1] &quot;Brock_2017&quot;     &quot;Middleton_2020&quot;</code></pre>
-<p>I am not great at RegEx so I imagine there is a better way of doing that, but my method worked.
-Importantly, the above will work with double-barreled names like <code>name1_name2_yyyy</code>.
-Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
+<div id="do-we-need-both" class="section level2">
+<h2>Do we need both?</h2>
+<p>By the time <code>escalation</code> was released, there was quite a bit of overlap between <code>trialr</code> and <code>escalation</code>.
+So do we need both?
+Yes, and I will explain why!
+Is <code>trialr</code> now redundant?
+Not at all, but it will become more focused.</p>
+<p><code>escalation</code> went far further than <code>trialr</code> in making dose-finding designs hot-swappable and customisable.
+It makes sense that inferential tools like running simulations are offered in <code>escalation</code> so that comparing designs is easy.</p>
+<p><code>trialr</code> still has its place, however.
+It takes care of fitting models to data using MCMC via Stan.
+This is a reliable way of fitting complex (e.g. non-linear, multi-parameter) models when other methods struggle.
+Henceforth, <code>trialr</code> will focus only on Stan-based MCMC model-fitting.</p>
+<p><code>escalation</code> will now use <code>trialr</code> alongside dose-finding packages from other authors like <code>dfcrm</code> <span class="citation">(Cheung 2013)</span> and <code>BOIN</code> <span class="citation">(Yuan and Liu 2018)</span> to support the broadest possible array of dose-escalation methods.</p>
 </div>
-<div id="end-product" class="section level2">
-<h2>End product</h2>
-<p>This is the end result:</p>
-<p><img src="result.png" /></p>
-<p>One hundred and twenty-two consecutive references compacted into one reference, as required.</p>
+<div id="how-might-this-look-in-future" class="section level2">
+<h2>How might this look in future?</h2>
+<p>One of my near term goals is to add dose-response models to <code>trialr</code> like Emax.
+Dose-response modelling is a topic close to dose-finding trials but quite distinct from it.
+When I add the Emax model, the Stan implementation will go in <code>trialr</code>.
+If the Emax model stands to be useful as a dose-selection tool, then it can be added to support the usual methods in the <code>escalation</code> package.</p>
+</div>
+<div id="the-situation-now" class="section level2">
+<h2>The situation now</h2>
+<p>I recently updated both packages on CRAN:</p>
+<ul>
+<li><code>trialr</code> is now at v0.1.5 at <a href="https://CRAN.R-project.org/package=trialr" class="uri">https://CRAN.R-project.org/package=trialr</a></li>
+<li><code>escalation</code> is now at v0.1.4 at <a href="https://CRAN.R-project.org/package=escalation" class="uri">https://CRAN.R-project.org/package=escalation</a></li>
+</ul>
+<p><code>escalation</code> now depends on <code>trialr</code> to deliver Stan-MCMC implementations of CRM, EffTox, and the phase I method of <span class="citation">Neuenschwander, Branson, and Gsponer (2008)</span>.</p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
 <div id="refs" class="references">
-<div id="ref-rcrossref">
-<p>Chamberlain, Scott, Hao Zhu, Najko Jahn, Carl Boettiger, and Karthik Ram. 2020. <em>Rcrossref: Client for Various ’Crossref’ ’Apis’</em>. <a href="https://CRAN.R-project.org/package=rcrossref">https://CRAN.R-project.org/package=rcrossref</a>.</p>
+<div id="ref-Brock2019">
+<p>Brock, Kristian. 2019. “trialr: Bayesian Clinical Trial Designs in R and Stan.” <em>arXiv E-Prints</em>, June, arXiv:1907.00161.</p>
+</div>
+<div id="ref-escalation">
+<p>Brock, Kristian. 2020a. <em>Escalation: Modular Approach to Dose Finding Clinical Trials</em>. <a href="https://CRAN.R-project.org/package=escalation">https://CRAN.R-project.org/package=escalation</a>.</p>
+</div>
+<div id="ref-trialr">
+<p>———. 2020b. <em>Trialr: Clinical Trial Designs in ’Rstan’</em>. <a href="https://CRAN.R-project.org/package=trialr">https://CRAN.R-project.org/package=trialr</a>.</p>
+</div>
+<div id="ref-dfcrm">
+<p>Cheung, Ken. 2013. <em>Dfcrm: Dose-Finding by the Continual Reassessment Method</em>. <a href="https://CRAN.R-project.org/package=dfcrm">https://CRAN.R-project.org/package=dfcrm</a>.</p>
+</div>
+<div id="ref-Neuenschwander2008">
+<p>Neuenschwander, Beat, Michael Branson, and Thomas Gsponer. 2008. “Critical aspects of the Bayesian approach to phase I cancer trials.” <em>Statistics in Medicine</em> 27: 2420–39. <a href="https://doi.org/10.1002/sim.3230">https://doi.org/10.1002/sim.3230</a>.</p>
+</div>
+<div id="ref-OQuigley1990">
+<p>O’Quigley, J, M Pepe, and L Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” <em>Biometrics</em> 46 (1): 33–48. <a href="https://doi.org/10.2307/2531628">https://doi.org/10.2307/2531628</a>.</p>
+</div>
+<div id="ref-Thall2004">
+<p>Thall, PF, and JD Cook. 2004. “Dose-Finding Based on Efficacy-Toxicity Trade-Offs.” <em>Biometrics</em> 60 (3): 684–93.</p>
+</div>
+<div id="ref-BOIN">
+<p>Yuan, Ying, and Suyu Liu. 2018. <em>BOIN: Bayesian Optimal Interval (Boin) Design for Single-Agent and Drug- Combination Phase I Clinical Trials</em>. <a href="https://CRAN.R-project.org/package=BOIN">https://CRAN.R-project.org/package=BOIN</a>.</p>
 </div>
 </div>
 </div>
@@ -848,7 +812,13 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
 
 <div class="article-tags">
   
+  <a class="badge badge-light" href="/tags/escalation/">escalation</a>
+  
+  <a class="badge badge-light" href="/tags/trialr/">trialr</a>
+  
   <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/dosefinding/">DoseFinding</a>
   
 </div>
 
@@ -865,7 +835,7 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/post/using-rcrossref/&amp;text=Fetching%20BibTeX%20citations%20using%20rcrossref" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/post/trialr-and-escalation/&amp;text=trialr%20and%20escalation" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -878,7 +848,7 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/post/using-rcrossref/&amp;t=Fetching%20BibTeX%20citations%20using%20rcrossref" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/post/trialr-and-escalation/&amp;t=trialr%20and%20escalation" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -891,7 +861,7 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
       
       
       <li>
-        <a href="mailto:?subject=Fetching%20BibTeX%20citations%20using%20rcrossref&amp;body=https://www.kristianbrock.com/post/using-rcrossref/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=trialr%20and%20escalation&amp;body=https://www.kristianbrock.com/post/trialr-and-escalation/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -904,7 +874,7 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/post/using-rcrossref/&amp;title=Fetching%20BibTeX%20citations%20using%20rcrossref" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/post/trialr-and-escalation/&amp;title=trialr%20and%20escalation" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -917,7 +887,7 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
       
       
       <li>
-        <a href="https://web.whatsapp.com/send?text=Fetching%20BibTeX%20citations%20using%20rcrossref%20https://www.kristianbrock.com/post/using-rcrossref/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="https://web.whatsapp.com/send?text=trialr%20and%20escalation%20https://www.kristianbrock.com/post/trialr-and-escalation/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -930,7 +900,7 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/post/using-rcrossref/&amp;title=Fetching%20BibTeX%20citations%20using%20rcrossref" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/post/trialr-and-escalation/&amp;title=trialr%20and%20escalation" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>
@@ -1062,13 +1032,15 @@ Finally, I pasted the contents of <code>cite_keys</code> into my tex file.</p>
     <h3>Related</h3>
     <ul>
       
-      <li><a href="/post/emax-intro/">Fitting the Emax Model in R</a></li>
-      
       <li><a href="/post/simulate-vs-enumerate-dose-finding/">Simulation or enumeration with dose-finding designs?</a></li>
       
       <li><a href="/post/dose-paths/">Dose-paths in the escalation package</a></li>
       
+      <li><a href="/post/emax-intro/">Fitting the Emax Model in R</a></li>
+      
       <li><a href="/post/introducing-escalation/">Introducing escalation</a></li>
+      
+      <li><a href="/post/using-rcrossref/">Fetching BibTeX citations using rcrossref</a></li>
       
     </ul>
   </div>
