@@ -13,6 +13,330 @@
     </image>
     
     <item>
+      <title>New phase I methods in escalation</title>
+      <link>https://www.kristianbrock.com/post/new-phase1-escalation-methods/</link>
+      <pubDate>Tue, 20 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/new-phase1-escalation-methods/</guid>
+      <description>
+&lt;script src=&#34;index_files/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;index_files/viz/viz.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;index_files/DiagrammeR-styles/styles.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;index_files/grViz-binding/grViz.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;This week I updated the &lt;a href=&#34;https://CRAN.R-project.org/package=escalation&#34;&gt;&lt;code&gt;escalation&lt;/code&gt;&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock 2020)&lt;/span&gt; package on CRAN with new methods to implement several phase I and phase I/II dose-finding designs.
+This post describes the addition of the phase I methods TPI, mTPI, and the logistic model method of &lt;span class=&#34;citation&#34;&gt;Neuenschwander, Branson, and Gsponer (2008)&lt;/span&gt;, and also the addition of MCMC-based CRM methods.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tpi&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TPI&lt;/h2&gt;
+&lt;p&gt;The toxicity probability interval (TPI) design was introduced by &lt;span class=&#34;citation&#34;&gt;Ji, Li, and Bekele (2007)&lt;/span&gt;.
+It is one of a series of dose-finding trial designs that works by partitioning the probability of toxicity into a set of intervals.
+These designs make dose-selection decisions that are determined by the interval in which the probability of toxicity for the current dose is believed to reside.&lt;/p&gt;
+&lt;p&gt;Core to this design is a beta-binomial Bayesian conjugate model.
+For hyperparameters &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;, let the probability of toxicity at dose &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; be &lt;span class=&#34;math inline&#34;&gt;\(p_i\)&lt;/span&gt;, with prior distribution&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p_i \sim Beta(\alpha, \beta).\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;If &lt;span class=&#34;math inline&#34;&gt;\(n_i\)&lt;/span&gt; patients have been treated at dose &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;, yielding &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; toxicity events, the posterior distribution is&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ p_i | data \sim Beta(\alpha + x_{i}, \beta + n_{i} - x_{i}).\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Using this distribution, let the standard deviation of &lt;span class=&#34;math inline&#34;&gt;\(p_i\)&lt;/span&gt; be denoted by &lt;span class=&#34;math inline&#34;&gt;\(\sigma_i\)&lt;/span&gt;.
+The design seeks a dose with probability of toxicity close to some pre-specified target level, &lt;span class=&#34;math inline&#34;&gt;\(p_T\)&lt;/span&gt;.
+The entire range of possible values for &lt;span class=&#34;math inline&#34;&gt;\(p_i\)&lt;/span&gt; can be broken up into the following intervals:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The underdosing interval (UI), defined as &lt;span class=&#34;math inline&#34;&gt;\((0, p_{T} - K_{2} \sigma_{i})\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;The equivalence interval (EI), defined as &lt;span class=&#34;math inline&#34;&gt;\((p_{T} - K_{2} \sigma_{i}, p_{T} + K_{1} \sigma_{i})\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;The overdosing interval (OI), defined as &lt;span class=&#34;math inline&#34;&gt;\((p_{T} + K_{1} \sigma_{i}, 1)\)&lt;/span&gt;;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;for pre-specified model constants, &lt;span class=&#34;math inline&#34;&gt;\(K_1, K_2\)&lt;/span&gt;.
+These intervals are mutally-exclusive and mutually-exhaustive, meaning that every possible probability belongs to precisely one of them.
+In other words, these intervals form a partition of the probability space, &lt;span class=&#34;math inline&#34;&gt;\((0, 1)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Using the posterior distribution, we can calculate the three probabilities&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p_{UI} = Pr(p_i \in \text{UI}), \enspace p_{EI} = Pr(p_i \in \text{EI}), \enspace p_{OI} = Pr(p_i \in \text{OI}).\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;By definition, &lt;span class=&#34;math inline&#34;&gt;\(p_{UI} + p_{EI} + p_{OI} = 1\)&lt;/span&gt;.
+The logical action in the dose-finding trial depends on which of these three probabilities is the greatest.
+If &lt;span class=&#34;math inline&#34;&gt;\(p_{UI} &amp;gt; p_{EI}, p_{OI}\)&lt;/span&gt;, then the current dose is likely an underdose, so our desire should be to escalate dose to &lt;span class=&#34;math inline&#34;&gt;\(i+1\)&lt;/span&gt;.
+In contrast, if &lt;span class=&#34;math inline&#34;&gt;\(p_{OI} &amp;gt; p_{UI}, p_{EI}\)&lt;/span&gt;, then the current dose is likely an overdose and we will want to de-escalate dose to &lt;span class=&#34;math inline&#34;&gt;\(i-1\)&lt;/span&gt; for the next patient.
+If &lt;span class=&#34;math inline&#34;&gt;\(p_{EI} &amp;gt; p_{UI}, p_{OI}\)&lt;/span&gt;, then the current dose is deemed sufficiently close to &lt;span class=&#34;math inline&#34;&gt;\(p_T\)&lt;/span&gt; and we will want to stay at dose-level &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Further to these rules regarding dose-selection, the following rule is used to avoid recommending dangerous doses.
+A dose is deemed inadmissible for being excessively toxic if&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ Pr(p_{i} &amp;gt; p_{T} | data) &amp;gt; \xi,\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;for a certainty threshold, &lt;span class=&#34;math inline&#34;&gt;\(\xi\)&lt;/span&gt;.
+If a dose is excluded by this rule, it should not be recommended by the model.
+Irrespective the probabilities &lt;span class=&#34;math inline&#34;&gt;\(p_{UI}, p_{EI}, p_{OI}\)&lt;/span&gt;, the design will recommend to stay at dose &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; rather than escalate to a dose previously identified as being inadmissible.
+Furthermore, the design will advocate stopping if the lowest dose is inferred to be inadmissible.&lt;/p&gt;
+&lt;p&gt;In their paper, the authors demonstrate acceptable operating performance using &lt;span class=&#34;math inline&#34;&gt;\(\alpha = \beta = 0.005\)&lt;/span&gt;, &lt;span class=&#34;math inline&#34;&gt;\(K_{1} = 1\)&lt;/span&gt;, &lt;span class=&#34;math inline&#34;&gt;\(K_{2} = 1.5\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\xi = 0.95\)&lt;/span&gt;.
+See &lt;span class=&#34;citation&#34;&gt;Ji, Li, and Bekele (2007)&lt;/span&gt; for full details.&lt;/p&gt;
+&lt;div id=&#34;implementation-in-escalation&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Implementation in &lt;code&gt;escalation&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Let us specify the model that the authors investigate in their publication:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)
+
+model &amp;lt;- get_tpi(num_doses = 5, target = 0.3, alpha = 0.005, beta = 0.005, 
+                 k1 = 1, k2 = 1.5, exclusion_certainty = 0.95)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As with all models in &lt;code&gt;escalation&lt;/code&gt;, we fit the model to some outcomes using code like:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;1NNT&amp;#39;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and learn the dose recommended for the next patient(s):&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In their Table 1, &lt;span class=&#34;citation&#34;&gt;Ji, Li, and Bekele (2007)&lt;/span&gt; recommend some model choices based on notional cohort outcomes.
+We can reproduce their findings using, for example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model %&amp;gt;% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2) %&amp;gt;% 
+  graph_paths()&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;2\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#22A884FF\&#34;] \n  \&#34;3\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;4\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;5\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;8\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNNNNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNNNNT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNNNTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNNTTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NNTTTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NTTTTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTTTTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;I.e. if there are six patients at the current dose, this particular parameterisation will only advocate escalation if exactly zero toxicities are seen.
+If one or two toxicities are seen, the design advocates staying at dose 2, otherwise deescalation is recommended.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mtpi&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;mTPI&lt;/h2&gt;
+&lt;p&gt;The modified toxicity probability interval (mTPI) design was introduced by &lt;span class=&#34;citation&#34;&gt;Ji et al. (2010)&lt;/span&gt;.
+As the name suggests, it is a modification of the earlier TPI design.
+mTPI is very similar to TPI, again using a method that partitions the probability of toxicity into a set of intervals.&lt;/p&gt;
+&lt;p&gt;This design uses a beta-binomial Bayesian conjugate model.
+For hyperparameters &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;, let the probability of toxicity at dose &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; be &lt;span class=&#34;math inline&#34;&gt;\(p_i\)&lt;/span&gt;, with prior distribution&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[p_i \sim Beta(\alpha, \beta).\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;If &lt;span class=&#34;math inline&#34;&gt;\(n_i\)&lt;/span&gt; patients have been treated at dose &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;, yielding &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt; toxicity events, the posterior distribution is&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ p_i | data \sim Beta(\alpha + x_{i}, \beta + n_{i} - x_{i}).\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The design seeks a dose with probability of toxicity close to some pre-specified target level, &lt;span class=&#34;math inline&#34;&gt;\(p_T\)&lt;/span&gt;.
+The entire range of possible values for &lt;span class=&#34;math inline&#34;&gt;\(p_i\)&lt;/span&gt; can be broken up into the following intervals:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The underdosing interval (UI), defined as &lt;span class=&#34;math inline&#34;&gt;\((0, p_{T} - \epsilon_{1})\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;The equivalence interval (EI), defined as &lt;span class=&#34;math inline&#34;&gt;\((p_{T} - \epsilon_{1}, p_{T} + \epsilon_{2})\)&lt;/span&gt;;&lt;/li&gt;
+&lt;li&gt;The overdosing interval (OI), defined as &lt;span class=&#34;math inline&#34;&gt;\((p_{T} + \epsilon_{2}, 1)\)&lt;/span&gt;;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;for pre-specified model constants, &lt;span class=&#34;math inline&#34;&gt;\(\epsilon_{1}, \epsilon_{2}\)&lt;/span&gt;.
+These intervals are mutally-exclusive and mutually-exhaustive, meaning that every possible probability belongs to precisely one of them.
+In other words, these intervals form a partition of the probability space, &lt;span class=&#34;math inline&#34;&gt;\((0, 1)\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;For a continuous random variable &lt;span class=&#34;math inline&#34;&gt;\(X\)&lt;/span&gt; with cumulative probability mass function &lt;span class=&#34;math inline&#34;&gt;\(F(x)\)&lt;/span&gt; (i.e. &lt;span class=&#34;math inline&#34;&gt;\(Pr(X &amp;lt; x) = F(x)\)&lt;/span&gt;), the authors define the unit probability mass (UPM) for an interval &lt;span class=&#34;math inline&#34;&gt;\((a, b)\)&lt;/span&gt; to be &lt;span class=&#34;math inline&#34;&gt;\((F(b) - F(a)) / (b - a)\)&lt;/span&gt;.
+That is, the UPM is the probability mass in an interval divided by the width of the interval, and can be interpreted as the average probability density of the interval.&lt;/p&gt;
+&lt;p&gt;Then, using the posterior distribution identified above, we calculate the three UPMs&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[UPM_{UI} = Pr(p_i \in \text{UI}) / (p_{T} - \epsilon_{1}),\]&lt;/span&gt;
+&lt;span class=&#34;math display&#34;&gt;\[UPM_{EI} = Pr(p_i \in \text{EI}) / (\epsilon_{1} + \epsilon_{2}),\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;and&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[UPM_{OI} = Pr(p_i \in \text{OI}) / (1 - p_{T} + \epsilon_{2}).\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The logical action in the dose-finding trial depends on which of these three quantities is the greatest.
+If &lt;span class=&#34;math inline&#34;&gt;\(UPM_{UI} &amp;gt; UPM_{EI}, UPM_{OI}\)&lt;/span&gt;, then the current dose is likely an underdose, so our desire should be to escalate dose to &lt;span class=&#34;math inline&#34;&gt;\(i+1\)&lt;/span&gt;.
+In contrast, if &lt;span class=&#34;math inline&#34;&gt;\(UPM_{OI} &amp;gt; UPM_{UI}, UPM_{EI}\)&lt;/span&gt;, then the current dose is likely an overdose and we will want to de-escalate dose to &lt;span class=&#34;math inline&#34;&gt;\(i-1\)&lt;/span&gt; for the next patient.
+If &lt;span class=&#34;math inline&#34;&gt;\(UPM_{EI} &amp;gt; UPM_{UI}, UPM_{OI}\)&lt;/span&gt;, then the current dose is deemed sufficiently close to &lt;span class=&#34;math inline&#34;&gt;\(p_T\)&lt;/span&gt; and we will want to stay at dose-level &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Further to these rules regarding dose-selection, the following rule is used to avoid recommending dangerous doses.
+A dose is deemed inadmissible for being excessively toxic if&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ Pr(p_{i} &amp;gt; p_{T} | data) &amp;gt; \xi,\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;for a certainty threshold, &lt;span class=&#34;math inline&#34;&gt;\(\xi\)&lt;/span&gt;.
+If a dose is excluded by this rule, it should not be recommended by the model.
+Irrespective the values of &lt;span class=&#34;math inline&#34;&gt;\(UPM_{UI}, UPM_{EI}\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(UPM_{OI}\)&lt;/span&gt;, the design will recommend to stay at dose &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt; rather than escalate to a dose previously identified as being inadmissible.
+Furthermore, the design will advocate stopping if the lowest dose is inferred to be inadmissible.&lt;/p&gt;
+&lt;p&gt;In their paper, the authors demonstrate acceptable operating performance using &lt;span class=&#34;math inline&#34;&gt;\(\alpha = \beta = 1\)&lt;/span&gt;, &lt;span class=&#34;math inline&#34;&gt;\(\epsilon_{1} = 0.05\)&lt;/span&gt;, &lt;span class=&#34;math inline&#34;&gt;\(\epsilon_{2} = 0.05\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\xi = 0.95\)&lt;/span&gt;.
+See &lt;span class=&#34;citation&#34;&gt;Ji et al. (2010)&lt;/span&gt; for full details.&lt;/p&gt;
+&lt;div id=&#34;implementation-in-escalation-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Implementation in &lt;code&gt;escalation&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Again, let us investigate one of the parameterisations that the authors investigate in their publication:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)
+
+model &amp;lt;- get_mtpi(num_doses = 5, target = 0.3, alpha = 1, beta = 1, 
+                  epsilon1 = 0.05, epsilon2 = 0.05, exclusion_certainty = 0.95)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As before, we fit the model and learn the dose recommended for the next patient(s) using:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(&amp;#39;1NNT&amp;#39;) 
+fit %&amp;gt;% recommended_dose()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In their Figure 2, the authors again enumerate model advice over a range of cohort outputs.
+Just as we did with TPI, enumerating the dose recommendations after a cohort of 6 has been treated at dose 2:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model %&amp;gt;% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2) %&amp;gt;% 
+  graph_paths()&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;grViz html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;diagram&#34;:&#34;digraph {\n\ngraph [layout = \&#34;neato\&#34;,\n       outputorder = \&#34;edgesfirst\&#34;,\n       bgcolor = \&#34;white\&#34;]\n\nnode [fontname = \&#34;Helvetica\&#34;,\n      fontsize = \&#34;10\&#34;,\n      shape = \&#34;circle\&#34;,\n      fixedsize = \&#34;true\&#34;,\n      width = \&#34;0.5\&#34;,\n      style = \&#34;filled\&#34;,\n      fillcolor = \&#34;aliceblue\&#34;,\n      color = \&#34;gray70\&#34;,\n      fontcolor = \&#34;gray50\&#34;]\n\nedge [fontname = \&#34;Helvetica\&#34;,\n     fontsize = \&#34;8\&#34;,\n     len = \&#34;1.5\&#34;,\n     color = \&#34;gray80\&#34;,\n     arrowsize = \&#34;0.5\&#34;]\n\n  \&#34;1\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;2\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#22A884FF\&#34;] \n  \&#34;3\&#34; [label = \&#34;3\&#34;, fontcolor = \&#34;#440154FF\&#34;, fillcolor = \&#34;#22A884FF\&#34;] \n  \&#34;4\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;5\&#34; [label = \&#34;2\&#34;, fontcolor = \&#34;#FDE725FF\&#34;, fillcolor = \&#34;#2A788EFF\&#34;] \n  \&#34;6\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;7\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n  \&#34;8\&#34; [label = \&#34;1\&#34;, fontcolor = \&#34;#7AD151FF\&#34;, fillcolor = \&#34;#414487FF\&#34;] \n\&#34;1\&#34;-&gt;\&#34;2\&#34; [label = \&#34;NNNNNN\&#34;] \n\&#34;1\&#34;-&gt;\&#34;3\&#34; [label = \&#34;NNNNNT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;4\&#34; [label = \&#34;NNNNTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;5\&#34; [label = \&#34;NNNTTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;6\&#34; [label = \&#34;NNTTTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;7\&#34; [label = \&#34;NTTTTT\&#34;] \n\&#34;1\&#34;-&gt;\&#34;8\&#34; [label = \&#34;TTTTTT\&#34;] \n}&#34;,&#34;config&#34;:{&#34;engine&#34;:&#34;dot&#34;,&#34;options&#34;:null}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;We see that after &lt;code&gt;2NNNNNT&lt;/code&gt;, the mTPI advocates escalation whereas TPI advocated sticking at dose 2.
+The advice from the two models matches in all other outcomes.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;neuenschwander-et-al.&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Neuenschwander &lt;em&gt;et al.&lt;/em&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;span class=&#34;citation&#34;&gt;Neuenschwander, Branson, and Gsponer (2008)&lt;/span&gt; (NBG) introduced a derivative of the CRM for dose-escalation clinical trials using the model:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ \text{logit} p_i = \alpha + \exp{(\beta)} \log{(x_i / d^*)}, \]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;where &lt;span class=&#34;math inline&#34;&gt;\(p_i\)&lt;/span&gt; is the probability of toxicity at the &lt;span class=&#34;math inline&#34;&gt;\(i\)&lt;/span&gt;th dose, &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;, and &lt;span class=&#34;math inline&#34;&gt;\(d^*\)&lt;/span&gt; is a reference dose.
+Here &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt; are model parameters on which the authors place a bivariate normal prior.
+This model is very similar to the two-parameter logistic CRM.
+However, a notable difference is that the dose, &lt;span class=&#34;math inline&#34;&gt;\(x_i\)&lt;/span&gt;, enters the model as a covariate.
+This dispenses with the toxicity skeleton that is used in the CRM.&lt;/p&gt;
+&lt;div id=&#34;implementation-in-escalation-2&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Implementation in &lt;code&gt;escalation&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;The heavy lifting required to fit the model is performed by &lt;code&gt;trialr&lt;/code&gt; and &lt;code&gt;rstan&lt;/code&gt;.
+&lt;code&gt;escalation&lt;/code&gt; merely composes the model fit in such a way that it can be used with the other dose-selection modules.&lt;/p&gt;
+&lt;p&gt;For illustration, let us reproduce the analysis in &lt;span class=&#34;citation&#34;&gt;Neuenschwander, Branson, and Gsponer (2008)&lt;/span&gt; that the authors used to demonstrate the flexibility of a two-parameter approach.
+In a trial of 15 doses, the investigators saw outcomes:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)
+
+dose &amp;lt;- c(1, 2.5, 5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, 250)
+outcomes &amp;lt;- &amp;#39;1NNN 2NNNN 3NNNN 4NNNN 7TT&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Creating a dose-escalation model with NBG’s parameters:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model &amp;lt;- get_trialr_nbg(real_doses = dose, d_star = 250, target = 0.3,
+                        alpha_mean = 2.15, alpha_sd = 0.84,
+                        beta_mean = 0.52, beta_sd = 0.8,
+                        seed = 2020)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and fitting the model to the observed outcomes:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fit &amp;lt;- model %&amp;gt;% fit(outcomes)
+fit&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Patient-level data:
+## # A tibble: 17 x 4
+##    Patient Cohort  Dose   Tox
+##      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt;
+##  1       1      1     1     0
+##  2       2      1     1     0
+##  3       3      1     1     0
+##  4       4      2     2     0
+##  5       5      2     2     0
+##  6       6      2     2     0
+##  7       7      2     2     0
+##  8       8      3     3     0
+##  9       9      3     3     0
+## 10      10      3     3     0
+## 11      11      3     3     0
+## 12      12      4     4     0
+## 13      13      4     4     0
+## 14      14      4     4     0
+## 15      15      4     4     0
+## 16      16      5     7     1
+## 17      17      5     7     1
+## 
+## Dose-level data:
+## # A tibble: 15 x 7
+##    RealDose  dose   tox     n empiric_tox_rate mean_prob_tox median_prob_tox
+##       &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt; &amp;lt;int&amp;gt;            &amp;lt;dbl&amp;gt;         &amp;lt;dbl&amp;gt;           &amp;lt;dbl&amp;gt;
+##  1      1       1     0     3                0        0.0117         0.00511
+##  2      2.5     2     0     4                0        0.0306         0.0186 
+##  3      5       3     0     4                0        0.0644         0.0468 
+##  4     10       4     0     4                0        0.134          0.114  
+##  5     15       5     0     0              NaN        0.202          0.185  
+##  6     20       6     0     0              NaN        0.264          0.251  
+##  7     25       7     2     2                1        0.322          0.314  
+##  8     30       8     0     0              NaN        0.374          0.370  
+##  9     40       9     0     0              NaN        0.463          0.466  
+## 10     50      10     0     0              NaN        0.535          0.543  
+## 11     75      11     0     0              NaN        0.662          0.678  
+## 12    100      12     0     0              NaN        0.741          0.760  
+## 13    150      13     0     0              NaN        0.829          0.849  
+## 14    200      14     0     0              NaN        0.875          0.894  
+## 15    250      15     0     0              NaN        0.902          0.920  
+## 
+## The model targets a toxicity level of 0.3.
+## The model advocates continuing at dose 7.&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;we see that dose 7 is selected for the next cohort using the metric of selecting the dose with posterior expected probability of toxicity closest to the target.
+In the above output, &lt;code&gt;mean_prob_tox&lt;/code&gt; broadly matches the values plotted in the lower right panel of Figure 1 in &lt;span class=&#34;citation&#34;&gt;Neuenschwander, Branson, and Gsponer (2008)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;further-work&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Further work&lt;/h3&gt;
+&lt;p&gt;There are a few minor shortcomings of the NBG implementation in &lt;code&gt;escalation&lt;/code&gt; &amp;amp; &lt;code&gt;trialr&lt;/code&gt;.
+Firstly, NBG propose a bivariate normal prior distribution on &lt;span class=&#34;math inline&#34;&gt;\(\alpha\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(\beta\)&lt;/span&gt;.
+However, the implementation in &lt;code&gt;trialr&lt;/code&gt; currently uses independent normal priors.
+Hopefully, this will be addressed in a future release of &lt;code&gt;trialr&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Furthermore, NBG propose a method for selecting dose that accounts for the probability of recommending an overdose.
+That logic is currently not implemented in &lt;code&gt;escalation&lt;/code&gt;, but will be in the near future.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mcmc-crm&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;MCMC CRM&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;escalation&lt;/code&gt; already provides one-parameter CRM models via the &lt;code&gt;dfcrm&lt;/code&gt; package &lt;span class=&#34;citation&#34;&gt;(Cheung 2013)&lt;/span&gt;.
+It now also provides MCMC implementations of those same one-parameter models:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;skeleton &amp;lt;- c(0.05, 0.12, 0.25, 0.40, 0.55)
+target &amp;lt;- 0.25
+
+model1 &amp;lt;- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = &amp;#39;empiric&amp;#39;, beta_sd = 1)
+model2 &amp;lt;- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = &amp;#39;logistic&amp;#39;, a0 = 3, 
+                         beta_mean = 0, beta_sd = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and also adds a two-parameter logistic model:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model3 &amp;lt;- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = &amp;#39;logistic2&amp;#39;, 
+                         alpha_mean = 0, alpha_sd = 2, 
+                         beta_mean = 0, beta_sd = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For more on the parameterisation of these methods, check out the CRM vignette in the &lt;a href=&#34;https://CRAN.R-project.org/package=escalation&#34;&gt;&lt;code&gt;escalation&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;simulations-and-dose-paths&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Simulations and dose-paths&lt;/h2&gt;
+&lt;p&gt;As with all methods in &lt;code&gt;escalation&lt;/code&gt;, simulations are supported right out of the box.&lt;/p&gt;
+&lt;p&gt;For illustration, &lt;span class=&#34;citation&#34;&gt;Ji, Li, and Bekele (2007)&lt;/span&gt; present a simulation study to compare the performance of their TPI design to some alternatives.
+They specify a design that uses a maximum sample size of thirty patients:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model &amp;lt;- get_tpi(num_doses = 8, target = 0.25, k1 = 1, k2 = 1.5,
+                 exclusion_certainty = 0.95) %&amp;gt;%
+  stop_at_n(n = 30)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and their scenario 1 assumes true probability of toxicity:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sc1 &amp;lt;- c(0.05, 0.25, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can then reproduce their simulated characteristics by running:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123)
+sims &amp;lt;- model %&amp;gt;%
+  simulate_trials(num_sims = 50, true_prob_tox = sc1, next_dose = 1)
+
+sims&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number of iterations: 50 
+## 
+## Number of doses: 8 
+## 
+## True probability of toxicity:
+##    1    2    3    4    5    6    7    8 
+## 0.05 0.25 0.50 0.60 0.70 0.80 0.90 0.95 
+## 
+## Probability of recommendation:
+## NoDose      1      2      3      4      5      6      7      8 
+##   0.00   0.14   0.76   0.10   0.00   0.00   0.00   0.00   0.00 
+## 
+## Probability of administration:
+##     1     2     3     4     5     6     7     8 
+## 0.226 0.606 0.160 0.008 0.000 0.000 0.000 0.000 
+## 
+## Sample size:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      30      30      30      30      30      30 
+## 
+## Total toxicities:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    4.00    6.00    7.00    7.44    9.00   11.00 
+## 
+## Trial duration:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   15.30   27.50   30.75   30.65   34.90   42.30&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For the sake of speed, we ran just fifty iterations but in a real situation, many thousands of iterations would be more appropriate.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Amongst pure phase I designs, &lt;code&gt;escalation&lt;/code&gt; now supports:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CRM&lt;/li&gt;
+&lt;li&gt;TPI&lt;/li&gt;
+&lt;li&gt;mTPI&lt;/li&gt;
+&lt;li&gt;BOIN&lt;/li&gt;
+&lt;li&gt;NBG&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It also supports some designs that select dose by co-primary efficacy and toxicity outcomes, the so-called seamless phase I/II designs.
+Those will be the subect of the next post on this blog.
+Til then, good day.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
+&lt;h2&gt;References&lt;/h2&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
+&lt;div id=&#34;ref-escalation&#34;&gt;
+&lt;p&gt;Brock, Kristian. 2020. &lt;em&gt;Escalation: Modular Approach to Dose Finding Clinical Trials&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=escalation&#34;&gt;https://CRAN.R-project.org/package=escalation&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-dfcrm&#34;&gt;
+&lt;p&gt;Cheung, Ken. 2013. &lt;em&gt;Dfcrm: Dose-Finding by the Continual Reassessment Method&lt;/em&gt;. &lt;a href=&#34;https://CRAN.R-project.org/package=dfcrm&#34;&gt;https://CRAN.R-project.org/package=dfcrm&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Ji2007&#34;&gt;
+&lt;p&gt;Ji, Yuan, Yisheng Li, and B. Nebiyou Bekele. 2007. “Dose-finding in phase I clinical trials based on toxicity probability intervals.” &lt;em&gt;Clinical Trials&lt;/em&gt; 4 (3): 235–44. &lt;a href=&#34;https://doi.org/10.1177/1740774507079442&#34;&gt;https://doi.org/10.1177/1740774507079442&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Ji2010&#34;&gt;
+&lt;p&gt;Ji, Yuan, Ping Liu, Yisheng Li, and B. Nebiyou Bekele. 2010. “A modified toxicity probability interval method for dose-finding trials.” &lt;em&gt;Clinical Trials&lt;/em&gt; 7 (6): 653–63. &lt;a href=&#34;https://doi.org/10.1177/1740774510382799&#34;&gt;https://doi.org/10.1177/1740774510382799&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ref-Neuenschwander2008&#34;&gt;
+&lt;p&gt;Neuenschwander, Beat, Michael Branson, and Thomas Gsponer. 2008. “Critical aspects of the Bayesian approach to phase I cancer trials.” &lt;em&gt;Statistics in Medicine&lt;/em&gt; 27: 2420–39. &lt;a href=&#34;https://doi.org/10.1002/sim.3230&#34;&gt;https://doi.org/10.1002/sim.3230&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>trialr and escalation</title>
       <link>https://www.kristianbrock.com/post/trialr-and-escalation/</link>
       <pubDate>Mon, 19 Oct 2020 00:00:00 +0000</pubDate>

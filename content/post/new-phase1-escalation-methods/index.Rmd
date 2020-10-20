@@ -1,0 +1,328 @@
+---
+title: "New phase I methods in escalation"
+subtitle: "Introducing new methods in `escalation` for TPI, mTPI and Neuenschwander et al.'s design for phase I trials, plus MCMC CRM methods."
+summary: "Introducing new methods in `escalation` for TPI, mTPI and Neuenschwander et al.'s design for phase I trials, plus MCMC-based CRM methods."
+authors: 
+  - admin
+categories:
+- Code
+tags:
+  - escalation
+  - R
+  - DoseFinding
+projects: []
+date: '2020-10-20'
+lastmod: '2020-10-20T17:07:58Z'
+draft: false
+featured: no
+image:
+  caption: 'Photo by [Samuel Isaac on Unsplash](https://unsplash.com/photos/83AdeG3iPMk)'
+  focal_point: ''
+  preview_only: no
+bibliography: library.bib
+---
+
+## Introduction
+
+This week I updated the [`escalation`](https://CRAN.R-project.org/package=escalation) [@escalation] package on CRAN with new methods to implement several phase I and phase I/II dose-finding designs.
+This post describes the addition of the phase I methods TPI, mTPI, and the logistic model method of @Neuenschwander2008, and also the addition of MCMC-based CRM methods.
+
+## TPI
+The toxicity probability interval (TPI) design was introduced by @Ji2007.
+It is one of a series of dose-finding trial designs that works by partitioning the probability of toxicity into a set of intervals.
+These designs make dose-selection decisions that are determined by the interval in which the probability of toxicity for the current dose is believed to reside.
+
+Core to this design is a beta-binomial Bayesian conjugate model.
+For hyperparameters $\alpha$ and $\beta$, let the probability of toxicity at dose $i$ be $p_i$, with prior distribution
+
+$$p_i \sim Beta(\alpha, \beta).$$
+
+If $n_i$ patients have been treated at dose $i$, yielding $x_i$ toxicity events, the posterior distribution is 
+
+$$ p_i | data \sim Beta(\alpha + x_{i}, \beta + n_{i} - x_{i}).$$
+
+Using this distribution, let the standard deviation of $p_i$ be denoted by $\sigma_i$.
+The design seeks a dose with probability of toxicity close to some pre-specified target level, $p_T$.
+The entire range of possible values for $p_i$ can be broken up into the following intervals: 
+
+* The underdosing interval (UI), defined as $(0, p_{T} - K_{2} \sigma_{i})$;
+* The equivalence interval (EI), defined as $(p_{T} - K_{2} \sigma_{i}, p_{T} + K_{1} \sigma_{i})$;
+* The overdosing interval (OI), defined as $(p_{T} + K_{1} \sigma_{i}, 1)$;
+
+for pre-specified model constants, $K_1, K_2$.
+These intervals are  mutally-exclusive and mutually-exhaustive, meaning that every possible probability belongs to precisely one of them.
+In other words, these intervals form a partition of the probability space, $(0, 1)$.
+
+Using the posterior distribution, we can calculate the three probabilities
+
+$$p_{UI} = Pr(p_i \in \text{UI}), \enspace p_{EI} = Pr(p_i \in \text{EI}), \enspace p_{OI} = Pr(p_i \in \text{OI}).$$
+
+By definition, $p_{UI} + p_{EI} + p_{OI} = 1$.
+The logical action in the dose-finding trial depends on which of these three probabilities is the greatest. 
+If $p_{UI} > p_{EI}, p_{OI}$, then the current dose is likely an underdose, so our desire should be to escalate dose to $i+1$.
+In contrast, if $p_{OI} > p_{UI}, p_{EI}$, then the current dose is likely an overdose and we will want to de-escalate dose to $i-1$ for the next patient.
+If $p_{EI} > p_{UI}, p_{OI}$, then the current dose is deemed sufficiently close to $p_T$ and we will want to stay at dose-level $i$.
+
+Further to these rules regarding dose-selection, the following rule is used to avoid recommending dangerous doses.
+A dose is deemed inadmissible for being excessively toxic if
+
+$$ Pr(p_{i} > p_{T} | data) > \xi,$$
+
+for a certainty threshold, $\xi$.
+If a dose is excluded by this rule, it should not be recommended by the model.
+Irrespective the probabilities $p_{UI}, p_{EI}, p_{OI}$, the design will recommend to stay at dose $i$ rather than escalate to a dose previously identified as being inadmissible.
+Furthermore, the design will advocate stopping if the lowest dose is inferred to be inadmissible.
+
+In their paper, the authors demonstrate acceptable operating performance using $\alpha = \beta = 0.005$, $K_{1} = 1$, $K_{2} = 1.5$ and $\xi = 0.95$.
+See @Ji2007 for full details.
+
+
+### Implementation in `escalation`
+
+Let us specify the model that the authors investigate in their publication:
+
+```{r, message=FALSE}
+library(escalation)
+
+model <- get_tpi(num_doses = 5, target = 0.3, alpha = 0.005, beta = 0.005, 
+                 k1 = 1, k2 = 1.5, exclusion_certainty = 0.95)
+```
+
+As with all models in `escalation`, we fit the model to some outcomes using code like:
+
+```{r}
+fit <- model %>% fit('1NNT') 
+```
+
+and learn the dose recommended for the next patient(s):
+
+```{r}
+fit %>% recommended_dose()
+```
+
+In their Table 1, @Ji2007 recommend some model choices based on notional cohort outcomes.
+We can reproduce their findings using, for example:
+
+```{r}
+model %>% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2) %>% 
+  graph_paths()
+```
+
+I.e. if there are six patients at the current dose, this particular parameterisation will only advocate escalation if exactly zero toxicities are seen.
+If one or two toxicities are seen, the design advocates staying at dose 2, otherwise deescalation is recommended.
+
+## mTPI
+The modified toxicity probability interval (mTPI) design was introduced by @Ji2010.
+As the name suggests, it is a modification of the earlier TPI design.
+mTPI is very similar to TPI, again using a method that partitions the probability of toxicity into a set of intervals.
+
+This design uses a beta-binomial Bayesian conjugate model.
+For hyperparameters $\alpha$ and $\beta$, let the probability of toxicity at dose $i$ be $p_i$, with prior distribution
+
+$$p_i \sim Beta(\alpha, \beta).$$
+
+If $n_i$ patients have been treated at dose $i$, yielding $x_i$ toxicity events, the posterior distribution is 
+
+$$ p_i | data \sim Beta(\alpha + x_{i}, \beta + n_{i} - x_{i}).$$
+
+The design seeks a dose with probability of toxicity close to some pre-specified target level, $p_T$.
+The entire range of possible values for $p_i$ can be broken up into the following intervals: 
+
+* The underdosing interval (UI), defined as $(0, p_{T} - \epsilon_{1})$;
+* The equivalence interval (EI), defined as $(p_{T} - \epsilon_{1}, p_{T} + \epsilon_{2})$;
+* The overdosing interval (OI), defined as $(p_{T} + \epsilon_{2}, 1)$;
+
+for pre-specified model constants, $\epsilon_{1}, \epsilon_{2}$.
+These intervals are  mutally-exclusive and mutually-exhaustive, meaning that every possible probability belongs to precisely one of them.
+In other words, these intervals form a partition of the probability space, $(0, 1)$.
+
+For a continuous random variable $X$ with cumulative probability mass function $F(x)$ (i.e. $Pr(X < x) = F(x)$), the authors define the unit probability mass (UPM) for an interval $(a, b)$ to be $(F(b) - F(a)) / (b - a)$.
+That is, the UPM is the probability mass in an interval divided by the width of the interval, and can be interpreted as the average probability density of the interval.
+
+Then, using the posterior distribution identified above, we calculate the three UPMs
+
+$$UPM_{UI} = Pr(p_i \in \text{UI}) / (p_{T} - \epsilon_{1}),$$
+$$UPM_{EI} = Pr(p_i \in \text{EI}) / (\epsilon_{1} + \epsilon_{2}),$$
+
+and 
+
+$$UPM_{OI} = Pr(p_i \in \text{OI}) / (1 - p_{T} + \epsilon_{2}).$$
+
+The logical action in the dose-finding trial depends on which of these three quantities is the greatest. 
+If $UPM_{UI} > UPM_{EI}, UPM_{OI}$, then the current dose is likely an underdose, so our desire should be to escalate dose to $i+1$.
+In contrast, if $UPM_{OI} > UPM_{UI}, UPM_{EI}$, then the current dose is likely an overdose and we will want to de-escalate dose to $i-1$ for the next patient.
+If $UPM_{EI} > UPM_{UI}, UPM_{OI}$, then the current dose is deemed sufficiently close to $p_T$ and we will want to stay at dose-level $i$.
+
+Further to these rules regarding dose-selection, the following rule is used to avoid recommending dangerous doses.
+A dose is deemed inadmissible for being excessively toxic if
+
+$$ Pr(p_{i} > p_{T} | data) > \xi,$$
+
+for a certainty threshold, $\xi$.
+If a dose is excluded by this rule, it should not be recommended by the model.
+Irrespective the values of $UPM_{UI}, UPM_{EI}$ and $UPM_{OI}$, the design will recommend to stay at dose $i$ rather than escalate to a dose previously identified as being inadmissible.
+Furthermore, the design will advocate stopping if the lowest dose is inferred to be inadmissible.
+
+In their paper, the authors demonstrate acceptable operating performance using $\alpha = \beta = 1$, $\epsilon_{1} = 0.05$, $\epsilon_{2} = 0.05$ and $\xi = 0.95$.
+See @Ji2010 for full details.
+
+
+### Implementation in `escalation`
+
+Again, let us investigate one of the parameterisations that the authors investigate in their publication:
+
+```{r, message=FALSE}
+library(escalation)
+
+model <- get_mtpi(num_doses = 5, target = 0.3, alpha = 1, beta = 1, 
+                  epsilon1 = 0.05, epsilon2 = 0.05, exclusion_certainty = 0.95)
+```
+
+As before, we fit the model and learn the dose recommended for the next patient(s) using:
+
+```{r}
+fit <- model %>% fit('1NNT') 
+fit %>% recommended_dose()
+```
+
+In their Figure 2, the authors again enumerate model advice over a range of cohort outputs.
+Just as we did with TPI, enumerating the dose recommendations after a cohort of 6 has been treated at dose 2:
+
+```{r}
+model %>% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2) %>% 
+  graph_paths()
+```
+
+We see that after `2NNNNNT`, the mTPI advocates escalation whereas TPI advocated sticking at dose 2.
+The advice from the two models matches in all other outcomes.
+
+## Neuenschwander _et al._
+@Neuenschwander2008 (NBG) introduced a derivative of the CRM for dose-escalation clinical trials using the model:
+
+$$ \text{logit} p_i = \alpha + \exp{(\beta)} \log{(x_i / d^*)}, $$
+
+where $p_i$ is the probability of toxicity at the $i$th dose, $x_i$, and $d^*$ is a reference dose.
+Here $\alpha$ and $\beta$ are model parameters on which the authors place a bivariate normal prior. 
+This model is very similar to the two-parameter logistic CRM.
+However, a notable difference is that the dose, $x_i$, enters the model as a covariate.
+This dispenses with the toxicity skeleton that is used in the CRM.
+
+
+### Implementation in `escalation`
+
+The heavy lifting required to fit the model is performed by `trialr` and `rstan`.
+`escalation` merely composes the model fit in such a way that it can be used with the other dose-selection modules.
+
+For illustration, let us reproduce the analysis in @Neuenschwander2008 that the authors used to demonstrate the flexibility of a two-parameter approach.
+In a trial of 15 doses, the investigators saw outcomes:
+
+```{r}
+library(escalation)
+
+dose <- c(1, 2.5, 5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, 250)
+outcomes <- '1NNN 2NNNN 3NNNN 4NNNN 7TT'
+```
+
+Creating a dose-escalation model with NBG's parameters:
+```{r}
+model <- get_trialr_nbg(real_doses = dose, d_star = 250, target = 0.3,
+                        alpha_mean = 2.15, alpha_sd = 0.84,
+                        beta_mean = 0.52, beta_sd = 0.8,
+                        seed = 2020)
+```
+
+and fitting the model to the observed outcomes:
+```{r}
+fit <- model %>% fit(outcomes)
+fit
+```
+
+we see that dose 7 is selected for the next cohort using the metric of selecting the dose with posterior expected probability of toxicity closest to the target.
+In the above output, `mean_prob_tox` broadly matches the values plotted in the lower right panel of Figure 1 in @Neuenschwander2008.
+
+### Further work
+There are a few minor shortcomings of the NBG implementation in `escalation` & `trialr`.
+Firstly, NBG propose a bivariate normal prior distribution on $\alpha$ and $\beta$.
+However, the implementation in `trialr` currently uses independent normal priors.
+Hopefully, this will be addressed in a future release of `trialr`.
+
+Furthermore, NBG propose a method for selecting dose that accounts for the probability of recommending an overdose.
+That logic is currently not implemented in `escalation`, but will be in the near future.
+
+
+## MCMC CRM
+`escalation` already provides one-parameter CRM models via the `dfcrm` package [@dfcrm].
+It now also provides MCMC implementations of those same one-parameter models:
+
+```{r}
+skeleton <- c(0.05, 0.12, 0.25, 0.40, 0.55)
+target <- 0.25
+
+model1 <- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = 'empiric', beta_sd = 1)
+model2 <- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = 'logistic', a0 = 3, 
+                         beta_mean = 0, beta_sd = 1)
+```
+
+and also adds a two-parameter logistic model:
+
+```{r}
+model3 <- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = 'logistic2', 
+                         alpha_mean = 0, alpha_sd = 2, 
+                         beta_mean = 0, beta_sd = 1)
+```
+
+For more on the parameterisation of these methods, check out the CRM vignette in the [`escalation`](https://CRAN.R-project.org/package=escalation).
+
+## Simulations and dose-paths
+As with all methods in `escalation`, simulations are supported right out of the box.
+
+For illustration, @Ji2007 present a simulation study to compare the performance of their TPI design to some alternatives.
+They specify a design that uses a maximum sample size of thirty patients:
+
+```{r}
+model <- get_tpi(num_doses = 8, target = 0.25, k1 = 1, k2 = 1.5,
+                 exclusion_certainty = 0.95) %>%
+  stop_at_n(n = 30)
+```
+
+and their scenario 1 assumes true probability of toxicity:
+
+```{r}
+sc1 <- c(0.05, 0.25, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95)
+```
+
+We can then reproduce their simulated characteristics by running:
+
+```{r}
+set.seed(123)
+sims <- model %>%
+  simulate_trials(num_sims = 50, true_prob_tox = sc1, next_dose = 1)
+
+sims
+```
+
+For the sake of speed, we ran just fifty iterations but in a real situation, many thousands of iterations would be more appropriate.
+
+
+## Conclusion
+Amongst pure phase I designs, `escalation` now supports:
+
+* CRM
+* TPI
+* mTPI
+* BOIN
+* NBG
+
+It also supports some designs that select dose by co-primary efficacy and toxicity outcomes, the so-called seamless phase I/II designs.
+Those will be the subect of the next post on this blog.
+Til then, good day.
+
+
+
+## References
+

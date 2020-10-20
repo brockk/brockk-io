@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.3">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Kristian Brock">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Introducing new methods in `escalation` for TPI, mTPI and Neuenschwander et al.&#39;s design for phase I trials, plus MCMC-based CRM methods.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/post/new-phase1-escalation-methods/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#4caf50">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157979306-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           document.location = url;
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target);  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-157979306-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://www.kristianbrock.com/post/new-phase1-escalation-methods/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@CatchTwentyToo">
+  <meta property="twitter:creator" content="@CatchTwentyToo">
+  
+  <meta property="og:site_name" content="Kristian Brock">
+  <meta property="og:url" content="https://www.kristianbrock.com/post/new-phase1-escalation-methods/">
+  <meta property="og:title" content="New phase I methods in escalation | Kristian Brock">
+  <meta property="og:description" content="Introducing new methods in `escalation` for TPI, mTPI and Neuenschwander et al.&#39;s design for phase I trials, plus MCMC-based CRM methods."><meta property="og:image" content="https://www.kristianbrock.com/post/new-phase1-escalation-methods/featured.jpg">
+  <meta property="twitter:image" content="https://www.kristianbrock.com/post/new-phase1-escalation-methods/featured.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-10-20T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2020-10-20T17:07:58&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kristianbrock.com/post/new-phase1-escalation-methods/"
+  },
+  "headline": "New phase I methods in escalation",
+  
+  "image": [
+    "https://www.kristianbrock.com/post/new-phase1-escalation-methods/featured.jpg"
+  ],
+  
+  "datePublished": "2020-10-20T00:00:00Z",
+  "dateModified": "2020-10-20T17:07:58Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kristian Brock"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kristian Brock",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kristianbrock.com/img/icon-512.png"
+    }
+  },
+  "description": "Introducing new methods in `escalation` for TPI, mTPI and Neuenschwander et al.'s design for phase I trials, plus MCMC-based CRM methods."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>New phase I methods in escalation | Kristian Brock</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Teaching</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact Me</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+<div class="article-container pt-3">
+  <h1>New phase I methods in escalation</h1>
+
+  
+  <p class="page-subtitle">Introducing new methods in <code>escalation</code> for TPI, mTPI and Neuenschwander et al.&lsquo;s design for phase I trials, plus MCMC CRM methods.</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  
+  <span><a href="/authors/admin/">Kristian Brock</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Oct 20, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    14 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/code/">Code</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 550px; max-height: 424px;">
+  <div style="position: relative">
+    <img src="/post/new-phase1-escalation-methods/featured.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Photo by <a href="https://unsplash.com/photos/83AdeG3iPMk">Samuel Isaac on Unsplash</a></span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="index_files/viz/viz.js"></script>
+<link href="index_files/DiagrammeR-styles/styles.css" rel="stylesheet" />
+<script src="index_files/grViz-binding/grViz.js"></script>
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This week I updated the <a href="https://CRAN.R-project.org/package=escalation"><code>escalation</code></a> <span class="citation">(Brock 2020)</span> package on CRAN with new methods to implement several phase I and phase I/II dose-finding designs.
+This post describes the addition of the phase I methods TPI, mTPI, and the logistic model method of <span class="citation">Neuenschwander, Branson, and Gsponer (2008)</span>, and also the addition of MCMC-based CRM methods.</p>
+</div>
+<div id="tpi" class="section level2">
+<h2>TPI</h2>
+<p>The toxicity probability interval (TPI) design was introduced by <span class="citation">Ji, Li, and Bekele (2007)</span>.
+It is one of a series of dose-finding trial designs that works by partitioning the probability of toxicity into a set of intervals.
+These designs make dose-selection decisions that are determined by the interval in which the probability of toxicity for the current dose is believed to reside.</p>
+<p>Core to this design is a beta-binomial Bayesian conjugate model.
+For hyperparameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, let the probability of toxicity at dose <span class="math inline">\(i\)</span> be <span class="math inline">\(p_i\)</span>, with prior distribution</p>
+<p><span class="math display">\[p_i \sim Beta(\alpha, \beta).\]</span></p>
+<p>If <span class="math inline">\(n_i\)</span> patients have been treated at dose <span class="math inline">\(i\)</span>, yielding <span class="math inline">\(x_i\)</span> toxicity events, the posterior distribution is</p>
+<p><span class="math display">\[ p_i | data \sim Beta(\alpha + x_{i}, \beta + n_{i} - x_{i}).\]</span></p>
+<p>Using this distribution, let the standard deviation of <span class="math inline">\(p_i\)</span> be denoted by <span class="math inline">\(\sigma_i\)</span>.
+The design seeks a dose with probability of toxicity close to some pre-specified target level, <span class="math inline">\(p_T\)</span>.
+The entire range of possible values for <span class="math inline">\(p_i\)</span> can be broken up into the following intervals:</p>
+<ul>
+<li>The underdosing interval (UI), defined as <span class="math inline">\((0, p_{T} - K_{2} \sigma_{i})\)</span>;</li>
+<li>The equivalence interval (EI), defined as <span class="math inline">\((p_{T} - K_{2} \sigma_{i}, p_{T} + K_{1} \sigma_{i})\)</span>;</li>
+<li>The overdosing interval (OI), defined as <span class="math inline">\((p_{T} + K_{1} \sigma_{i}, 1)\)</span>;</li>
+</ul>
+<p>for pre-specified model constants, <span class="math inline">\(K_1, K_2\)</span>.
+These intervals are mutally-exclusive and mutually-exhaustive, meaning that every possible probability belongs to precisely one of them.
+In other words, these intervals form a partition of the probability space, <span class="math inline">\((0, 1)\)</span>.</p>
+<p>Using the posterior distribution, we can calculate the three probabilities</p>
+<p><span class="math display">\[p_{UI} = Pr(p_i \in \text{UI}), \enspace p_{EI} = Pr(p_i \in \text{EI}), \enspace p_{OI} = Pr(p_i \in \text{OI}).\]</span></p>
+<p>By definition, <span class="math inline">\(p_{UI} + p_{EI} + p_{OI} = 1\)</span>.
+The logical action in the dose-finding trial depends on which of these three probabilities is the greatest.
+If <span class="math inline">\(p_{UI} &gt; p_{EI}, p_{OI}\)</span>, then the current dose is likely an underdose, so our desire should be to escalate dose to <span class="math inline">\(i+1\)</span>.
+In contrast, if <span class="math inline">\(p_{OI} &gt; p_{UI}, p_{EI}\)</span>, then the current dose is likely an overdose and we will want to de-escalate dose to <span class="math inline">\(i-1\)</span> for the next patient.
+If <span class="math inline">\(p_{EI} &gt; p_{UI}, p_{OI}\)</span>, then the current dose is deemed sufficiently close to <span class="math inline">\(p_T\)</span> and we will want to stay at dose-level <span class="math inline">\(i\)</span>.</p>
+<p>Further to these rules regarding dose-selection, the following rule is used to avoid recommending dangerous doses.
+A dose is deemed inadmissible for being excessively toxic if</p>
+<p><span class="math display">\[ Pr(p_{i} &gt; p_{T} | data) &gt; \xi,\]</span></p>
+<p>for a certainty threshold, <span class="math inline">\(\xi\)</span>.
+If a dose is excluded by this rule, it should not be recommended by the model.
+Irrespective the probabilities <span class="math inline">\(p_{UI}, p_{EI}, p_{OI}\)</span>, the design will recommend to stay at dose <span class="math inline">\(i\)</span> rather than escalate to a dose previously identified as being inadmissible.
+Furthermore, the design will advocate stopping if the lowest dose is inferred to be inadmissible.</p>
+<p>In their paper, the authors demonstrate acceptable operating performance using <span class="math inline">\(\alpha = \beta = 0.005\)</span>, <span class="math inline">\(K_{1} = 1\)</span>, <span class="math inline">\(K_{2} = 1.5\)</span> and <span class="math inline">\(\xi = 0.95\)</span>.
+See <span class="citation">Ji, Li, and Bekele (2007)</span> for full details.</p>
+<div id="implementation-in-escalation" class="section level3">
+<h3>Implementation in <code>escalation</code></h3>
+<p>Let us specify the model that the authors investigate in their publication:</p>
+<pre class="r"><code>library(escalation)
+
+model &lt;- get_tpi(num_doses = 5, target = 0.3, alpha = 0.005, beta = 0.005, 
+                 k1 = 1, k2 = 1.5, exclusion_certainty = 0.95)</code></pre>
+<p>As with all models in <code>escalation</code>, we fit the model to some outcomes using code like:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;1NNT&#39;) </code></pre>
+<p>and learn the dose recommended for the next patient(s):</p>
+<pre class="r"><code>fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>In their Table 1, <span class="citation">Ji, Li, and Bekele (2007)</span> recommend some model choices based on notional cohort outcomes.
+We can reproduce their findings using, for example:</p>
+<pre class="r"><code>model %&gt;% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2) %&gt;% 
+  graph_paths()</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"2\", fontcolor = \"#FDE725FF\", fillcolor = \"#2A788EFF\"] \n  \"2\" [label = \"3\", fontcolor = \"#440154FF\", fillcolor = \"#22A884FF\"] \n  \"3\" [label = \"2\", fontcolor = \"#FDE725FF\", fillcolor = \"#2A788EFF\"] \n  \"4\" [label = \"2\", fontcolor = \"#FDE725FF\", fillcolor = \"#2A788EFF\"] \n  \"5\" [label = \"1\", fontcolor = \"#7AD151FF\", fillcolor = \"#414487FF\"] \n  \"6\" [label = \"1\", fontcolor = \"#7AD151FF\", fillcolor = \"#414487FF\"] \n  \"7\" [label = \"1\", fontcolor = \"#7AD151FF\", fillcolor = \"#414487FF\"] \n  \"8\" [label = \"1\", fontcolor = \"#7AD151FF\", fillcolor = \"#414487FF\"] \n\"1\"->\"2\" [label = \"NNNNNN\"] \n\"1\"->\"3\" [label = \"NNNNNT\"] \n\"1\"->\"4\" [label = \"NNNNTT\"] \n\"1\"->\"5\" [label = \"NNNTTT\"] \n\"1\"->\"6\" [label = \"NNTTTT\"] \n\"1\"->\"7\" [label = \"NTTTTT\"] \n\"1\"->\"8\" [label = \"TTTTTT\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>I.e. if there are six patients at the current dose, this particular parameterisation will only advocate escalation if exactly zero toxicities are seen.
+If one or two toxicities are seen, the design advocates staying at dose 2, otherwise deescalation is recommended.</p>
+</div>
+</div>
+<div id="mtpi" class="section level2">
+<h2>mTPI</h2>
+<p>The modified toxicity probability interval (mTPI) design was introduced by <span class="citation">Ji et al. (2010)</span>.
+As the name suggests, it is a modification of the earlier TPI design.
+mTPI is very similar to TPI, again using a method that partitions the probability of toxicity into a set of intervals.</p>
+<p>This design uses a beta-binomial Bayesian conjugate model.
+For hyperparameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, let the probability of toxicity at dose <span class="math inline">\(i\)</span> be <span class="math inline">\(p_i\)</span>, with prior distribution</p>
+<p><span class="math display">\[p_i \sim Beta(\alpha, \beta).\]</span></p>
+<p>If <span class="math inline">\(n_i\)</span> patients have been treated at dose <span class="math inline">\(i\)</span>, yielding <span class="math inline">\(x_i\)</span> toxicity events, the posterior distribution is</p>
+<p><span class="math display">\[ p_i | data \sim Beta(\alpha + x_{i}, \beta + n_{i} - x_{i}).\]</span></p>
+<p>The design seeks a dose with probability of toxicity close to some pre-specified target level, <span class="math inline">\(p_T\)</span>.
+The entire range of possible values for <span class="math inline">\(p_i\)</span> can be broken up into the following intervals:</p>
+<ul>
+<li>The underdosing interval (UI), defined as <span class="math inline">\((0, p_{T} - \epsilon_{1})\)</span>;</li>
+<li>The equivalence interval (EI), defined as <span class="math inline">\((p_{T} - \epsilon_{1}, p_{T} + \epsilon_{2})\)</span>;</li>
+<li>The overdosing interval (OI), defined as <span class="math inline">\((p_{T} + \epsilon_{2}, 1)\)</span>;</li>
+</ul>
+<p>for pre-specified model constants, <span class="math inline">\(\epsilon_{1}, \epsilon_{2}\)</span>.
+These intervals are mutally-exclusive and mutually-exhaustive, meaning that every possible probability belongs to precisely one of them.
+In other words, these intervals form a partition of the probability space, <span class="math inline">\((0, 1)\)</span>.</p>
+<p>For a continuous random variable <span class="math inline">\(X\)</span> with cumulative probability mass function <span class="math inline">\(F(x)\)</span> (i.e. <span class="math inline">\(Pr(X &lt; x) = F(x)\)</span>), the authors define the unit probability mass (UPM) for an interval <span class="math inline">\((a, b)\)</span> to be <span class="math inline">\((F(b) - F(a)) / (b - a)\)</span>.
+That is, the UPM is the probability mass in an interval divided by the width of the interval, and can be interpreted as the average probability density of the interval.</p>
+<p>Then, using the posterior distribution identified above, we calculate the three UPMs</p>
+<p><span class="math display">\[UPM_{UI} = Pr(p_i \in \text{UI}) / (p_{T} - \epsilon_{1}),\]</span>
+<span class="math display">\[UPM_{EI} = Pr(p_i \in \text{EI}) / (\epsilon_{1} + \epsilon_{2}),\]</span></p>
+<p>and</p>
+<p><span class="math display">\[UPM_{OI} = Pr(p_i \in \text{OI}) / (1 - p_{T} + \epsilon_{2}).\]</span></p>
+<p>The logical action in the dose-finding trial depends on which of these three quantities is the greatest.
+If <span class="math inline">\(UPM_{UI} &gt; UPM_{EI}, UPM_{OI}\)</span>, then the current dose is likely an underdose, so our desire should be to escalate dose to <span class="math inline">\(i+1\)</span>.
+In contrast, if <span class="math inline">\(UPM_{OI} &gt; UPM_{UI}, UPM_{EI}\)</span>, then the current dose is likely an overdose and we will want to de-escalate dose to <span class="math inline">\(i-1\)</span> for the next patient.
+If <span class="math inline">\(UPM_{EI} &gt; UPM_{UI}, UPM_{OI}\)</span>, then the current dose is deemed sufficiently close to <span class="math inline">\(p_T\)</span> and we will want to stay at dose-level <span class="math inline">\(i\)</span>.</p>
+<p>Further to these rules regarding dose-selection, the following rule is used to avoid recommending dangerous doses.
+A dose is deemed inadmissible for being excessively toxic if</p>
+<p><span class="math display">\[ Pr(p_{i} &gt; p_{T} | data) &gt; \xi,\]</span></p>
+<p>for a certainty threshold, <span class="math inline">\(\xi\)</span>.
+If a dose is excluded by this rule, it should not be recommended by the model.
+Irrespective the values of <span class="math inline">\(UPM_{UI}, UPM_{EI}\)</span> and <span class="math inline">\(UPM_{OI}\)</span>, the design will recommend to stay at dose <span class="math inline">\(i\)</span> rather than escalate to a dose previously identified as being inadmissible.
+Furthermore, the design will advocate stopping if the lowest dose is inferred to be inadmissible.</p>
+<p>In their paper, the authors demonstrate acceptable operating performance using <span class="math inline">\(\alpha = \beta = 1\)</span>, <span class="math inline">\(\epsilon_{1} = 0.05\)</span>, <span class="math inline">\(\epsilon_{2} = 0.05\)</span> and <span class="math inline">\(\xi = 0.95\)</span>.
+See <span class="citation">Ji et al. (2010)</span> for full details.</p>
+<div id="implementation-in-escalation-1" class="section level3">
+<h3>Implementation in <code>escalation</code></h3>
+<p>Again, let us investigate one of the parameterisations that the authors investigate in their publication:</p>
+<pre class="r"><code>library(escalation)
+
+model &lt;- get_mtpi(num_doses = 5, target = 0.3, alpha = 1, beta = 1, 
+                  epsilon1 = 0.05, epsilon2 = 0.05, exclusion_certainty = 0.95)</code></pre>
+<p>As before, we fit the model and learn the dose recommended for the next patient(s) using:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(&#39;1NNT&#39;) 
+fit %&gt;% recommended_dose()</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>In their Figure 2, the authors again enumerate model advice over a range of cohort outputs.
+Just as we did with TPI, enumerating the dose recommendations after a cohort of 6 has been treated at dose 2:</p>
+<pre class="r"><code>model %&gt;% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2) %&gt;% 
+  graph_paths()</code></pre>
+<div id="htmlwidget-2" style="width:672px;height:480px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2">{"x":{"diagram":"digraph {\n\ngraph [layout = \"neato\",\n       outputorder = \"edgesfirst\",\n       bgcolor = \"white\"]\n\nnode [fontname = \"Helvetica\",\n      fontsize = \"10\",\n      shape = \"circle\",\n      fixedsize = \"true\",\n      width = \"0.5\",\n      style = \"filled\",\n      fillcolor = \"aliceblue\",\n      color = \"gray70\",\n      fontcolor = \"gray50\"]\n\nedge [fontname = \"Helvetica\",\n     fontsize = \"8\",\n     len = \"1.5\",\n     color = \"gray80\",\n     arrowsize = \"0.5\"]\n\n  \"1\" [label = \"2\", fontcolor = \"#FDE725FF\", fillcolor = \"#2A788EFF\"] \n  \"2\" [label = \"3\", fontcolor = \"#440154FF\", fillcolor = \"#22A884FF\"] \n  \"3\" [label = \"3\", fontcolor = \"#440154FF\", fillcolor = \"#22A884FF\"] \n  \"4\" [label = \"2\", fontcolor = \"#FDE725FF\", fillcolor = \"#2A788EFF\"] \n  \"5\" [label = \"2\", fontcolor = \"#FDE725FF\", fillcolor = \"#2A788EFF\"] \n  \"6\" [label = \"1\", fontcolor = \"#7AD151FF\", fillcolor = \"#414487FF\"] \n  \"7\" [label = \"1\", fontcolor = \"#7AD151FF\", fillcolor = \"#414487FF\"] \n  \"8\" [label = \"1\", fontcolor = \"#7AD151FF\", fillcolor = \"#414487FF\"] \n\"1\"->\"2\" [label = \"NNNNNN\"] \n\"1\"->\"3\" [label = \"NNNNNT\"] \n\"1\"->\"4\" [label = \"NNNNTT\"] \n\"1\"->\"5\" [label = \"NNNTTT\"] \n\"1\"->\"6\" [label = \"NNTTTT\"] \n\"1\"->\"7\" [label = \"NTTTTT\"] \n\"1\"->\"8\" [label = \"TTTTTT\"] \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>We see that after <code>2NNNNNT</code>, the mTPI advocates escalation whereas TPI advocated sticking at dose 2.
+The advice from the two models matches in all other outcomes.</p>
+</div>
+</div>
+<div id="neuenschwander-et-al." class="section level2">
+<h2>Neuenschwander <em>et al.</em></h2>
+<p><span class="citation">Neuenschwander, Branson, and Gsponer (2008)</span> (NBG) introduced a derivative of the CRM for dose-escalation clinical trials using the model:</p>
+<p><span class="math display">\[ \text{logit} p_i = \alpha + \exp{(\beta)} \log{(x_i / d^*)}, \]</span></p>
+<p>where <span class="math inline">\(p_i\)</span> is the probability of toxicity at the <span class="math inline">\(i\)</span>th dose, <span class="math inline">\(x_i\)</span>, and <span class="math inline">\(d^*\)</span> is a reference dose.
+Here <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are model parameters on which the authors place a bivariate normal prior.
+This model is very similar to the two-parameter logistic CRM.
+However, a notable difference is that the dose, <span class="math inline">\(x_i\)</span>, enters the model as a covariate.
+This dispenses with the toxicity skeleton that is used in the CRM.</p>
+<div id="implementation-in-escalation-2" class="section level3">
+<h3>Implementation in <code>escalation</code></h3>
+<p>The heavy lifting required to fit the model is performed by <code>trialr</code> and <code>rstan</code>.
+<code>escalation</code> merely composes the model fit in such a way that it can be used with the other dose-selection modules.</p>
+<p>For illustration, let us reproduce the analysis in <span class="citation">Neuenschwander, Branson, and Gsponer (2008)</span> that the authors used to demonstrate the flexibility of a two-parameter approach.
+In a trial of 15 doses, the investigators saw outcomes:</p>
+<pre class="r"><code>library(escalation)
+
+dose &lt;- c(1, 2.5, 5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, 250)
+outcomes &lt;- &#39;1NNN 2NNNN 3NNNN 4NNNN 7TT&#39;</code></pre>
+<p>Creating a dose-escalation model with NBG’s parameters:</p>
+<pre class="r"><code>model &lt;- get_trialr_nbg(real_doses = dose, d_star = 250, target = 0.3,
+                        alpha_mean = 2.15, alpha_sd = 0.84,
+                        beta_mean = 0.52, beta_sd = 0.8,
+                        seed = 2020)</code></pre>
+<p>and fitting the model to the observed outcomes:</p>
+<pre class="r"><code>fit &lt;- model %&gt;% fit(outcomes)
+fit</code></pre>
+<pre><code>## Patient-level data:
+## # A tibble: 17 x 4
+##    Patient Cohort  Dose   Tox
+##      &lt;int&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1       1      1     1     0
+##  2       2      1     1     0
+##  3       3      1     1     0
+##  4       4      2     2     0
+##  5       5      2     2     0
+##  6       6      2     2     0
+##  7       7      2     2     0
+##  8       8      3     3     0
+##  9       9      3     3     0
+## 10      10      3     3     0
+## 11      11      3     3     0
+## 12      12      4     4     0
+## 13      13      4     4     0
+## 14      14      4     4     0
+## 15      15      4     4     0
+## 16      16      5     7     1
+## 17      17      5     7     1
+## 
+## Dose-level data:
+## # A tibble: 15 x 7
+##    RealDose  dose   tox     n empiric_tox_rate mean_prob_tox median_prob_tox
+##       &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;            &lt;dbl&gt;         &lt;dbl&gt;           &lt;dbl&gt;
+##  1      1       1     0     3                0        0.0117         0.00511
+##  2      2.5     2     0     4                0        0.0306         0.0186 
+##  3      5       3     0     4                0        0.0644         0.0468 
+##  4     10       4     0     4                0        0.134          0.114  
+##  5     15       5     0     0              NaN        0.202          0.185  
+##  6     20       6     0     0              NaN        0.264          0.251  
+##  7     25       7     2     2                1        0.322          0.314  
+##  8     30       8     0     0              NaN        0.374          0.370  
+##  9     40       9     0     0              NaN        0.463          0.466  
+## 10     50      10     0     0              NaN        0.535          0.543  
+## 11     75      11     0     0              NaN        0.662          0.678  
+## 12    100      12     0     0              NaN        0.741          0.760  
+## 13    150      13     0     0              NaN        0.829          0.849  
+## 14    200      14     0     0              NaN        0.875          0.894  
+## 15    250      15     0     0              NaN        0.902          0.920  
+## 
+## The model targets a toxicity level of 0.3.
+## The model advocates continuing at dose 7.</code></pre>
+<p>we see that dose 7 is selected for the next cohort using the metric of selecting the dose with posterior expected probability of toxicity closest to the target.
+In the above output, <code>mean_prob_tox</code> broadly matches the values plotted in the lower right panel of Figure 1 in <span class="citation">Neuenschwander, Branson, and Gsponer (2008)</span>.</p>
+</div>
+<div id="further-work" class="section level3">
+<h3>Further work</h3>
+<p>There are a few minor shortcomings of the NBG implementation in <code>escalation</code> &amp; <code>trialr</code>.
+Firstly, NBG propose a bivariate normal prior distribution on <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.
+However, the implementation in <code>trialr</code> currently uses independent normal priors.
+Hopefully, this will be addressed in a future release of <code>trialr</code>.</p>
+<p>Furthermore, NBG propose a method for selecting dose that accounts for the probability of recommending an overdose.
+That logic is currently not implemented in <code>escalation</code>, but will be in the near future.</p>
+</div>
+</div>
+<div id="mcmc-crm" class="section level2">
+<h2>MCMC CRM</h2>
+<p><code>escalation</code> already provides one-parameter CRM models via the <code>dfcrm</code> package <span class="citation">(Cheung 2013)</span>.
+It now also provides MCMC implementations of those same one-parameter models:</p>
+<pre class="r"><code>skeleton &lt;- c(0.05, 0.12, 0.25, 0.40, 0.55)
+target &lt;- 0.25
+
+model1 &lt;- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = &#39;empiric&#39;, beta_sd = 1)
+model2 &lt;- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = &#39;logistic&#39;, a0 = 3, 
+                         beta_mean = 0, beta_sd = 1)</code></pre>
+<p>and also adds a two-parameter logistic model:</p>
+<pre class="r"><code>model3 &lt;- get_trialr_crm(skeleton = skeleton, target = target, 
+                         model = &#39;logistic2&#39;, 
+                         alpha_mean = 0, alpha_sd = 2, 
+                         beta_mean = 0, beta_sd = 1)</code></pre>
+<p>For more on the parameterisation of these methods, check out the CRM vignette in the <a href="https://CRAN.R-project.org/package=escalation"><code>escalation</code></a>.</p>
+</div>
+<div id="simulations-and-dose-paths" class="section level2">
+<h2>Simulations and dose-paths</h2>
+<p>As with all methods in <code>escalation</code>, simulations are supported right out of the box.</p>
+<p>For illustration, <span class="citation">Ji, Li, and Bekele (2007)</span> present a simulation study to compare the performance of their TPI design to some alternatives.
+They specify a design that uses a maximum sample size of thirty patients:</p>
+<pre class="r"><code>model &lt;- get_tpi(num_doses = 8, target = 0.25, k1 = 1, k2 = 1.5,
+                 exclusion_certainty = 0.95) %&gt;%
+  stop_at_n(n = 30)</code></pre>
+<p>and their scenario 1 assumes true probability of toxicity:</p>
+<pre class="r"><code>sc1 &lt;- c(0.05, 0.25, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95)</code></pre>
+<p>We can then reproduce their simulated characteristics by running:</p>
+<pre class="r"><code>set.seed(123)
+sims &lt;- model %&gt;%
+  simulate_trials(num_sims = 50, true_prob_tox = sc1, next_dose = 1)
+
+sims</code></pre>
+<pre><code>## Number of iterations: 50 
+## 
+## Number of doses: 8 
+## 
+## True probability of toxicity:
+##    1    2    3    4    5    6    7    8 
+## 0.05 0.25 0.50 0.60 0.70 0.80 0.90 0.95 
+## 
+## Probability of recommendation:
+## NoDose      1      2      3      4      5      6      7      8 
+##   0.00   0.14   0.76   0.10   0.00   0.00   0.00   0.00   0.00 
+## 
+## Probability of administration:
+##     1     2     3     4     5     6     7     8 
+## 0.226 0.606 0.160 0.008 0.000 0.000 0.000 0.000 
+## 
+## Sample size:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      30      30      30      30      30      30 
+## 
+## Total toxicities:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    4.00    6.00    7.00    7.44    9.00   11.00 
+## 
+## Trial duration:
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   15.30   27.50   30.75   30.65   34.90   42.30</code></pre>
+<p>For the sake of speed, we ran just fifty iterations but in a real situation, many thousands of iterations would be more appropriate.</p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Amongst pure phase I designs, <code>escalation</code> now supports:</p>
+<ul>
+<li>CRM</li>
+<li>TPI</li>
+<li>mTPI</li>
+<li>BOIN</li>
+<li>NBG</li>
+</ul>
+<p>It also supports some designs that select dose by co-primary efficacy and toxicity outcomes, the so-called seamless phase I/II designs.
+Those will be the subect of the next post on this blog.
+Til then, good day.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-escalation">
+<p>Brock, Kristian. 2020. <em>Escalation: Modular Approach to Dose Finding Clinical Trials</em>. <a href="https://CRAN.R-project.org/package=escalation">https://CRAN.R-project.org/package=escalation</a>.</p>
+</div>
+<div id="ref-dfcrm">
+<p>Cheung, Ken. 2013. <em>Dfcrm: Dose-Finding by the Continual Reassessment Method</em>. <a href="https://CRAN.R-project.org/package=dfcrm">https://CRAN.R-project.org/package=dfcrm</a>.</p>
+</div>
+<div id="ref-Ji2007">
+<p>Ji, Yuan, Yisheng Li, and B. Nebiyou Bekele. 2007. “Dose-finding in phase I clinical trials based on toxicity probability intervals.” <em>Clinical Trials</em> 4 (3): 235–44. <a href="https://doi.org/10.1177/1740774507079442">https://doi.org/10.1177/1740774507079442</a>.</p>
+</div>
+<div id="ref-Ji2010">
+<p>Ji, Yuan, Ping Liu, Yisheng Li, and B. Nebiyou Bekele. 2010. “A modified toxicity probability interval method for dose-finding trials.” <em>Clinical Trials</em> 7 (6): 653–63. <a href="https://doi.org/10.1177/1740774510382799">https://doi.org/10.1177/1740774510382799</a>.</p>
+</div>
+<div id="ref-Neuenschwander2008">
+<p>Neuenschwander, Beat, Michael Branson, and Thomas Gsponer. 2008. “Critical aspects of the Bayesian approach to phase I cancer trials.” <em>Statistics in Medicine</em> 27: 2420–39. <a href="https://doi.org/10.1002/sim.3230">https://doi.org/10.1002/sim.3230</a>.</p>
+</div>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/escalation/">escalation</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/dosefinding/">DoseFinding</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/post/new-phase1-escalation-methods/&amp;text=New%20phase%20I%20methods%20in%20escalation" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/post/new-phase1-escalation-methods/&amp;t=New%20phase%20I%20methods%20in%20escalation" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=New%20phase%20I%20methods%20in%20escalation&amp;body=https://www.kristianbrock.com/post/new-phase1-escalation-methods/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/post/new-phase1-escalation-methods/&amp;title=New%20phase%20I%20methods%20in%20escalation" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=New%20phase%20I%20methods%20in%20escalation%20https://www.kristianbrock.com/post/new-phase1-escalation-methods/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/post/new-phase1-escalation-methods/&amp;title=New%20phase%20I%20methods%20in%20escalation" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/ba2fdaa5d7c978ce64a39a93043d05ca?s=200')" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kristianbrock.com/">Kristian Brock</a></h5>
+      <h6 class="card-subtitle">Principal Biostatistician</h6>
+      <p class="card-text">I am an academic early phase clincial trial statistician.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/CatchTwentyToo" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.co.uk/citations?user=zoh03M4AAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/brockk/" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/trialr-and-escalation/">trialr and escalation</a></li>
+      
+      <li><a href="/post/simulate-vs-enumerate-dose-finding/">Simulation or enumeration with dose-finding designs?</a></li>
+      
+      <li><a href="/post/dose-paths/">Dose-paths in the escalation package</a></li>
+      
+      <li><a href="/post/emax-intro/">Fitting the Emax Model in R</a></li>
+      
+      <li><a href="/post/introducing-escalation/">Introducing escalation</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.3/mermaid.min.js" integrity="" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.600a2e440c16093e23e26e90951c4d4b.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
