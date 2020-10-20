@@ -103,10 +103,14 @@ fit %>% recommended_dose()
 In their Table 1, @Ji2007 recommend some model choices based on notional cohort outcomes.
 We can reproduce their findings using, for example:
 
-```{r}
-model %>% 
-  get_dose_paths(cohort_sizes = 6, next_dose = 2) %>% 
-  graph_paths()
+```{r, message=FALSE}
+paths <- model %>% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2)
+
+library(dplyr)
+as_tibble(paths) %>% 
+  select(outcomes, next_dose) %>% 
+  knitr::kable()
 ```
 
 I.e. if there are six patients at the current dose, this particular parameterisation will only advocate escalation if exactly zero toxicities are seen.
@@ -190,13 +194,16 @@ In their Figure 2, the authors again enumerate model advice over a range of coho
 Just as we did with TPI, enumerating the dose recommendations after a cohort of 6 has been treated at dose 2:
 
 ```{r}
-model %>% 
-  get_dose_paths(cohort_sizes = 6, next_dose = 2) %>% 
-  graph_paths()
+paths <- model %>% 
+  get_dose_paths(cohort_sizes = 6, next_dose = 2)
+
+as_tibble(paths) %>% 
+  select(outcomes, next_dose) %>% 
+  knitr::kable()
 ```
 
 We see that after `2NNNNNT`, the mTPI advocates escalation whereas TPI advocated sticking at dose 2.
-The advice from the two models matches in all other outcomes.
+The advice from the two models matches in all other outcomes in this particular example.
 
 ## Neuenschwander _et al._
 @Neuenschwander2008 (NBG) introduced a derivative of the CRM for dose-escalation clinical trials using the model:
