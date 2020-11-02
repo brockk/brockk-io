@@ -5,12 +5,126 @@
     <link>https://www.kristianbrock.com/categories/research/</link>
       <atom:link href="https://www.kristianbrock.com/categories/research/index.xml" rel="self" type="application/rss+xml" />
     <description>Research</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 13 May 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Research</title>
       <link>https://www.kristianbrock.com/categories/research/</link>
     </image>
+    
+    <item>
+      <title>Sending me data in Excel</title>
+      <link>https://www.kristianbrock.com/post/send-me-data/</link>
+      <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/send-me-data/</guid>
+      <description>
+
+
+&lt;div id=&#34;intro&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Intro&lt;/h2&gt;
+&lt;p&gt;I collaborate with lots of different researchers, helping them to analyse their data.
+For simplicity, they almost always send me data in an Excel spreadsheet.
+That is fine, but it is evidently not clear to most how to lay out the data to facilitate statistical analysis.&lt;/p&gt;
+&lt;p&gt;Before I can analyse the data, I have to import it.
+The way the data is saved really impacts how easy or hard it is to import.
+There are some common mistakes that lots of researchers make.
+The goal of this post is to describe how to lay out data in Excel so that it can be imported into R and analysed immediately.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rule-1---start-in-cell-a1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rule 1 - start in cell A1&lt;/h2&gt;
+&lt;p&gt;When importing data from Excel, what the computer expects is a solid rectangle of data starting in cell A1.
+Empty rows and columns may make the data more visually appealing to a human but they are guaranteed to confuse a computer.&lt;/p&gt;
+&lt;p&gt;Put your first column header in cell A1, your second column header in B1, and so on.
+Then put your data in the subsequent rows, using one row for each observation or subject.&lt;/p&gt;
+&lt;p&gt;The computer will import values from cells as far out as the last non-empty column and as far down as the last non-empty row.
+This means you cannot slap explanatory notes below your block of data because, to a computer, your note looks like malformed data.
+If you want to provide notes, put them on a dedicated tab.&lt;/p&gt;
+&lt;p&gt;How not to do it:
+&lt;img src=&#34;Rule1.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rule-2---one-data-type-per-column&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rule 2 - One data-type per column&lt;/h2&gt;
+&lt;p&gt;Broadly speaking, we work with numbers, text, and dates (which are in fact just a special type of number).&lt;/p&gt;
+&lt;p&gt;When software imports data in columns, it works out the type of the column by inspecting the values in the individual cells.
+If every value in a column is a number, then the column will be treated as numerical.
+That is great because analysis (like calculating an average) can proceed with no fuss.&lt;/p&gt;
+&lt;p&gt;However, all it takes is a single textual value in a column of otherwise numerical values for the entire column to be treated as text.
+This is because the datatype chosen for a column has to be valid for every value in the column and text is the catch-all scenario.
+If your column contains numbers, do not label missing values as “missing” or “not known” - just leave them blank.&lt;/p&gt;
+&lt;p&gt;Equally, do not use inequalities like “&amp;lt; 0.5” because this too will be read as text and result in the entire column being treated as text.
+The case with inequalities is tricky and could perhaps be handled gracefully using separate columns for the observed value and the lower and/or upper thresholds of precision, where applicable.&lt;/p&gt;
+&lt;p&gt;How not to do it:
+&lt;img src=&#34;Rule2.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rule-3---funky-column-names-are&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rule 3 - Funky column names are $?^£&lt;/h2&gt;
+&lt;p&gt;Column names must be unique.
+You cannot have two columns called “Data”, for instance.
+Thus, meaningful column names with an appropriate level of detail are important.
+However, column names should not be too complex.
+This is because they will have to be typed out when the column is used in the analysis.
+Each time a column name is typed, the chances of an error increase.&lt;/p&gt;
+&lt;p&gt;Common examples of excessively complex column names are those that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;include units, like “Concentration (μmol/L)”&lt;/li&gt;
+&lt;li&gt;enumerate the categorical levels, like “Sex (1=Female, 2=Male, 3=Non-binary, 4=Prefer not to say, 5=Missing)”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I advise that column names:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;use letters and numbers (but do not start with a number)&lt;/li&gt;
+&lt;li&gt;do not use spaces or symbols&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Capturing data from questionnaires can be tricky because there is a temptation to name the columns using the question text.
+This will almost surely result in cumbersome column names.
+In this situation, columns names “Q1”, “Q2”, etc are fine.
+However, it would be advisable to also include a data-dictionary tab where the exact question text is listed against the question number.&lt;/p&gt;
+&lt;p&gt;How not to do it:
+&lt;img src=&#34;Rule3.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rule-4---be-consistent&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rule 4 - Be consistent&lt;/h2&gt;
+&lt;p&gt;When entering column names and textual data values, be aware that:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spelling matters: “Weather” is obviously different to “Whether”.&lt;/li&gt;
+&lt;li&gt;Case matters: “Rainy” is different to “rainy”.&lt;/li&gt;
+&lt;li&gt;Space matters: “Day of Week” is different to “DayofWeek”.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In Rule 3, I advocated not putting the levels of categorical variables in the column header because it is too prone to error.
+It is absolutely fine to use descriptive textual labels like “Rainy” and “Sunny” rather than codified numerical values.
+But when you choose your category values, stick with them.
+Subtle ways in which categorical variables frequently differ are in capitalisation and use of space.&lt;/p&gt;
+&lt;p&gt;If you want to codify categorical variables, that is fine but you it is advisable that you also include a data-dictionary tab where the codified values are listed against their textual values.&lt;/p&gt;
+&lt;p&gt;How not to do it:
+&lt;img src=&#34;Rule4.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rule-5---an-empty-cell-is-fine&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rule 5 - An empty cell is fine&lt;/h2&gt;
+&lt;p&gt;In Rule 2, I told you not to label missing values.
+An empty cell is absolutely fine.
+If an particular piece of information is missing, just leave the cell empty.&lt;/p&gt;
+&lt;p&gt;How not to do it:
+&lt;img src=&#34;Rule5.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rule-6---stats-software-is-colourblind&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rule 6 - Stats software is colourblind&lt;/h2&gt;
+&lt;p&gt;Researchers like to use cell shading to group related columns and make their data sheets easier to navigate.
+That is absolutely fine…but do not expect stats software to detect your colouring, much less to understand what it means.&lt;/p&gt;
+&lt;p&gt;In particular, do not convey important information in the formatting.
+It will not work to use red shading or italics to convey approximate vs exact values, for instance.
+All information should be conveyed in a dedicated column.
+In this example, a column named MeasurementType taking values “Exact” and “Approximate” would be warranted.&lt;/p&gt;
+&lt;p&gt;How not to do it:
+&lt;img src=&#34;Rule6.png&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;an-ideal-example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;An ideal example&lt;/h2&gt;
+&lt;p&gt;Obey all of those rules and you should come up with something that looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;Goal.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;An Excel sheet like this can be loaded into R and visualised or analysed immediately with no relabelling of columns, no re-casting of data-types, no data rejigging.
+Make your data easier to analyse to get the analysis back quicker.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Fitting the Emax Model in R</title>
