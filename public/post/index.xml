@@ -13,6 +13,88 @@
     </image>
     
     <item>
+      <title>Praise for statistical developers</title>
+      <link>https://www.kristianbrock.com/post/praise-for-stats-developers/</link>
+      <pubDate>Thu, 18 Feb 2021 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/praise-for-stats-developers/</guid>
+      <description>
+
+
+&lt;p&gt;Statistics is hard.
+Computer programming is hard.
+To write accurate and reusable statistical software, you have to be good at both.
+And if you can do both, people should be high-fiving you in the street and gifting you Iberian hams.&lt;/p&gt;
+&lt;div id=&#34;all-hail-the-statistical-developers&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;All hail the statistical developers&lt;/h2&gt;
+&lt;p&gt;How many statisticians in their careers will need to fit a mixed-effects model? Almost all.
+How many will try different covariance structures or generalisations for binary and/or count data? Most.
+How many could write the code to fit such a model? Barely any.&lt;/p&gt;
+&lt;p&gt;I do not mean how many statisticians could use existing tools to fit such a model.
+I mean how many statisticians, starting from scratch, facing an empty text file, writing R or C++ or Python or Julia or whatever, would have a cat in hell’s chance of producing code to fit a mixed-effects model with all the bells and whistles?
+I wouldn’t.
+The mere idea makes me want to lay down.&lt;/p&gt;
+&lt;p&gt;Chatting with a colleague recently, he floated the idea that researchers need to be careful when they develop tools, because programmers are somehow perceived as less important than other researchers, like coding is the pursuit of those that cannot do proper research.
+Desk flesh.
+Code monkeys.
+Give them a giant bag of Cheesie Wotsits and stick on a Spiderman DVD and they will leave you alone.&lt;/p&gt;
+&lt;p&gt;And I agreed with him.
+There is career risk, I think, in being seen as a programmer / researcher rather than out-and-out researcher.
+Perhaps there is some faulty application of zero-sum logic that diminishes your perceived talents if you also understand &lt;a href=&#34;https://en.wikipedia.org/wiki/Object-oriented_programming&#34;&gt;object oriented programming&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But this should not be the case!
+Nobody has done more to improve R in the last 10 years than Hadley Wickham.
+R was, to be blunt, an awkward language to use.
+The &lt;a href=&#34;https://www.tidyverse.org/&#34;&gt;tidyverse&lt;/a&gt; has made modern R an actual joy to behold and something I recommend without qualification to every analyst.&lt;/p&gt;
+&lt;p&gt;Likewise, &lt;a href=&#34;https://mc-stan.org/&#34;&gt;Stan&lt;/a&gt; has completely changed the game in statistical modelling.
+The broad suite of packages in the Stan ecosystem has shoved us all miles forwards in statistical modelling, model checking, visualisation, model combination, probabilistic decision making, etc.
+I was so blown away when I realised the utterly bewildering array of statistical models that could be fit using &lt;a href=&#34;https://cran.r-project.org/web/packages/brms/index.html&#34;&gt;brms&lt;/a&gt; that I wanted to carry the author, Paul-Christian Bürkner, aloft on a makeshift throne, like C3PO and the Ewoks at the end of Return of the Jedi.&lt;/p&gt;
+&lt;p&gt;Looking at the R packages I have used in the last month, I have to say to the authors of
+&lt;a href=&#34;https://cran.r-project.org/package=dplyr&#34;&gt;dplyr&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=ggplot2&#34;&gt;ggplot2&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=rlang&#34;&gt;rlang&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=R6&#34;&gt;R6&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=httr&#34;&gt;httr&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=magrittr&#34;&gt;magrittr&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=glue&#34;&gt;glue&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=tibble&#34;&gt;tibble&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=purrr&#34;&gt;purrr&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=furrr&#34;&gt;furrr&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=tidyselect&#34;&gt;tidyselect&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=withr&#34;&gt;withr&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=Rcpp&#34;&gt;Rcpp&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=RcppParallel&#34;&gt;RcppParallel&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=rstan&#34;&gt;rstan&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=rstanarm&#34;&gt;rstanarm&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=loo&#34;&gt;loo&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=brms&#34;&gt;brms&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=testthat&#34;&gt;testthat&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=curl&#34;&gt;curl&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=jsonlite&#34;&gt;jsonlite&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=V8&#34;&gt;V8&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=tidybayes&#34;&gt;tidybayes&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=lattice&#34;&gt;lattice&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=here&#34;&gt;here&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=DoseFinding&#34;&gt;DoseFinding&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=patchwork&#34;&gt;patchwork&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=xtable&#34;&gt;xtable&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=gtsummary&#34;&gt;gtsummary&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=lme4&#34;&gt;lme4&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=binom&#34;&gt;binom&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=broom&#34;&gt;broom&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=broom.mixed&#34;&gt;broom.mixed&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=RBesT&#34;&gt;RBesT&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=tidyr&#34;&gt;tidyr&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=forcats&#34;&gt;forcats&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=lubridate&#34;&gt;lubridate&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=readxl&#34;&gt;readxl&lt;/a&gt;,
+&lt;a href=&#34;https://cran.r-project.org/package=pwr&#34;&gt;pwr&lt;/a&gt;, and
+&lt;a href=&#34;https://cran.r-project.org/package=devtools&#34;&gt;devtools&lt;/a&gt;
+that you truly are the best amongst us.
+I owe you a ham.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Sending me data in Excel</title>
       <link>https://www.kristianbrock.com/post/send-me-data/</link>
       <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>

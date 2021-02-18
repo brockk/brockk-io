@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: I am an academic early phase clincial trial statistician.
+bio: I am a clinical trial statistician that likes to use Bayes.
 education:
   courses:
   - course: PhD in Clinical Trial Methodology
@@ -17,6 +17,7 @@ email: "kristian.brock@gmail.com"
 interests:
 - Clinical Trials
 - Early Phase Methodology
+- Regression Modelling
 - Bayesian Statistics
 - R
 - Stan
@@ -48,4 +49,5 @@ user_groups:
 I am a biostatistician specialising in Bayesian and early-phase trial methodology at UCB. 
 I have experience in cancer and non-cancer clinical trials. 
 I have authored several methodology papers and conducted the analysis for several trial results publications. 
-By honourary association, I lead a MSc module on early phase trials at the University of Birmingham and supervise PhDs on trial methodology.
+I write statistical software.
+By honourary association, I contribute to a MSc module on early phase trials at the University of Birmingham and supervise PhDs on trial methodology.
