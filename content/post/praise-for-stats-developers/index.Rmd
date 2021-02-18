@@ -32,7 +32,7 @@ I mean how many statisticians, starting from scratch, facing an empty text file,
 I wouldn't.
 The mere idea makes me want to lay down.
 
-Chatting with a colleague recently, he floated the idea that researchers need to be careful when they develop tools, because programmers are somehow perceived as less important than other researchers, like coding is the pursuit of those that cannot do proper research.
+Chatting with a colleague, [Nico Kist](https://github.com/nicokist) recently, he floated the idea that researchers need to be careful when they develop tools, because programmers are somehow perceived as less important than other researchers, like coding is the pursuit of those that cannot do proper research.
 Desk flesh.
 Code monkeys. 
 Give them a giant bag of Cheesie Wotsits and stick on a Spiderman DVD and they will leave you alone.

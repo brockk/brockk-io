@@ -53,7 +53,7 @@ How many could write the code to fit such a model? Barely any.&lt;/p&gt;
 I mean how many statisticians, starting from scratch, facing an empty text file, writing R or C++ or Python or Julia or whatever, would have a cat in hell’s chance of producing code to fit a mixed-effects model with all the bells and whistles?
 I wouldn’t.
 The mere idea makes me want to lay down.&lt;/p&gt;
-&lt;p&gt;Chatting with a colleague recently, he floated the idea that researchers need to be careful when they develop tools, because programmers are somehow perceived as less important than other researchers, like coding is the pursuit of those that cannot do proper research.
+&lt;p&gt;Chatting with a colleague, &lt;a href=&#34;https://github.com/nicokist&#34;&gt;Nico Kist&lt;/a&gt; recently, he floated the idea that researchers need to be careful when they develop tools, because programmers are somehow perceived as less important than other researchers, like coding is the pursuit of those that cannot do proper research.
 Desk flesh.
 Code monkeys.
 Give them a giant bag of Cheesie Wotsits and stick on a Spiderman DVD and they will leave you alone.&lt;/p&gt;
