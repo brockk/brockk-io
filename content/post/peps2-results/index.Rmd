@@ -15,7 +15,7 @@ projects:
 date: '2020-04-06'
 lastmod: '2020-04-06T10:02:56Z'
 draft: false
-featured: yes
+featured: no
 image:
   caption: 'Photo by [Sara Bakhshi on Unsplash](https://unsplash.com/photos/_-DIX0c_Q1Y)'
   focal_point: ''

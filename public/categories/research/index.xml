@@ -5,12 +5,143 @@
     <link>https://www.kristianbrock.com/categories/research/</link>
       <atom:link href="https://www.kristianbrock.com/categories/research/index.xml" rel="self" type="application/rss+xml" />
     <description>Research</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 01 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 26 Feb 2024 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://www.kristianbrock.com/img/icon-192.png</url>
       <title>Research</title>
       <link>https://www.kristianbrock.com/categories/research/</link>
     </image>
+    
+    <item>
+      <title>Comparing dose-finding designs by simulation</title>
+      <link>https://www.kristianbrock.com/post/comparing-dosefinding-simulations/</link>
+      <pubDate>Mon, 26 Feb 2024 00:00:00 +0000</pubDate>
+      <guid>https://www.kristianbrock.com/post/comparing-dosefinding-simulations/</guid>
+      <description>
+&lt;script src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Mike Sweeting, Dan Slade, Dan Jackson and I (all of AstraZeneca) recently published a preprint &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-sweeting2023&#34;&gt;Sweeting et al. 2024&lt;/a&gt;)&lt;/span&gt; describing a simple method to improve efficiency when comparing dose-finding designs by simulation.
+The preprint is available &lt;a href=&#34;https://arxiv.org/abs/2402.15460&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;in-a-nutshell&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;In a nutshell&lt;/h1&gt;
+&lt;p&gt;Typically, when we investigate the performance of a dose-finding design, we run simulations.
+If we are comparing several different designs (or variants of a design), we generally run simulations for each candidate design separately.
+We tend to do this because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;this is how it is implemented in software;&lt;/li&gt;
+&lt;li&gt;different designs are implemented in different packages;&lt;/li&gt;
+&lt;li&gt;it might not strike us to do it differently.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However, this is inefficient.
+By running separate batches of simulations for different designs, we are effectively comparing different designs using different patients.
+It would be much more efficient to use the same simulated patients on each candidate design.
+Doing so would reduce the Monte Carlo (random) error inherent in using a finite number of iterations to estimate a limiting value.&lt;/p&gt;
+&lt;p&gt;The trouble is, dose-finding designs are &lt;em&gt;adaptive&lt;/em&gt;, meaning some parameter of the trial (in this instance, the dose delivered and therefore the associated toxicity and efficacy probabilities) is dependent on the outcomes observed in other patients in the trial.
+Our solution is to effectively simulate all possible binary toxicity (and efficacy) outcomes for a patient in advance by using latent uniform variables on &lt;span class=&#34;math inline&#34;&gt;\((0, 1)\)&lt;/span&gt;.
+These can be interpreted as patient-level propensities.&lt;/p&gt;
+&lt;p&gt;To illustrate, imagine a patient’s uniform toxicity propensity is sampled to be &lt;span class=&#34;math inline&#34;&gt;\(u_1 = 0.36\)&lt;/span&gt;.
+This patient would be regarded as experiencing toxicity when treated at any dose with an associated toxicity probability exceeding 0.36.
+This allows the same patient to behave consistently when having its dose selected by different designs in simulation.
+The method works for toxicity-seeking designs like CRM, mTPI and BOIN; and also co-primary efficacy-toxicity designs like EffTox and BOIN12.
+Full details are in the paper.&lt;/p&gt;
+&lt;p&gt;The idea of using latent uniform variables to represent propensity to toxicity events has been proposed in different dose-finding contexts &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-o2002non&#34;&gt;O’Quigley, Paoletti, and Maccario 2002&lt;/a&gt;; &lt;a href=&#34;#ref-cheung2014simple&#34;&gt;Cheung 2014&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-implementation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Code implementation&lt;/h1&gt;
+&lt;p&gt;Our proposal is implemented in v0.1.8 of the &lt;code&gt;escalation&lt;/code&gt; package &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-escalation&#34;&gt;Brock, Slade, and Sweeting 2023&lt;/a&gt;)&lt;/span&gt;, now uploaded &lt;a href=&#34;https://cran.r-project.org/package=escalation&#34;&gt;to CRAN&lt;/a&gt;.
+&lt;code&gt;escalation&lt;/code&gt; implements many different dose-finding designs with optional behaviour modifiers, making it perfect for comparing the performance of competing designs.&lt;/p&gt;
+&lt;p&gt;To illustrate, let us reproduce an example from the package vignettes, comparing the behaviour of the perennial 3+3 design and two variants of the CRM in a five-dose scenario.
+We start by defining the competing designs in a list with convenient names:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(escalation)
+
+target &amp;lt;- 0.25
+skeleton &amp;lt;- c(0.05, 0.1, 0.25, 0.4, 0.6)
+
+designs &amp;lt;- 
+  list(
+    &amp;quot;3+3&amp;quot; = get_three_plus_three(num_doses = 5),
+    &amp;quot;CRM&amp;quot; = get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;%
+      stop_at_n(n = 12),
+    &amp;quot;Stopping CRM&amp;quot; = get_dfcrm(skeleton = skeleton, target = target) %&amp;gt;%
+      stop_at_n(n = 12) %&amp;gt;%
+      stop_when_too_toxic(dose = 1, tox_threshold = 0.35, confidence = 0.8)
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we will compare three designs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;3+3;&lt;/li&gt;
+&lt;li&gt;CRM without a toxicity stopping rule;&lt;/li&gt;
+&lt;li&gt;and an otherwise identical CRM design with a toxicity stopping rule.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The names we provide will be reused.&lt;/p&gt;
+&lt;p&gt;For illustration we use only a modest number of replicates.
+Feel free to investigate more replicates yourself.
+We compare different designs using the &lt;code&gt;simulate_compare&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_sims &amp;lt;- 100
+true_prob_tox &amp;lt;- c(0.12, 0.27, 0.44, 0.53, 0.57)
+
+sims &amp;lt;- simulate_compare(
+  designs, 
+  num_sims = num_sims, 
+  true_prob_tox = true_prob_tox
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Running 3+3 
+## Running CRM 
+## Running Stopping CRM&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We provide a convenient function to quickly visualise how the probability of selecting each dose in each design evolved as the simulations progressed.
+The dose-levels are represented in the columns of this plot:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(1:2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;convergence_plot(sims)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 2, 3 and 4.
+The differences between the two CRM variants are very small.
+We can be more precise by formally contrasting the probability of selecting each dose for each pair of designs:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
+library(ggplot2)
+
+as_tibble(sims) %&amp;gt;% 
+  filter(n %% 5 == 0) %&amp;gt;%
+  ggplot(aes(x = n, y = delta)) +
+  geom_point(size = 0.4) +
+  geom_linerange(aes(ymin = delta_l, ymax = delta_u)) +
+  geom_hline(yintercept = 0, linetype = &amp;quot;dashed&amp;quot;, col = &amp;quot;red&amp;quot;) +
+  labs(x = &amp;quot;iteration&amp;quot;) +
+  facet_grid(comparison ~ dose,
+             labeller = labeller(
+               .rows = label_both,
+               .cols = label_both)
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;All the work above is done by &lt;code&gt;as_tibble(sims)&lt;/code&gt;.
+The rest of the code is just plotting.&lt;/p&gt;
+&lt;p&gt;The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
+Change the &lt;code&gt;alpha = 0.05&lt;/code&gt; parameter when calling &lt;code&gt;as_tibble(sims)&lt;/code&gt; to get confident intervals for a different significance level.
+Despite the small number of simulated iterates, we see that the two CRM variants are significantly more likely to recommend dose-level 2.&lt;/p&gt;
+&lt;p&gt;We see that, even with the very small sample size of 50 simulated trials, the CRM designs are significantly more likely to recommend dose 3 than the 3+3 design.
+In contrast, in this scenario there is very little difference at all between the two CRM variants.&lt;/p&gt;
+&lt;p&gt;We also provide functions to get and set the patient-level propensities, allowing comparison and reproduction in other software packages.
+Check out the “Comparing dose-escalation designs by simulation” vignette on the &lt;a href=&#34;https://cran.r-project.org/package=escalation&#34;&gt;CRAN package page&lt;/a&gt; and the &lt;a href=&#34;https://brockk.github.io/escalation/&#34;&gt;package documentation site&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;references&#34; class=&#34;section level1 unnumbered&#34;&gt;
+&lt;h1&gt;References&lt;/h1&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-escalation&#34; class=&#34;csl-entry&#34;&gt;
+Brock, Kristian, Daniel Slade, and Michael Sweeting. 2023. &lt;em&gt;Escalation: Modular Approach to Dose Finding Clinical Trials&lt;/em&gt;. &lt;a href=&#34;https://cran.r-project.org/package=escalation&#34;&gt;https://cran.r-project.org/package=escalation&lt;/a&gt;.
+&lt;/div&gt;
+&lt;div id=&#34;ref-cheung2014simple&#34; class=&#34;csl-entry&#34;&gt;
+Cheung, Ying Kuen. 2014. &lt;span&gt;“Simple Benchmark for Complex Dose Finding Studies.”&lt;/span&gt; &lt;em&gt;Biometrics&lt;/em&gt; 70 (2): 389–97.
+&lt;/div&gt;
+&lt;div id=&#34;ref-o2002non&#34; class=&#34;csl-entry&#34;&gt;
+O’Quigley, John, Xavier Paoletti, and Jean Maccario. 2002. &lt;span&gt;“Non-Parametric Optimal Design in Dose Finding Studies.”&lt;/span&gt; &lt;em&gt;Biostatistics&lt;/em&gt; 3 (1): 51–56.
+&lt;/div&gt;
+&lt;div id=&#34;ref-sweeting2023&#34; class=&#34;csl-entry&#34;&gt;
+Sweeting, Michael, Daniel Slade, Daniel Jackson, and Kristian Brock. 2024. &lt;span&gt;“Potential Outcome Simulation for Efficient Head-to-Head Comparison of Adaptive Dose-Finding Designs.”&lt;/span&gt; &lt;em&gt;arXiv Preprint arXiv:2402.15460&lt;/em&gt;. &lt;a href=&#34;https://arxiv.org/abs/2402.15460&#34;&gt;https://arxiv.org/abs/2402.15460&lt;/a&gt;.
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Sending me data in Excel</title>
@@ -1431,7 +1562,7 @@ I would take the list and fill it out for each trial to ensure I had all the rig
 &lt;h3 id=&#34;1-doses-under-investigation&#34;&gt;1. Doses under investigation?&lt;/h3&gt;
 &lt;p&gt;Put simply, which doses are you investigating?
 And how many are there?
-Let&#39;s refer to the number of doses as $n$.
+Let&amp;rsquo;s refer to the number of doses as $n$.
 For the plain vanilla CRM, the doses should be fully orderable, meaning it should be possible to unambiguously state that $a &amp;gt; b$ or $a &amp;lt; b$ for each pair of doses $a, b$.
 Incidentally, this is also true of the 3+3.
 It is easy to inadvertently violate the &lt;em&gt;total orderability&lt;/em&gt; rule when you have combinations (e.g. is 10mg A + 10mb B a greater or lesser dose than 5mg A + 20mg B?) or when you are varying doses and frequencies (e.g. is 20mg of A each day a greater or lesser dose than 100mg of A once per week?).&lt;/p&gt;

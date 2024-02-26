@@ -111,7 +111,7 @@ I recall using Monte Carlo integration to resolve six-dimensional integrals to e
 In fact, there were probably many better ways.
 However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
 This manuscript is my first sole-author attempt at research.
-It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
+It was particularly pleasing to implement James Wason and Shaun Seaman&amp;rsquo;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
 &lt;code&gt;trial&lt;/code&gt; is on CRAN.&lt;/p&gt;
 </description>
     </item>

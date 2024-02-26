@@ -1,7 +1,7 @@
 ---
 authors:
 - admin
-bio: I am a clinical trial statistician that likes to use Bayes.
+bio: I am a clinical trial methodology statistician that likes to use Bayesian statistics.
 education:
   courses:
   - course: PhD in Clinical Trial Methodology
@@ -16,17 +16,16 @@ education:
 email: "kristian.brock@gmail.com"
 interests:
 - Clinical Trials
-- Early Phase Methodology
-- Regression Modelling
 - Bayesian Statistics
+- Trial Methodology
 - R
 - Stan
 name: Kristian Brock
 organizations:
-- name: UCB
+- name: AstraZeneca
 - name: University of Birmingham
   url: ""
-role: Principal Biostatistician
+role: Statistical Consultant
 social:
 - icon: envelope
   icon_pack: fas
@@ -46,8 +45,8 @@ user_groups:
 - Visitors
 ---
 
-I am a biostatistician specialising in Bayesian and early-phase trial methodology at UCB. 
+I am a biostatistician specialising in Bayesian trial methodology at AstraZeneca. 
 I have experience in cancer and non-cancer clinical trials. 
 I have authored several methodology papers and conducted the analysis for several trial results publications. 
 I write statistical software.
-By honourary association, I contribute to a MSc module on early phase trials at the University of Birmingham and supervise PhDs on trial methodology.
+By honourary association, I supervise trial methods research at the Cancer Research UK Clinical Trials Unit at the University of Birmingham.

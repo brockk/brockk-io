@@ -73,7 +73,7 @@ Naturally, this suggests a Bryant &amp;amp; Day optimal design.
 However, published data in performance status 0 &amp;amp; 1 NSCLC patients showed that the PD-L1 tumour proportion score biomarker was strongly predictive of response.
 There was also evidence that first-line patients did better than subsequent-line patients.
 We expected each of these variables to remain predictive in the performance status 2 population and wanted to stratify the analysis by these variables.
-Unfortunately, Bryant &amp;amp; Day&#39;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
+Unfortunately, Bryant &amp;amp; Day&amp;rsquo;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
 &lt;p&gt;I happened to be working on a dose-finding trial at the time that used the EffTox design of Thall &amp;amp; Cook (2004) to appraise joint efficacy and toxicity rates at different doses of experimental agents.
 It struck me on a cycle home that the EffTox design could be adjusted with variables reflecting PD-L1 and line-of-therapy status in place of dose to study our co-primary outcomes whilst adjusting for our putative predictive factors.
 I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the trial outcomes.&lt;/p&gt;
@@ -95,7 +95,7 @@ Bayesian models are relatively abundant in early phase clinical trials where inf
 &lt;li&gt;the Contimual Reassessment Method (CMR) for toxicity-based dose-finding;&lt;/li&gt;
 &lt;li&gt;the time-to-event CRM for late-onset toxicity in dose-finding;&lt;/li&gt;
 &lt;li&gt;the EffTox for toxicity- and efficacy-based dose-finding;&lt;/li&gt;
-&lt;li&gt;Wason &amp;amp; Seaman&#39;s Augmented Binary method for fusing continuous and binary outcomes in phase II;&lt;/li&gt;
+&lt;li&gt;Wason &amp;amp; Seaman&amp;rsquo;s Augmented Binary method for fusing continuous and binary outcomes in phase II;&lt;/li&gt;
 &lt;li&gt;a hierarchical model of binary responses on related subgroups;&lt;/li&gt;
 &lt;li&gt;and more.&lt;/li&gt;
 &lt;/ul&gt;

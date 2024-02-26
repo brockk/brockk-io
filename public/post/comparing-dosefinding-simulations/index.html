@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.6.3">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Kristian Brock">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="A simple, efficient method for comparing dose-finding designs described in preprint and implemented in escalation v0.1.8">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#4caf50">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157979306-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           document.location = url;
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target);  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-157979306-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/">
+
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@CatchTwentyToo">
+  <meta property="twitter:creator" content="@CatchTwentyToo">
+  
+  <meta property="og:site_name" content="Kristian Brock">
+  <meta property="og:url" content="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/">
+  <meta property="og:title" content="Comparing dose-finding designs by simulation | Kristian Brock">
+  <meta property="og:description" content="A simple, efficient method for comparing dose-finding designs described in preprint and implemented in escalation v0.1.8"><meta property="og:image" content="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/featured.jpg">
+  <meta property="twitter:image" content="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/featured.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2024-02-26T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2024-02-26T13:10:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.kristianbrock.com/post/comparing-dosefinding-simulations/"
+  },
+  "headline": "Comparing dose-finding designs by simulation",
+  
+  "image": [
+    "https://www.kristianbrock.com/post/comparing-dosefinding-simulations/featured.jpg"
+  ],
+  
+  "datePublished": "2024-02-26T00:00:00Z",
+  "dateModified": "2024-02-26T13:10:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Kristian Brock"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kristian Brock",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.kristianbrock.com/img/icon-512.png"
+    }
+  },
+  "description": "A simple, efficient method for comparing dose-finding designs described in preprint and implemented in escalation v0.1.8"
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Comparing dose-finding designs by simulation | Kristian Brock</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Kristian Brock</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/courses/"><span>Teaching</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact Me</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item">
+        <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1>Comparing dose-finding designs by simulation</h1>
+
+  
+  <p class="page-subtitle">A simple, efficient method for comparing dose-finding designs described in preprint and implemented in escalation v0.1.8</p>
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  
+  <span><a href="/authors/admin/">Kristian Brock</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+          Last updated on
+      
+    
+    Feb 26, 2024
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/research/">Research</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 480px;">
+  <div style="position: relative">
+    <img src="/post/comparing-dosefinding-simulations/featured_hub5a7d769679b7fed990db68190dbce14_204707_720x0_resize_q90_lanczos.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Photo by : <a href="https://unsplash.com/photos/two-cars-in-front-of-shutter-doors-8Zt0xOOK4nI">Dietmar Becker on Unsplash</a></span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>Mike Sweeting, Dan Slade, Dan Jackson and I (all of AstraZeneca) recently published a preprint <span class="citation">(<a href="#ref-sweeting2023">Sweeting et al. 2024</a>)</span> describing a simple method to improve efficiency when comparing dose-finding designs by simulation.
+The preprint is available <a href="https://arxiv.org/abs/2402.15460">here</a>.</p>
+<div id="in-a-nutshell" class="section level1">
+<h1>In a nutshell</h1>
+<p>Typically, when we investigate the performance of a dose-finding design, we run simulations.
+If we are comparing several different designs (or variants of a design), we generally run simulations for each candidate design separately.
+We tend to do this because:</p>
+<ul>
+<li>this is how it is implemented in software;</li>
+<li>different designs are implemented in different packages;</li>
+<li>it might not strike us to do it differently.</li>
+</ul>
+<p>However, this is inefficient.
+By running separate batches of simulations for different designs, we are effectively comparing different designs using different patients.
+It would be much more efficient to use the same simulated patients on each candidate design.
+Doing so would reduce the Monte Carlo (random) error inherent in using a finite number of iterations to estimate a limiting value.</p>
+<p>The trouble is, dose-finding designs are <em>adaptive</em>, meaning some parameter of the trial (in this instance, the dose delivered and therefore the associated toxicity and efficacy probabilities) is dependent on the outcomes observed in other patients in the trial.
+Our solution is to effectively simulate all possible binary toxicity (and efficacy) outcomes for a patient in advance by using latent uniform variables on <span class="math inline">\((0, 1)\)</span>.
+These can be interpreted as patient-level propensities.</p>
+<p>To illustrate, imagine a patient’s uniform toxicity propensity is sampled to be <span class="math inline">\(u_1 = 0.36\)</span>.
+This patient would be regarded as experiencing toxicity when treated at any dose with an associated toxicity probability exceeding 0.36.
+This allows the same patient to behave consistently when having its dose selected by different designs in simulation.
+The method works for toxicity-seeking designs like CRM, mTPI and BOIN; and also co-primary efficacy-toxicity designs like EffTox and BOIN12.
+Full details are in the paper.</p>
+<p>The idea of using latent uniform variables to represent propensity to toxicity events has been proposed in different dose-finding contexts <span class="citation">(<a href="#ref-o2002non">O’Quigley, Paoletti, and Maccario 2002</a>; <a href="#ref-cheung2014simple">Cheung 2014</a>)</span>.</p>
+</div>
+<div id="code-implementation" class="section level1">
+<h1>Code implementation</h1>
+<p>Our proposal is implemented in v0.1.8 of the <code>escalation</code> package <span class="citation">(<a href="#ref-escalation">Brock, Slade, and Sweeting 2023</a>)</span>, now uploaded <a href="https://cran.r-project.org/package=escalation">to CRAN</a>.
+<code>escalation</code> implements many different dose-finding designs with optional behaviour modifiers, making it perfect for comparing the performance of competing designs.</p>
+<p>To illustrate, let us reproduce an example from the package vignettes, comparing the behaviour of the perennial 3+3 design and two variants of the CRM in a five-dose scenario.
+We start by defining the competing designs in a list with convenient names:</p>
+<pre class="r"><code>library(escalation)
+
+target &lt;- 0.25
+skeleton &lt;- c(0.05, 0.1, 0.25, 0.4, 0.6)
+
+designs &lt;- 
+  list(
+    &quot;3+3&quot; = get_three_plus_three(num_doses = 5),
+    &quot;CRM&quot; = get_dfcrm(skeleton = skeleton, target = target) %&gt;%
+      stop_at_n(n = 12),
+    &quot;Stopping CRM&quot; = get_dfcrm(skeleton = skeleton, target = target) %&gt;%
+      stop_at_n(n = 12) %&gt;%
+      stop_when_too_toxic(dose = 1, tox_threshold = 0.35, confidence = 0.8)
+  )</code></pre>
+<p>Here we will compare three designs:</p>
+<ul>
+<li>3+3;</li>
+<li>CRM without a toxicity stopping rule;</li>
+<li>and an otherwise identical CRM design with a toxicity stopping rule.</li>
+</ul>
+<p>The names we provide will be reused.</p>
+<p>For illustration we use only a modest number of replicates.
+Feel free to investigate more replicates yourself.
+We compare different designs using the <code>simulate_compare</code> function:</p>
+<pre class="r"><code>num_sims &lt;- 100
+true_prob_tox &lt;- c(0.12, 0.27, 0.44, 0.53, 0.57)
+
+sims &lt;- simulate_compare(
+  designs, 
+  num_sims = num_sims, 
+  true_prob_tox = true_prob_tox
+)</code></pre>
+<pre><code>## Running 3+3 
+## Running CRM 
+## Running Stopping CRM</code></pre>
+<p>We provide a convenient function to quickly visualise how the probability of selecting each dose in each design evolved as the simulations progressed.
+The dose-levels are represented in the columns of this plot:</p>
+<pre class="r"><code>plot(1:2)</code></pre>
+<p><img src="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-3-1.png" width="720" /></p>
+<pre class="r"><code>convergence_plot(sims)</code></pre>
+<p><img src="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-4-1.png" width="720" /></p>
+<p>We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 2, 3 and 4.
+The differences between the two CRM variants are very small.
+We can be more precise by formally contrasting the probability of selecting each dose for each pair of designs:</p>
+<pre class="r"><code>library(dplyr)
+library(ggplot2)
+
+as_tibble(sims) %&gt;% 
+  filter(n %% 5 == 0) %&gt;%
+  ggplot(aes(x = n, y = delta)) +
+  geom_point(size = 0.4) +
+  geom_linerange(aes(ymin = delta_l, ymax = delta_u)) +
+  geom_hline(yintercept = 0, linetype = &quot;dashed&quot;, col = &quot;red&quot;) +
+  labs(x = &quot;iteration&quot;) +
+  facet_grid(comparison ~ dose,
+             labeller = labeller(
+               .rows = label_both,
+               .cols = label_both)
+  )</code></pre>
+<p><img src="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>All the work above is done by <code>as_tibble(sims)</code>.
+The rest of the code is just plotting.</p>
+<p>The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
+Change the <code>alpha = 0.05</code> parameter when calling <code>as_tibble(sims)</code> to get confident intervals for a different significance level.
+Despite the small number of simulated iterates, we see that the two CRM variants are significantly more likely to recommend dose-level 2.</p>
+<p>We see that, even with the very small sample size of 50 simulated trials, the CRM designs are significantly more likely to recommend dose 3 than the 3+3 design.
+In contrast, in this scenario there is very little difference at all between the two CRM variants.</p>
+<p>We also provide functions to get and set the patient-level propensities, allowing comparison and reproduction in other software packages.
+Check out the “Comparing dose-escalation designs by simulation” vignette on the <a href="https://cran.r-project.org/package=escalation">CRAN package page</a> and the <a href="https://brockk.github.io/escalation/">package documentation site</a>.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-escalation" class="csl-entry">
+Brock, Kristian, Daniel Slade, and Michael Sweeting. 2023. <em>Escalation: Modular Approach to Dose Finding Clinical Trials</em>. <a href="https://cran.r-project.org/package=escalation">https://cran.r-project.org/package=escalation</a>.
+</div>
+<div id="ref-cheung2014simple" class="csl-entry">
+Cheung, Ying Kuen. 2014. <span>“Simple Benchmark for Complex Dose Finding Studies.”</span> <em>Biometrics</em> 70 (2): 389–97.
+</div>
+<div id="ref-o2002non" class="csl-entry">
+O’Quigley, John, Xavier Paoletti, and Jean Maccario. 2002. <span>“Non-Parametric Optimal Design in Dose Finding Studies.”</span> <em>Biostatistics</em> 3 (1): 51–56.
+</div>
+<div id="ref-sweeting2023" class="csl-entry">
+Sweeting, Michael, Daniel Slade, Daniel Jackson, and Kristian Brock. 2024. <span>“Potential Outcome Simulation for Efficient Head-to-Head Comparison of Adaptive Dose-Finding Designs.”</span> <em>arXiv Preprint arXiv:2402.15460</em>. <a href="https://arxiv.org/abs/2402.15460">https://arxiv.org/abs/2402.15460</a>.
+</div>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/dosefinding/">DoseFinding</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=https://www.kristianbrock.com/post/comparing-dosefinding-simulations/&amp;text=Comparing%20dose-finding%20designs%20by%20simulation" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=https://www.kristianbrock.com/post/comparing-dosefinding-simulations/&amp;t=Comparing%20dose-finding%20designs%20by%20simulation" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Comparing%20dose-finding%20designs%20by%20simulation&amp;body=https://www.kristianbrock.com/post/comparing-dosefinding-simulations/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.kristianbrock.com/post/comparing-dosefinding-simulations/&amp;title=Comparing%20dose-finding%20designs%20by%20simulation" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Comparing%20dose-finding%20designs%20by%20simulation%20https://www.kristianbrock.com/post/comparing-dosefinding-simulations/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=https://www.kristianbrock.com/post/comparing-dosefinding-simulations/&amp;title=Comparing%20dose-finding%20designs%20by%20simulation" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      <img class="portrait mr-3" src="https://s.gravatar.com/avatar/ba2fdaa5d7c978ce64a39a93043d05ca?s=200')" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="https://www.kristianbrock.com/">Kristian Brock</a></h5>
+      <h6 class="card-subtitle">Statistical Consultant</h6>
+      <p class="card-text">I am a clinical trial methodology statistician that likes to use Bayesian statistics.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/CatchTwentyToo" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.co.uk/citations?user=zoh03M4AAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/brockk/" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/post/new-phase1-escalation-methods/">New phase I methods in escalation</a></li>
+      
+      <li><a href="/post/trialr-and-escalation/">trialr and escalation</a></li>
+      
+      <li><a href="/post/emax-intro/">Fitting the Emax Model in R</a></li>
+      
+      <li><a href="/project/dosefindingdata/">Real data on lots of dose-finding trials</a></li>
+      
+      <li><a href="/post/dose-finding-trial-sizes/">Sample sizes in phase I</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.3/mermaid.min.js" integrity="" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js" integrity="sha256-1zu+3BnLYV9LdiY85uXMzii3bdrkelyp37e0ZyTAQh0=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.600a2e440c16093e23e26e90951c4d4b.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -30,7 +30,7 @@ I would take the list and fill it out for each trial to ensure I had all the rig
 &lt;h3 id=&#34;1-doses-under-investigation&#34;&gt;1. Doses under investigation?&lt;/h3&gt;
 &lt;p&gt;Put simply, which doses are you investigating?
 And how many are there?
-Let&#39;s refer to the number of doses as $n$.
+Let&amp;rsquo;s refer to the number of doses as $n$.
 For the plain vanilla CRM, the doses should be fully orderable, meaning it should be possible to unambiguously state that $a &amp;gt; b$ or $a &amp;lt; b$ for each pair of doses $a, b$.
 Incidentally, this is also true of the 3+3.
 It is easy to inadvertently violate the &lt;em&gt;total orderability&lt;/em&gt; rule when you have combinations (e.g. is 10mg A + 10mb B a greater or lesser dose than 5mg A + 20mg B?) or when you are varying doses and frequencies (e.g. is 20mg of A each day a greater or lesser dose than 100mg of A once per week?).&lt;/p&gt;

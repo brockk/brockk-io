@@ -61,7 +61,7 @@ I recall using Monte Carlo integration to resolve six-dimensional integrals to e
 In fact, there were probably many better ways.
 However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
 This manuscript is my first sole-author attempt at research.
-It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
+It was particularly pleasing to implement James Wason and Shaun Seaman&amp;rsquo;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
 &lt;code&gt;trial&lt;/code&gt; is on CRAN.&lt;/p&gt;
 </description>
     </item>
@@ -73,7 +73,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s aug
       <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
-The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
+The topic of the day was the trials community&amp;rsquo;s over-reliance on rule-based dose-finding methods like 3+3.
 This tutorial paper was produced by a group of attendees to promote model-based methods.&lt;/p&gt;
 </description>
     </item>

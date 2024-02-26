@@ -67,12 +67,21 @@ date_format = "Jan 2006"
 
 
 [[experience]]
-  title = "Principal Biostatistician"
+  title = "Statistical Lead"
   company = "UCB"
   company_url = ""
   location = "Slough, UK"
   date_start = "2020-07-01"
+  date_end = "2023-07-01"
+  description = """I worked at UCB as a statistical methodologist in their Centre for Excellence in Statistical Innovation."""
+
+[[experience]]
+  title = "Statistical Consultant"
+  company = "AstraZeneca"
+  company_url = ""
+  location = "Cambridge, UK"
+  date_start = "2023-08-31"
   date_end = ""
-  description = """I joined UCB as a statistical methodologist in their Centre for Excellence in Statistical Innovation."""
+  description = """I work in a statistical innovation team at AstraZeneca."""
 
 +++

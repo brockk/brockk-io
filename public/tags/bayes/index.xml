@@ -18,13 +18,14 @@
       <pubDate>Mon, 06 Apr 2020 00:00:00 +0000</pubDate>
       <guid>https://www.kristianbrock.com/post/peps2-results/</guid>
       <description>
+&lt;script src=&#34;https://www.kristianbrock.com/post/peps2-results/index_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;div id=&#34;summary&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Summary&lt;/h1&gt;
 &lt;p&gt;PePS2 is a phase II clinical trial of pembrolizumab in non-small-cell lung cancer (NSCLC) patients with a performance status of 2.
-Trial results were recently published in Lancet Respiratory Medicine &lt;span class=&#34;citation&#34;&gt;(Middleton et al. 2020)&lt;/span&gt;.
-Previous trials in the KEYNOTE series &lt;span class=&#34;citation&#34;&gt;(Garon et al. 2015; Herbst et al. 2016)&lt;/span&gt; had showed that pembrolizumab was efficacious in NSCLC patients.&lt;/p&gt;
+Trial results were recently published in Lancet Respiratory Medicine &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-middleton_pembrolizumab_2020&#34; role=&#34;doc-biblioref&#34;&gt;Middleton et al. 2020&lt;/a&gt;)&lt;/span&gt;.
+Previous trials in the KEYNOTE series &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-Garon2015&#34; role=&#34;doc-biblioref&#34;&gt;Garon et al. 2015&lt;/a&gt;; &lt;a href=&#34;#ref-Herbst2016&#34; role=&#34;doc-biblioref&#34;&gt;Herbst et al. 2016&lt;/a&gt;)&lt;/span&gt; had showed that pembrolizumab was efficacious in NSCLC patients.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;the-gap-in-the-evidence&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;The gap in the evidence&lt;/h1&gt;
@@ -38,8 +39,8 @@ It is an ordered variable with five levels reflecting greater levels of disabili
 &lt;li&gt;4 – patients are bedbound.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;We will say that a patient with a peformance status of 2 is &lt;em&gt;PS2&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;The KEYNOTE-001 trial &lt;span class=&#34;citation&#34;&gt;(Garon et al. 2015)&lt;/span&gt; showed that pembrolizumab was efficacious in NSCLC patients.
-The subsequent KEYNOTE-010 trial &lt;span class=&#34;citation&#34;&gt;(Herbst et al. 2016)&lt;/span&gt; showed that pembrolizumab was superior to docetaxel chemotherapy.
+&lt;p&gt;The KEYNOTE-001 trial &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-Garon2015&#34; role=&#34;doc-biblioref&#34;&gt;Garon et al. 2015&lt;/a&gt;)&lt;/span&gt; showed that pembrolizumab was efficacious in NSCLC patients.
+The subsequent KEYNOTE-010 trial &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-Herbst2016&#34; role=&#34;doc-biblioref&#34;&gt;Herbst et al. 2016&lt;/a&gt;)&lt;/span&gt; showed that pembrolizumab was superior to docetaxel chemotherapy.
 However, it is doubtful that a PS2 patient would be strong enough to tolerate chemotherapy.
 Hence, to maintain equipoise in KEYNOTE-010, the trialists restricted randomisation to PS0 and PS1 patients.
 That trial was successful and pembrolizumab was licenced in NSCLC.
@@ -51,17 +52,17 @@ However, by virtue of their probable unsuitablility to chemotherapy, PS2 patient
 &lt;p&gt;The PePS2 trial sought to address this gap in the evidence.&lt;/p&gt;
 &lt;div id=&#34;stratification&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Stratification&lt;/h2&gt;
-&lt;p&gt;In the KEYNOTE-001 trial, &lt;span class=&#34;citation&#34;&gt;Garon et al. (2015)&lt;/span&gt; had introduced the programmed death ligand 1 tumour proportion score biomarker (PD-L1 TPS, or simply TPS), being the percentage of cells in a tumour biopsy that expressed PD-L1.
+&lt;p&gt;In the KEYNOTE-001 trial, &lt;span class=&#34;citation&#34;&gt;Garon et al. (&lt;a href=&#34;#ref-Garon2015&#34; role=&#34;doc-biblioref&#34;&gt;2015&lt;/a&gt;)&lt;/span&gt; had introduced the programmed death ligand 1 tumour proportion score biomarker (PD-L1 TPS, or simply TPS), being the percentage of cells in a tumour biopsy that expressed PD-L1.
 Pembrolizumab is a PD-L1 blockade drug so it was reasonably hypothesised that the treatment would work best in those patients whose tumours expressed lots of PD-L1.
 The KEYNOTE-001 showed this to be precisely the case.&lt;/p&gt;
 &lt;p&gt;KEYNOTE-001 also showed that first-line patients (those patients who had received no previous anti-cancer therapy) achieved outcomes that appeared to be slightly different to patients receiving pembrolizumab as a subsequent-line therapy.&lt;/p&gt;
 &lt;p&gt;In PePS2, we sought to evaluate the effects of pembrolizumab on co-primary efficacy and toxicity outcomes whilst stratifying the analysis for these baseline covariates.
-I developed a statistical design for this purpose, described &lt;a href=&#34;https://www.kristianbrock.com/publication/peps2-design/&#34;&gt;here&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(Brock et al. 2019)&lt;/span&gt;.&lt;/p&gt;
+I developed a statistical design for this purpose, described &lt;a href=&#34;https://www.kristianbrock.com/publication/peps2-design/&#34;&gt;here&lt;/a&gt; &lt;span class=&#34;citation&#34;&gt;(&lt;a href=&#34;#ref-brock_phase_2019&#34; role=&#34;doc-biblioref&#34;&gt;Brock et al. 2019&lt;/a&gt;)&lt;/span&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;results&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Results&lt;/h2&gt;
 &lt;p&gt;On 19-March-2020, the &lt;a href=&#34;https://www.thelancet.com/journals/lanres/article/PIIS2213-2600(20)30033-3/fulltext&#34;&gt;results were published&lt;/a&gt; in Lancet Respiratory Medicine.
-&lt;span class=&#34;citation&#34;&gt;Alessi and Awad (2020)&lt;/span&gt; provided an accompanying commentary of the data in that same journal.&lt;/p&gt;
+&lt;span class=&#34;citation&#34;&gt;Alessi and Awad (&lt;a href=&#34;#ref-alessi_immunotherapy_2020&#34; role=&#34;doc-biblioref&#34;&gt;2020&lt;/a&gt;)&lt;/span&gt; provided an accompanying commentary of the data in that same journal.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;more&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;More&lt;/h2&gt;
@@ -69,21 +70,21 @@ I developed a statistical design for this purpose, described &lt;a href=&#34;htt
 &lt;/div&gt;
 &lt;div id=&#34;references&#34; class=&#34;section level2 unnumbered&#34;&gt;
 &lt;h2&gt;References&lt;/h2&gt;
-&lt;div id=&#34;refs&#34; class=&#34;references&#34;&gt;
-&lt;div id=&#34;ref-alessi_immunotherapy_2020&#34;&gt;
-&lt;p&gt;Alessi, Joao V, and Mark M Awad. 2020. “Immunotherapy in Lung Cancer: Effective for Patients with Poor Performance Status?” &lt;em&gt;The Lancet Respiratory Medicine&lt;/em&gt;, March, S2213260020301077. &lt;a href=&#34;https://doi.org/10.1016/S2213-2600(20)30107-7&#34;&gt;https://doi.org/10.1016/S2213-2600(20)30107-7&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;refs&#34; class=&#34;references csl-bib-body hanging-indent&#34;&gt;
+&lt;div id=&#34;ref-alessi_immunotherapy_2020&#34; class=&#34;csl-entry&#34;&gt;
+Alessi, Joao V, and Mark M Awad. 2020. &lt;span&gt;“Immunotherapy in Lung Cancer: Effective for Patients with Poor Performance Status?”&lt;/span&gt; &lt;em&gt;The Lancet Respiratory Medicine&lt;/em&gt;, March, S2213260020301077. &lt;a href=&#34;https://doi.org/10.1016/S2213-2600(20)30107-7&#34;&gt;https://doi.org/10.1016/S2213-2600(20)30107-7&lt;/a&gt;.
 &lt;/div&gt;
-&lt;div id=&#34;ref-brock_phase_2019&#34;&gt;
-&lt;p&gt;Brock, Kristian, Lucinda Billingham, Christina Yap, and Gary Middleton. 2019. “A Phase II Clinical Trial Design for Associated Co-Primary Efficacy and Toxicity Outcomes with Baseline Covariates.” In &lt;em&gt;Bayesian Statistics and New Generations&lt;/em&gt;, edited by Raffaele Argiento, Daniele Durante, and Sara Wade, 125–33. Springer Proceedings in Mathematics &amp;amp; Statistics. Cham: Springer International Publishing. &lt;a href=&#34;https://doi.org/10.1007/978-3-030-30611-3_13&#34;&gt;https://doi.org/10.1007/978-3-030-30611-3_13&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;ref-brock_phase_2019&#34; class=&#34;csl-entry&#34;&gt;
+Brock, Kristian, Lucinda Billingham, Christina Yap, and Gary Middleton. 2019. &lt;span&gt;“A &lt;span&gt;Phase&lt;/span&gt; &lt;span&gt;II&lt;/span&gt; &lt;span&gt;Clinical&lt;/span&gt; &lt;span&gt;Trial&lt;/span&gt; &lt;span&gt;Design&lt;/span&gt; for &lt;span&gt;Associated&lt;/span&gt; &lt;span&gt;Co&lt;/span&gt;-Primary &lt;span&gt;Efficacy&lt;/span&gt; and &lt;span&gt;Toxicity&lt;/span&gt; &lt;span&gt;Outcomes&lt;/span&gt; with &lt;span&gt;Baseline&lt;/span&gt; &lt;span&gt;Covariates&lt;/span&gt;.”&lt;/span&gt; In &lt;em&gt;Bayesian &lt;span&gt;Statistics&lt;/span&gt; and &lt;span&gt;New&lt;/span&gt; &lt;span&gt;Generations&lt;/span&gt;&lt;/em&gt;, edited by Raffaele Argiento, Daniele Durante, and Sara Wade, 125–33. Springer &lt;span&gt;Proceedings&lt;/span&gt; in &lt;span&gt;Mathematics&lt;/span&gt; &amp;amp; &lt;span&gt;Statistics&lt;/span&gt;. Cham: Springer International Publishing. &lt;a href=&#34;https://doi.org/10.1007/978-3-030-30611-3_13&#34;&gt;https://doi.org/10.1007/978-3-030-30611-3_13&lt;/a&gt;.
 &lt;/div&gt;
-&lt;div id=&#34;ref-Garon2015&#34;&gt;
-&lt;p&gt;Garon, Edward B, Naiyer a Rizvi, Rina Hui, Natasha Leighl, Ani S Balmanoukian, Joseph Paul Eder, Amita Patnaik, et al. 2015. “Pembrolizumab for the Treatment of Non-Small-Cell Lung Cancer.” &lt;em&gt;The New England Journal of Medicine&lt;/em&gt; 372 (21): 2018–28. &lt;a href=&#34;https://doi.org/10.1056/NEJMoa1501824&#34;&gt;https://doi.org/10.1056/NEJMoa1501824&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;ref-Garon2015&#34; class=&#34;csl-entry&#34;&gt;
+Garon, Edward B, Naiyer a Rizvi, Rina Hui, Natasha Leighl, Ani S Balmanoukian, Joseph Paul Eder, Amita Patnaik, et al. 2015. &lt;span&gt;“Pembrolizumab for the Treatment of Non-Small-Cell Lung Cancer.”&lt;/span&gt; &lt;em&gt;The New England Journal of Medicine&lt;/em&gt; 372 (21): 2018–28. &lt;a href=&#34;https://doi.org/10.1056/NEJMoa1501824&#34;&gt;https://doi.org/10.1056/NEJMoa1501824&lt;/a&gt;.
 &lt;/div&gt;
-&lt;div id=&#34;ref-Herbst2016&#34;&gt;
-&lt;p&gt;Herbst, Roy S., Paul Baas, Dong Wan Kim, Enriqueta Felip, José L. Pérez-Gracia, Ji Youn Han, Julian Molina, et al. 2016. “Pembrolizumab Versus Docetaxel for Previously Treated, PD-L1-Positive, Advanced Non-Small-Cell Lung Cancer (KEYNOTE-010): A Randomised Controlled Trial.” &lt;em&gt;The Lancet&lt;/em&gt; 387 (10027): 1540–50. &lt;a href=&#34;https://doi.org/10.1016/S0140-6736(15)01281-7&#34;&gt;https://doi.org/10.1016/S0140-6736(15)01281-7&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;ref-Herbst2016&#34; class=&#34;csl-entry&#34;&gt;
+Herbst, Roy S., Paul Baas, Dong Wan Kim, Enriqueta Felip, José L. Pérez-Gracia, Ji Youn Han, Julian Molina, et al. 2016. &lt;span&gt;“Pembrolizumab Versus Docetaxel for Previously Treated, &lt;span&gt;PD&lt;/span&gt;-&lt;span&gt;L1&lt;/span&gt;-Positive, Advanced Non-Small-Cell Lung Cancer (&lt;span&gt;KEYNOTE&lt;/span&gt;-010): &lt;span&gt;A&lt;/span&gt; Randomised Controlled Trial.”&lt;/span&gt; &lt;em&gt;The Lancet&lt;/em&gt; 387 (10027): 1540–50. &lt;a href=&#34;https://doi.org/10.1016/S0140-6736(15)01281-7&#34;&gt;https://doi.org/10.1016/S0140-6736(15)01281-7&lt;/a&gt;.
 &lt;/div&gt;
-&lt;div id=&#34;ref-middleton_pembrolizumab_2020&#34;&gt;
-&lt;p&gt;Middleton, Gary, Kristian Brock, Joshua Savage, Rhys Mant, Yvonne Summers, John Connibear, Riyaz Shah, et al. 2020. “Pembrolizumab in Patients with Non-Small-Cell Lung Cancer of Performance Status 2 (PePS2): A Single Arm, Phase 2 Trial.” &lt;em&gt;The Lancet Respiratory Medicine&lt;/em&gt; 0 (0). &lt;a href=&#34;https://doi.org/10.1016/S2213-2600(20)30033-3&#34;&gt;https://doi.org/10.1016/S2213-2600(20)30033-3&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;ref-middleton_pembrolizumab_2020&#34; class=&#34;csl-entry&#34;&gt;
+Middleton, Gary, Kristian Brock, Joshua Savage, Rhys Mant, Yvonne Summers, John Connibear, Riyaz Shah, et al. 2020. &lt;span&gt;“Pembrolizumab in Patients with Non-Small-Cell Lung Cancer of Performance Status 2 (&lt;span&gt;PePS2&lt;/span&gt;): A Single Arm, Phase 2 Trial.”&lt;/span&gt; &lt;em&gt;The Lancet Respiratory Medicine&lt;/em&gt; 0 (0). &lt;a href=&#34;https://doi.org/10.1016/S2213-2600(20)30033-3&#34;&gt;https://doi.org/10.1016/S2213-2600(20)30033-3&lt;/a&gt;.
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -109,7 +110,7 @@ Naturally, this suggests a Bryant &amp;amp; Day optimal design.
 However, published data in performance status 0 &amp;amp; 1 NSCLC patients showed that the PD-L1 tumour proportion score biomarker was strongly predictive of response.
 There was also evidence that first-line patients did better than subsequent-line patients.
 We expected each of these variables to remain predictive in the performance status 2 population and wanted to stratify the analysis by these variables.
-Unfortunately, Bryant &amp;amp; Day&#39;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
+Unfortunately, Bryant &amp;amp; Day&amp;rsquo;s design assumes an homogeneous population so does not admit explanatory variables.&lt;/p&gt;
 &lt;p&gt;I happened to be working on a dose-finding trial at the time that used the EffTox design of Thall &amp;amp; Cook (2004) to appraise joint efficacy and toxicity rates at different doses of experimental agents.
 It struck me on a cycle home that the EffTox design could be adjusted with variables reflecting PD-L1 and line-of-therapy status in place of dose to study our co-primary outcomes whilst adjusting for our putative predictive factors.
 I worked up the design as part of my PhD, eventually published a design paper, and used the model to conduct a Bayesian analysis of the trial outcomes.&lt;/p&gt;
@@ -131,7 +132,7 @@ Bayesian models are relatively abundant in early phase clinical trials where inf
 &lt;li&gt;the Contimual Reassessment Method (CMR) for toxicity-based dose-finding;&lt;/li&gt;
 &lt;li&gt;the time-to-event CRM for late-onset toxicity in dose-finding;&lt;/li&gt;
 &lt;li&gt;the EffTox for toxicity- and efficacy-based dose-finding;&lt;/li&gt;
-&lt;li&gt;Wason &amp;amp; Seaman&#39;s Augmented Binary method for fusing continuous and binary outcomes in phase II;&lt;/li&gt;
+&lt;li&gt;Wason &amp;amp; Seaman&amp;rsquo;s Augmented Binary method for fusing continuous and binary outcomes in phase II;&lt;/li&gt;
 &lt;li&gt;a hierarchical model of binary responses on related subgroups;&lt;/li&gt;
 &lt;li&gt;and more.&lt;/li&gt;
 &lt;/ul&gt;
@@ -178,7 +179,7 @@ I recall using Monte Carlo integration to resolve six-dimensional integrals to e
 In fact, there were probably many better ways.
 However, I doubt any would be as good as Stan, a probabilistic programming language and Hamiltonion Monte Carlo Markov Chain sampler.
 This manuscript is my first sole-author attempt at research.
-It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
+It was particularly pleasing to implement James Wason and Shaun Seaman&amp;rsquo;s augmented binary method, an approach that will surely feature strongly if we are to wean ourselves off information-light binary response variables.
 &lt;code&gt;trial&lt;/code&gt; is on CRAN.&lt;/p&gt;
 </description>
     </item>
@@ -190,7 +191,7 @@ It was particularly pleasing to implement James Wason and Shaun Seaman&#39;s aug
       <guid>https://www.kristianbrock.com/publication/crm-tutorial/</guid>
       <description>&lt;h3 id=&#34;about-this-publication&#34;&gt;About this publication&lt;/h3&gt;
 &lt;p&gt;I had been a trial statistician about 6 months when I attended an NIHR workshop on early phase trial methodology in 2014.
-The topic of the day was the trials community&#39;s over-reliance on rule-based dose-finding methods like 3+3.
+The topic of the day was the trials community&amp;rsquo;s over-reliance on rule-based dose-finding methods like 3+3.
 This tutorial paper was produced by a group of attendees to promote model-based methods.&lt;/p&gt;
 </description>
     </item>
