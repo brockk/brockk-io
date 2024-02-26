@@ -111,11 +111,6 @@ We provide a convenient function to quickly visualise how the probability of sel
 The dose-levels are represented in the columns of this plot:
 
 ```{r}
-plot(1:2)
-```
-
-
-```{r}
 convergence_plot(sims)
 ```
 

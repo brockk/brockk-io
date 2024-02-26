@@ -90,10 +90,8 @@ sims &amp;lt;- simulate_compare(
 ## Running Stopping CRM&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We provide a convenient function to quickly visualise how the probability of selecting each dose in each design evolved as the simulations progressed.
 The dose-levels are represented in the columns of this plot:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot(1:2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;convergence_plot(sims)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 2, 3 and 4.
 The differences between the two CRM variants are very small.
 We can be more precise by formally contrasting the probability of selecting each dose for each pair of designs:&lt;/p&gt;
@@ -112,7 +110,7 @@ as_tibble(sims) %&amp;gt;%
                .rows = label_both,
                .cols = label_both)
   )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;All the work above is done by &lt;code&gt;as_tibble(sims)&lt;/code&gt;.
 The rest of the code is just plotting.&lt;/p&gt;
 &lt;p&gt;The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
