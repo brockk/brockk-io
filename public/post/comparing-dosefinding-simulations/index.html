@@ -270,7 +270,7 @@
     
       <meta property="article:published_time" content="2024-02-26T00:00:00&#43;00:00">
     
-    <meta property="article:modified_time" content="2024-02-26T14:49:16&#43;00:00">
+    <meta property="article:modified_time" content="2024-02-26T15:10:46&#43;00:00">
   
 
   
@@ -305,7 +305,7 @@
   ],
   
   "datePublished": "2024-02-26T00:00:00Z",
-  "dateModified": "2024-02-26T14:49:16Z",
+  "dateModified": "2024-02-26T15:10:46Z",
   
   "author": {
     "@type": "Person",
@@ -798,7 +798,7 @@ sims &lt;- simulate_compare(
 The dose-levels are represented in the columns of this plot:</p>
 <pre class="r"><code>convergence_plot(sims)</code></pre>
 <p><img src="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-3-1.png" width="720" /></p>
-<p>We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 2, 3 and 4.
+<p>We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 3 and 4.
 The differences between the two CRM variants are very small.
 We can be more precise by formally contrasting the probability of selecting each dose for each pair of designs:</p>
 <pre class="r"><code>library(dplyr)
@@ -818,10 +818,9 @@ as_tibble(sims) %&gt;%
   )</code></pre>
 <p><img src="https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>All the work above is done by <code>as_tibble(sims)</code>.
-The rest of the code is just plotting.</p>
-<p>The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
-Change the <code>alpha = 0.05</code> parameter when calling <code>as_tibble(sims)</code> to get confident intervals for a different significance level.
-Despite the small number of simulated iterates, we see that the two CRM variants are significantly more likely to recommend dose-level 2.</p>
+The rest of the code is just plotting.
+The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
+Change the <code>alpha = 0.05</code> parameter when calling <code>as_tibble(sims)</code> to get confident intervals for a different significance level.</p>
 <p>We see that, even with the very small sample size of 50 simulated trials, the CRM designs are significantly more likely to recommend dose 3 than the 3+3 design.
 In contrast, in this scenario there is very little difference at all between the two CRM variants.</p>
 <p>We also provide functions to get and set the patient-level propensities, allowing comparison and reproduction in other software packages.

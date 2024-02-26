@@ -114,7 +114,7 @@ The dose-levels are represented in the columns of this plot:
 convergence_plot(sims)
 ```
 
-We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 2, 3 and 4.
+We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 3 and 4.
 The differences between the two CRM variants are very small.
 We can be more precise by formally contrasting the probability of selecting each dose for each pair of designs:
 
@@ -138,10 +138,8 @@ as_tibble(sims) %>%
 
 All the work above is done by `as_tibble(sims)`.
 The rest of the code is just plotting.
-
 The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
 Change the `alpha = 0.05` parameter when calling `as_tibble(sims)` to get confident intervals for a different significance level.
-Despite the small number of simulated iterates, we see that the two CRM variants are significantly more likely to recommend dose-level 2.
 
 We see that, even with the very small sample size of 50 simulated trials, the CRM designs are significantly more likely to recommend dose 3 than the 3+3 design.
 In contrast, in this scenario there is very little difference at all between the two CRM variants.

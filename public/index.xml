@@ -112,7 +112,7 @@ sims &amp;lt;- simulate_compare(
 The dose-levels are represented in the columns of this plot:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;convergence_plot(sims)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;720&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 2, 3 and 4.
+&lt;p&gt;We can see immediately, for instance, that the designs generally agree that dose 2 is the best MTD candidate, and that the CRM designs are more likely to recommend doses 3 and 4.
 The differences between the two CRM variants are very small.
 We can be more precise by formally contrasting the probability of selecting each dose for each pair of designs:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
@@ -132,10 +132,9 @@ as_tibble(sims) %&amp;gt;%
   )&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.kristianbrock.com/post/comparing-dosefinding-simulations/index_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;All the work above is done by &lt;code&gt;as_tibble(sims)&lt;/code&gt;.
-The rest of the code is just plotting.&lt;/p&gt;
-&lt;p&gt;The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
-Change the &lt;code&gt;alpha = 0.05&lt;/code&gt; parameter when calling &lt;code&gt;as_tibble(sims)&lt;/code&gt; to get confident intervals for a different significance level.
-Despite the small number of simulated iterates, we see that the two CRM variants are significantly more likely to recommend dose-level 2.&lt;/p&gt;
+The rest of the code is just plotting.
+The error bars here reflect 95% symmetric asymptotic normal confidence intervals.
+Change the &lt;code&gt;alpha = 0.05&lt;/code&gt; parameter when calling &lt;code&gt;as_tibble(sims)&lt;/code&gt; to get confident intervals for a different significance level.&lt;/p&gt;
 &lt;p&gt;We see that, even with the very small sample size of 50 simulated trials, the CRM designs are significantly more likely to recommend dose 3 than the 3+3 design.
 In contrast, in this scenario there is very little difference at all between the two CRM variants.&lt;/p&gt;
 &lt;p&gt;We also provide functions to get and set the patient-level propensities, allowing comparison and reproduction in other software packages.
